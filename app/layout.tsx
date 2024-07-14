@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const generalSans = localFont({
+  src: [
+    {
+      path: "./generalsans-variable.woff2",
+      style: "normal"
+    },
+    {
+      path: "./generalsans-variableitalic.woff2",
+      style: "italic"
+    }
+  ],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={generalSans.className + " antialiased"}>{children}</body>
     </html>
   );
 }
