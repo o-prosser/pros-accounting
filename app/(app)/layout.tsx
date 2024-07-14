@@ -1,9 +1,19 @@
-import { BanknoteIcon, FileTextIcon, HomeIcon, SettingsIcon, TagIcon } from "lucide-react";
+import { BanknoteIcon, ChevronDownIcon, FileTextIcon, HomeIcon, LogOutIcon, SettingsIcon, TagIcon, User } from "lucide-react";
 import MobileLink from "./components/mobile-link";
 import Logo from "@/components/ui/logo";
 import DesktopLink from "./components/desktop-link";
+import { getSession } from "@/lib/auth";
+import { selectCurrentOrganisation } from "@/models/organisation";
+import { redirect } from "next/navigation";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu'
+import { Button } from "@/components/ui/button";
 
-const AppLayout = ({children}: {children: React.ReactNode}) => {
+const AppLayout = async ({children}: {children: React.ReactNode}) => {
+  const session = await getSession();
+  const organisation = await selectCurrentOrganisation();
+
+  if (!session || !organisation) redirect("/setup");
+
   return (
     <>
       {/* Mobile */}
@@ -20,7 +30,7 @@ const AppLayout = ({children}: {children: React.ReactNode}) => {
         <MobileLink href="#">
           <FileTextIcon />
         </MobileLink>
-        <MobileLink href="#">
+        <MobileLink href="/settings">
           <SettingsIcon />
         </MobileLink>
       </nav>
@@ -45,10 +55,32 @@ const AppLayout = ({children}: {children: React.ReactNode}) => {
           <FileTextIcon />
           Reports
         </DesktopLink>   
-        <DesktopLink href="#">
+        <DesktopLink href="/settings">
           <SettingsIcon />
           Settings
-        </DesktopLink>       
+        </DesktopLink>    
+
+        <div className="flex-1" />
+
+        <div className="flex items-center w-full">
+          <div className="h-12 w-12 bg-background rounded-full overflow-hidden flex justify-center items-center">
+            <User className="fill-zinc-400 text-zinc-400 h-11 w-11 -mb-3.5 inline-block" />
+          </div>  
+          <div className="flex flex-col items-start -gap-2 pl-2 flex-1 w-full">
+            <span className="text-sm text-muted-foreground">{organisation.name}</span>
+            <span className="font-medium">{session.user.firstName} {session.user.lastName}</span>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <ChevronDownIcon/>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40">
+              <DropdownMenuItem><LogOutIcon className="text-muted-foreground mr-2 h-4 w-4" /> Log out</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>   
       </div>
 
       {/* Content */}

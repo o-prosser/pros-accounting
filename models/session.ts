@@ -9,6 +9,7 @@ export const selectSession = async ({id}: {id: SelectSession["id"]}) => {
       user: {
         columns: {
           id: true,
+          organisationId: true,
           email: true,
           firstName: true,
           lastName: true,
