@@ -1,0 +1,36 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { registerAction } from "./actions";
+import { Metadata } from "next";
+import { Title } from "@/components/ui/typography";
+
+export const metadata: Metadata = { title: "Register" };
+
+const RegisterPage = () => {
+  return (
+    <>
+      <Title className="sm:text-center mb-6">Create your account</Title>
+      
+      <form action={registerAction} className="w-full">
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" name="name" type="text" autoComplete="name" required autoFocus className="mt-1 w-full mb-6" />
+
+        <Label htmlFor="email">Email address</Label>
+        <Input id="email" name="email" type="email" autoComplete="email" required autoFocus className="mt-1 w-full mb-6" />
+
+        <Label htmlFor="password">Password</Label>
+        <Input id="password" name="password" type="password" autoComplete="password" required autoFocus className="mt-1 w-full mb-8" />
+
+        <Button type="submit" className="w-full">Register</Button>
+      </form>
+
+      <p className="text-sm text-muted-foreground pt-6 text-center">
+        Already registered? <Button asChild variant="link" size={null}><Link href="/register">Login</Link></Button>
+      </p>
+    </>
+  )
+}
+
+export default RegisterPage;
