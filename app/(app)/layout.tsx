@@ -24,7 +24,7 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
         <MobileLink href="#">
           <BanknoteIcon />
         </MobileLink>
-        <MobileLink href="#">
+        <MobileLink href="/categories">
           <TagIcon />
         </MobileLink>
         <MobileLink href="#">
@@ -47,7 +47,7 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
           <BanknoteIcon />
           Payments
         </DesktopLink>     
-        <DesktopLink href="#">
+        <DesktopLink href="/categories">
           <TagIcon />
           Categories
         </DesktopLink>    

@@ -1,8 +1,9 @@
 import { getSession } from "@/lib/auth"
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
-export const selectCurrentOrganisation = async () => {
+export const selectCurrentOrganisation = cache(async () => {
   const session = await getSession();
   if (!session) redirect("/login");
 
@@ -17,4 +18,4 @@ export const selectCurrentOrganisation = async () => {
   if (!organisation) redirect("/setup");
 
   return organisation
-}
+})
