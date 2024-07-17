@@ -25,7 +25,7 @@ const CategoriesIndex = async () => {
           <CardContent>
             <div className="grid gap-4">
               {category.subCategories.map((subCategory, idx) => (
-                <Button variant="outline" className="justify-between" asChild><Link href="#">{subCategory.name}<ArrowRightIcon className="text-muted-foreground" /></Link></Button>
+                <Button key={idx} variant="outline" className="justify-between" asChild><Link href="#">{subCategory.name}<ArrowRightIcon className="text-muted-foreground" /></Link></Button>
               ))}
 
               <CreateSubCategory category={category} />
