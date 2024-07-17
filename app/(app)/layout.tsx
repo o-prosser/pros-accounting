@@ -1,12 +1,13 @@
-import { BanknoteIcon, ChevronDownIcon, FileTextIcon, HomeIcon, LogOutIcon, SettingsIcon, TagIcon, User } from "lucide-react";
+import { BanknoteIcon, ChevronDownIcon, FileTextIcon, HomeIcon, LogOutIcon, Moon, SettingsIcon, Sun, TagIcon, User } from "lucide-react";
 import MobileLink from "./components/mobile-link";
 import Logo from "@/components/ui/logo";
 import DesktopLink from "./components/desktop-link";
 import { getSession } from "@/lib/auth";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { redirect } from "next/navigation";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu'
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger} from '@/components/ui/dropdown-menu'
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "./_components/theme-toggle";
 
 const AppLayout = async ({children}: {children: React.ReactNode}) => {
   const session = await getSession();
@@ -21,7 +22,7 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
         <MobileLink href="/dashboard">
           <HomeIcon/>
         </MobileLink>
-        <MobileLink href="#">
+        <MobileLink href="/transactions">
           <BanknoteIcon />
         </MobileLink>
         <MobileLink href="/categories">
@@ -43,9 +44,9 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
           <HomeIcon />
           Dashboard
         </DesktopLink>           
-        <DesktopLink href="#">
+        <DesktopLink href="/transactions">
           <BanknoteIcon />
-          Payments
+          Transactions
         </DesktopLink>     
         <DesktopLink href="/categories">
           <TagIcon />
@@ -77,6 +78,7 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40">
+              <ModeToggle />
               <DropdownMenuItem><LogOutIcon className="text-muted-foreground mr-2 h-4 w-4" /> Log out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

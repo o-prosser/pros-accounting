@@ -27,3 +27,25 @@ export const selectCategories = async () => {
 
   return categories;
 }
+
+export const selectCategoriesMin = async () => {
+  const organisation = await selectCurrentOrganisation();
+
+  const categories = await db.query.categoriesTable.findMany({
+    where: (fields, {eq}) => eq(fields.organisationId, organisation.id),
+    columns: {
+      id: true,
+      name: true,
+    },
+    with: {
+      subCategories: {
+        columns: {
+          id: true,
+          name: true,
+        }
+      }
+    } 
+  })
+
+  return categories;
+}

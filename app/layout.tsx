@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+// import { ThemeProvider } from "@/components/theme-provider";
 
 const generalSans = localFont({
   src: [
     {
       path: "./generalsans-variable.woff2",
-      style: "normal"
+      style: "normal",
     },
     {
       path: "./generalsans-variableitalic.woff2",
-      style: "italic"
-    }
+      style: "italic",
+    },
   ],
-  display: 'swap',
-})
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={generalSans.className + " antialiased"}>{children}</body>
+      <body className={generalSans.className + " antialiased"}>
+          {children}
+      </body>
     </html>
   );
 }
