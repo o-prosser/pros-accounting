@@ -1,14 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Title } from "@/components/ui/typography";
 import { selectCategoriesMin } from "@/models/category";
 import SelectCategory from "./_components/categories";
@@ -20,6 +12,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { PoundSterlingIcon } from "lucide-react";
 
 const TransactionsCreatePage = async () => {
   const categories = await selectCategoriesMin();
@@ -63,25 +56,35 @@ const TransactionsCreatePage = async () => {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-6">
           <div>
             <Label htmlFor="income">Income</Label>
-            <Input
-              id="income"
-              name="income"
-              type="income"
-              autoComplete="off"
-              className="mt-1 w-full"
-              step="0.01"
-            />
+            <div className="relative">
+              <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
+                <PoundSterlingIcon className="h-4 w-4 text-muted-foreground" />
+              </div>
+              <Input
+                id="income"
+                name="income"
+                type="income"
+                autoComplete="off"
+                className="mt-1 w-full pl-7"
+                step="0.01"
+              />
+            </div>
           </div>
           <div>
             <Label htmlFor="expense">Expense</Label>
-            <Input
-              id="expense"
-              name="expense"
-              type="number"
-              autoComplete="off"
-              className="mt-1 w-full"
-              step="0.01"
-            />
+            <div className="relative">
+              <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
+                <PoundSterlingIcon className="h-4 w-4 text-muted-foreground" />
+              </div>
+              <Input
+                id="expense"
+                name="expense"
+                type="income"
+                autoComplete="off"
+                className="mt-1 w-full pl-7"
+                step="0.01"
+              />
+            </div>
           </div>
         </div>
 

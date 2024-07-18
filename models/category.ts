@@ -36,6 +36,7 @@ export const selectCategoriesMin = async () => {
     columns: {
       id: true,
       name: true,
+      account: true,
     },
     with: {
       subCategories: {

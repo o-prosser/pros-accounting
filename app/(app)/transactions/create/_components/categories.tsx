@@ -1,10 +1,11 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 
-const SelectCategory = ({categories}: {categories: {id: string; name: string; subCategories: {id: string; name: string}[]}[]}) => {
+const SelectCategory = ({categories}: {categories: {id: string; name: string; account: "charity"|"club", subCategories: {id: string; name: string}[]}[]}) => {
   const [selected, setSelected]= useState<string|undefined>();
 
   return (
@@ -17,7 +18,17 @@ const SelectCategory = ({categories}: {categories: {id: string; name: string; su
           <SelectContent>
             <SelectGroup>
               {categories.map((category,idx) => (
-                <SelectItem value={category.id} key={idx}>{category.name}</SelectItem>
+                <SelectItem value={category.id} key={idx}>
+                  <Badge
+                    className="mr-2 py-0 leading-none px-1 mb-px text-[0.625rem]"
+                    variant={`outline-accent${
+                      category.account === "charity" ? "1" : "2"
+                    }`}
+                  >
+                    {category.account}
+                  </Badge>
+                  {category.name}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
