@@ -175,7 +175,7 @@ const CategoryPage = async ({ params }: { params: { id: string } }) => {
       <Heading className="mt-6">Sub categories</Heading>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {category.subCategories.map((subCategory, idx) => (
-          <Card>
+          <Card key={idx}>
             <CardHeader className="p-4">
               <CardTitle className="text-lg font-medium">{subCategory.name}</CardTitle>
               <CardDescription>{category.transactions.filter((transaction) => transaction.subCategoryId === subCategory.id).length} payments</CardDescription>
