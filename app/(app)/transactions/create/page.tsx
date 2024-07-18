@@ -25,11 +25,11 @@ const TransactionsCreatePage = async () => {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-6">
           <div>
             <Label htmlFor="income">Income</Label>
-            <Input id="income" name="income" type="income" autoComplete="off" className="mt-1 w-full" />
+            <Input id="income" name="income" type="income" autoComplete="off" className="mt-1 w-full" step="0.01" />
           </div>
           <div>
             <Label htmlFor="expense">Expense</Label>
-            <Input id="expense" name="expense" type="number" autoComplete="off" className="mt-1 w-full" />
+            <Input id="expense" name="expense" type="number" autoComplete="off" className="mt-1 w-full" step="0.01" />
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 "use server";
 
-import { categoriesTable, subCategoriesTable, transactionsTable } from "@/drizzle/schema";
+import { transactionsTable } from "@/drizzle/schema/transactions";
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { redirect } from "next/navigation";
@@ -30,9 +30,8 @@ export const createTransactionAction = async (formData: FormData) => {
   try {
     const organisation = await selectCurrentOrganisation();
 
-    console.log(fields.data);
-
     const transaction = await db.insert(transactionsTable).values({
+      // @ts-ignore
       name: fields.data.name,
       date: fields.data.date,
       income: (fields.data.income !== "" && fields.data.income !== null) ? parseFloat(fields.data.income) : undefined,
@@ -40,7 +39,7 @@ export const createTransactionAction = async (formData: FormData) => {
       categoryId: fields.data.category,
       subCategoryId: fields.data.subCategory,
       notes: fields.data.notes,
-      organisationId: organisation.id
+      organisationId: organisation.id,
     }).returning({id: transactionsTable.id});
 
     id = transaction[0].id

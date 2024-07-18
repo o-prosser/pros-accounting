@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/data-table";
-import { selectTransactions } from "@/models/transactions"
+import { selectTransactions } from "@/models/transaction"
 import { columns } from "./table";
 
 
