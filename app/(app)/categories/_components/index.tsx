@@ -5,6 +5,7 @@ import CreateSubCategory from "./sub-categories/create";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
+import { format, formatRelative } from "date-fns";
 
 const CategoriesIndex = async () => {
   const categories = await selectCategories();
@@ -19,16 +20,21 @@ const CategoriesIndex = async () => {
               <span className="pl-1.5">{category.name}</span>
             </CardTitle>
             <CardDescription>
-              Last updated DD/MM/YYYY
+              Last updated {format(category.lastUpdated || new Date, "dd MMM yyyy")}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4">
+            <div className="grid first:!rounded-t-lg last:!rounded-b-lg">
               {category.subCategories.map((subCategory, idx) => (
-                <Button key={idx} variant="outline" className="justify-between" asChild><Link href="#">{subCategory.name}<ArrowRightIcon className="text-muted-foreground" /></Link></Button>
+                <Button key={idx} variant="outline" className="justify-between rounded-none first:rounded-t-lg last:rounded-b-lg -mb-px group" asChild><Link href={`/categories/${category.id}/${subCategory.id}`}>{subCategory.name}<ArrowRightIcon className="text-muted-foreground !h-4 !w-4 group-hover:translate-x-1 transition duration-100" /></Link></Button>
               ))}
+            </div>
 
+            <div className="grid grid-cols-2 mt-4 gap-4">
               <CreateSubCategory category={category} />
+              <Button asChild>
+                <Link href={`/categories/${category.id}`}>View category</Link>
+              </Button>
             </div>
           </CardContent>
         </Card>

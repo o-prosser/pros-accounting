@@ -7,7 +7,13 @@ export const selectCategory = async (id: string) => {
   const category = await db.query.categoriesTable.findFirst({
     where: (fields, {eq, and}) => and(eq(fields.id, id), eq(fields.organisationId, organisation.id)),
     with: {
-      transactions: true,
+      subCategories: true,
+      transactions: {
+        with: {
+          subCategory: true
+        },
+        orderBy: (fields, {desc}) => desc(fields.date),
+      }
     }
   });
 
@@ -21,11 +27,17 @@ export const selectCategories = async () => {
     where: (fields, {eq}) => eq(fields.organisationId, organisation.id),
     with: {
       subCategories: true,
-      transactions: true,
-    }
+      transactions: {
+        orderBy: (fields, {desc}) => desc(fields.date),
+      },
+    },
   })
 
-  return categories;
+  return categories.map(category => {
+    const lastUpdated = category?.transactions[0].createdAt;
+
+    return {lastUpdated, ...category}
+  });
 }
 
 export const selectCategoriesMin = async () => {

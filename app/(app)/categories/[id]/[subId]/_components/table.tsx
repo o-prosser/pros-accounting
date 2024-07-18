@@ -24,15 +24,6 @@ export type Transaction = {
   income: string | null;
   expense: string | null;
   notes: string | null;
-  category: {
-    id: string;
-    name: string;
-    account: "club" | "charity";
-  };
-  subCategory: {
-    id: string;
-    name: string;
-  } | null;
 };
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -64,58 +55,6 @@ export const columns: ColumnDef<Transaction>[] = [
       );
     },
     cell: ({ row }) => format(row.getValue("date"), "dd MMM yyyy"),
-  },
-  {
-    accessorKey: "category",
-    header: ({column}) => {
-      return (
-        <div className="flex items-center gap-1">
-          <span>Category</span>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <FilterIcon />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-              Todo
-            </PopoverContent>
-          </Popover>
-        </div>
-      )
-    },
-    cell: ({ row }) => {
-      const category = row.original.category;
-      const subCategory = row.original.subCategory;
-
-      return (
-        <div>
-          <Badge
-            className="mr-2"
-            variant={`outline-accent${
-              category.account === "charity" ? "1" : "2"
-            }`}
-          >
-            {category.account}
-          </Badge>
-          <Button size={null} variant="link" asChild>
-            <Link href={`/categories/${category.id}`}>{category.name}</Link>
-          </Button>
-          {subCategory && subCategory !== null ? (
-            <>
-              <span className="text-muted-foreground px-1">/</span>
-              <Button size={null} variant="link" asChild>
-                <Link href={`/categories/${category.id}/${subCategory.id}`}>
-                  {subCategory.name}
-                </Link>
-              </Button>
-            </>
-          ) : (
-            ""
-          )}
-        </div>
-      );
-    },
   },
   {
     accessorKey: "income",

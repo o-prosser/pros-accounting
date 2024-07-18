@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 // import { ThemeProvider } from "@/components/theme-provider";
 
 const generalSans = localFont({
@@ -30,7 +31,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={generalSans.className + " antialiased"}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
           {children}
+          </ThemeProvider>
       </body>
     </html>
   );
