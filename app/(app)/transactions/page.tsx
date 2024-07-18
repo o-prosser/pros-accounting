@@ -4,10 +4,19 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { PlusIcon } from "lucide-react"
 import TransactionsIndex from "./_components"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 
 const TransactionsPage = () => {
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>Dashboard</BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>Transactions</BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <div className="flex items-start justify-between">
         <Title>Transactions</Title>
         <Button asChild><Link href="/transactions/create"><PlusIcon /><span className="hidden sm:inline">Add transaction</span></Link></Button>
