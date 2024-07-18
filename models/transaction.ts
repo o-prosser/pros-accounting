@@ -6,6 +6,7 @@ export const selectTransactions = async () => {
 
   const transactions = await db.query.transactionsTable.findMany({
     where: (fields, {eq}) => eq(fields.organisationId, organisation.id),
+    orderBy: (fields, {desc}) => desc(fields.date),
     with: {
       category: {
         columns: {name: true, id: true, account: true},
