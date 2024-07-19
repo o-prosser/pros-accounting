@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { PlusIcon } from "lucide-react";
 import { createSubCategoryAction } from "../../actions";
+import { FormButton } from "@/components/form-button";
 
 const CreateSubCategory = ({category}: {category: {id: string; name: string}}) => {
   return (
@@ -17,7 +18,7 @@ const CreateSubCategory = ({category}: {category: {id: string; name: string}}) =
         <Label htmlFor="name">Name</Label>
         <Input id="name" name="name" type="text" autoComplete="off" required autoFocus className="mt-1 w-full mb-6" />
 
-        <Button type="submit">Add sub category</Button>
+        <FormButton type="submit">Add sub category</FormButton>
       </form>
     </ResponsiveDialog>
   )

@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { EditIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { updateCategoryAction } from "../actions";
+import { FormButton } from "@/components/form-button";
 
 const EditCategory = ({category}: {category: {id: string; name: string; account: "club"|"charity"}}) => {
   return (
@@ -32,7 +33,7 @@ const EditCategory = ({category}: {category: {id: string; name: string; account:
           </SelectContent>
         </Select>
 
-        <Button type="submit">Update category</Button>
+        <FormButton type="submit">Update category</FormButton>
       </form>
     </ResponsiveDialog>
   )

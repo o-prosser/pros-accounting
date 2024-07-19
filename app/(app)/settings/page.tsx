@@ -1,3 +1,4 @@
+import { FormButton } from "@/components/form-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,7 +23,7 @@ const SettingsPage = async () => {
           <Label htmlFor="name">Name</Label>
           <Input id="name" name="name" type="text" required defaultValue={organisation.name} className="mt-1 w-full mb-4" />
 
-          <Button type="submit">Save</Button>
+          <FormButton type="submit">Save</FormButton>
         </form>
       </div>
     </>

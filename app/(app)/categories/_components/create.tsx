@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { createCategoryAction } from "../actions";
+import { FormButton } from "@/components/form-button";
 
 const CreateCategory = () => {
   return (
@@ -30,7 +31,7 @@ const CreateCategory = () => {
           </SelectContent>
         </Select>
 
-        <Button type="submit">Add category</Button>
+        <FormButton type="submit">Add category</FormButton>
       </form>
     </ResponsiveDialog>
   )

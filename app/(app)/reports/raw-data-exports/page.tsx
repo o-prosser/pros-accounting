@@ -1,16 +1,14 @@
+import { FormButton } from "@/components/form-button"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DateRangePicker } from "@/components/ui/date-range-picker"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Heading, Muted, Title } from "@/components/ui/typography"
+import { Muted, Title } from "@/components/ui/typography"
 import { selectCategoriesMin } from "@/models/category"
-import Link from "next/link"
-import { generateReport } from "./actions"
-import { FormButton } from "@/components/form-button"
 
-const CategorySummariesPage = async () => {
+const RawDataExportsPage = async () => {
   const categories = await selectCategoriesMin();
 
   return (
@@ -21,21 +19,21 @@ const CategorySummariesPage = async () => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>Reports</BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>Category summaries</BreadcrumbItem>
+          <BreadcrumbItem>Raw data exports</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Title>Category summaries</Title>
+      <Title>Raw data exports</Title>
 
       <Card className="max-w-lg">
         <CardHeader>
           <CardTitle>Generate report</CardTitle>
         </CardHeader>
         <CardContent>
-          <form method="GET" action="/reports/category-summaries/report.pdf">
+          <form method="GET" action="/reports/raw-data-exports/export.csv">
             <Label htmlFor="categoryId">Category</Label>
             <Select name="categoryId">
-              <SelectTrigger className="mt-1 w-full mb-4">
+              <SelectTrigger className="mt-1 w-full">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
@@ -46,6 +44,7 @@ const CategorySummariesPage = async () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
+            <Muted className="mb-4">Leave blank to export all transactions.</Muted>
 
             <Label htmlFor="date">Date range</Label>
             <DateRangePicker />
@@ -58,4 +57,4 @@ const CategorySummariesPage = async () => {
   )
 }
 
-export default CategorySummariesPage;
+export default RawDataExportsPage;

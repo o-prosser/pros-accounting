@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { PoundSterlingIcon } from "lucide-react";
+import { FormButton } from "@/components/form-button";
 
 const TransactionsCreatePage = async () => {
   const categories = await selectCategoriesMin();
@@ -93,7 +94,7 @@ const TransactionsCreatePage = async () => {
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" name="notes" className="mt-1 w-full mb-6" />
 
-        <Button type="submit">Add transaction</Button>
+        <FormButton type="submit">Add transaction</FormButton>
       </form>
     </>
   );
