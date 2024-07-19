@@ -7,9 +7,9 @@ const SortIcon = ({sort}: {sort: "asc"|"desc"|false}) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path d="m3 16 4 4 4-4" opacity={sort === 'asc' ? 1 : 0.5} />
       <path d="M7 20V4" opacity={sort === 'asc' ? 1 : 0.5} />

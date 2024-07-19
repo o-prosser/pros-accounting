@@ -1,7 +1,8 @@
 import db from "@/lib/db"
 import { selectCurrentOrganisation } from "./organisation"
+import { cache } from "react";
 
-export const selectCategory = async (id: string) => {
+export const selectCategory = cache(async (id: string) => {
   const organisation = await selectCurrentOrganisation();
 
   const category = await db.query.categoriesTable.findFirst({
@@ -18,7 +19,7 @@ export const selectCategory = async (id: string) => {
   });
 
   return category;
-}
+})
 
 export const selectCategories = async () => {
   const organisation = await selectCurrentOrganisation();

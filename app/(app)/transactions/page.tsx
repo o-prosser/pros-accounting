@@ -5,6 +5,9 @@ import Link from "next/link"
 import { PlusIcon } from "lucide-react"
 import TransactionsIndex from "./_components"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {title: "Transactions"}
 
 const TransactionsPage = () => {
   return (

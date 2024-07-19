@@ -13,6 +13,15 @@ import { getMonth } from "date-fns";
 import { DataTable } from "@/components/data-table";
 import { columns } from "./_components/table";
 
+import { Metadata } from "next";
+
+export const generateMetadata = async ({params}: {params: {id: string, subId: string}}): Promise<Metadata> => {
+  const category = await selectCategory(params.id);
+  const subCategory = category?.subCategories.find(subCategory => subCategory.id === params.subId);
+
+  return {title: subCategory?.name + ' / ' + category?.name}
+}
+
 const CategoryPage = async ({ params }: { params: { id: string, subId: string } }) => {
   const category = await selectCategory(params.id);
   if (!category) notFound();

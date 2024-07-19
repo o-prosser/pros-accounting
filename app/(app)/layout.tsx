@@ -8,6 +8,14 @@ import { redirect } from "next/navigation";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger} from '@/components/ui/dropdown-menu'
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./_components/theme-toggle";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    default: "ProsAccounting",
+    template: "%s – ProsAccounting"
+  },
+};
 
 const AppLayout = async ({children}: {children: React.ReactNode}) => {
   const session = await getSession();

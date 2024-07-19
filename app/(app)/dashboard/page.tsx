@@ -1,5 +1,8 @@
 import { Caption, Title } from "@/components/ui/typography";
 import { format } from "date-fns";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {title: 'Dashboard'}
 
 const DashboardPage = () => {
   return (

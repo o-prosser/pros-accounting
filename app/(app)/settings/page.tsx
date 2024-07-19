@@ -3,6 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Muted, Heading, Title } from "@/components/ui/typography"
 import { selectCurrentOrganisation } from "@/models/organisation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {title: "Settings"}
 
 const SettingsPage = async () => {
   const organisation = await selectCurrentOrganisation();

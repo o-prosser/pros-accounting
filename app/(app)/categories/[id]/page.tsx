@@ -19,6 +19,13 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
+import { Metadata } from "next";
+
+export const generateMetadata = async ({params}: {params: {id: string}}): Promise<Metadata> => {
+  const category = await selectCategory(params.id);
+
+  return {title: category?.name}
+}
 
 const CategoryPage = async ({ params }: { params: { id: string } }) => {
   const category = await selectCategory(params.id);

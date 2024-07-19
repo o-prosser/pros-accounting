@@ -3,6 +3,9 @@ import CreateCategory from "./_components/create"
 import { Suspense } from "react"
 import CategoriesIndex from "./_components"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {title: "Categories"}
 
 const CategoriesPage = () => {
   return (
