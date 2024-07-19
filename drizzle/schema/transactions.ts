@@ -7,7 +7,7 @@ import { organisationsTable } from "./organisations";
 export const transactionsTable = pgTable("transactions", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name", {length: 50}).notNull(),
-  date: date("date").notNull(),
+  date: date("date", {mode: "date"}).notNull(),
   income: numeric("income"),
   expense: numeric("expense"),
   categoryId: uuid("categoryId").notNull().references(() => categoriesTable.id, {onDelete: 'cascade'}),
