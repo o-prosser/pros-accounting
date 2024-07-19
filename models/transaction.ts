@@ -1,7 +1,8 @@
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "./organisation"
+import { cache } from "react";
 
-export const selectTransactions = async () => {
+export const selectTransactions = cache(async () => {
   const organisation = await selectCurrentOrganisation();
 
   const transactions = await db.query.transactionsTable.findMany({
@@ -18,4 +19,4 @@ export const selectTransactions = async () => {
   });
 
   return transactions;
-}
+});
