@@ -35,7 +35,7 @@ const Totals = async () => {
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="p-4 border-cyan-500 bg-cyan-50">
+        <Card className="p-4 border-cyan-500 bg-cyan-50 dark:bg-cyan-950">
           <Badge variant="outline-accent1">Charity</Badge>
           <div>
             <Caption>
@@ -69,7 +69,7 @@ const Totals = async () => {
             </div>
           </div>
         </Card>
-        <Card className="p-4 border-orange-500 bg-orange-50">
+        <Card className="p-4 border-orange-500 bg-orange-50 dark:bg-orange-950">
           <Badge variant="outline-accent2">Club</Badge>
           <div>
             <Caption>

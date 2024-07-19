@@ -89,7 +89,7 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
 
       {/* Desktop */}
       <div className="hidden md:flex fixed left-4 inset-y-4 bg-muted w-80 py-6 px-3 gap-y-2 flex-col items-start rounded-2xl">
-        <Logo className="h-6 pl-3 w-auto mb-4" />
+        <Logo className="h-6 pl-3 w-auto mb-4 fill-foreground" />
 
         <DesktopLink href="/dashboard">
           <HomeIcon />
