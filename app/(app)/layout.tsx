@@ -2,13 +2,16 @@ import { BanknoteIcon, ChevronDownIcon, FileTextIcon, HomeIcon, LogOutIcon, Moon
 import MobileLink from "./components/mobile-link";
 import Logo from "@/components/ui/logo";
 import DesktopLink from "./components/desktop-link";
-import { getSession } from "@/lib/auth";
+import { clearSession, getSession } from "@/lib/auth";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { redirect } from "next/navigation";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger} from '@/components/ui/dropdown-menu'
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./_components/theme-toggle";
 import { Metadata } from "next";
+import db from "@/lib/db";
+import { sessionsTable } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +25,23 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
   const organisation = await selectCurrentOrganisation();
 
   if (!session || !organisation) redirect("/setup");
+
+    const logout = async () => {
+      "use server";
+
+      const session = await getSession();
+      if (!session) redirect("/login");
+    
+      // Remove cookie
+      clearSession();
+    
+      // Set db entry to expire now so can't be used in future
+      await db.update(sessionsTable).set({
+        expiresAt: new Date()
+      }).where(eq(sessionsTable.id, session.id))
+    
+      redirect("/login");
+    };
 
   return (
     <>
@@ -87,7 +107,11 @@ const AppLayout = async ({children}: {children: React.ReactNode}) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40">
               <ModeToggle />
-              <DropdownMenuItem><LogOutIcon className="text-muted-foreground mr-2 h-4 w-4" /> Log out</DropdownMenuItem>
+              <form action={logout}>
+                <DropdownMenuItem asChild>
+                  <button type="submit"><LogOutIcon className="text-muted-foreground mr-2 h-4 w-4" /> Log out</button></DropdownMenuItem>
+
+              </form>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>   

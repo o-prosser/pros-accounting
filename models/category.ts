@@ -35,7 +35,7 @@ export const selectCategories = async () => {
   })
 
   return categories.map(category => {
-    const lastUpdated = category?.transactions[0].createdAt;
+    const lastUpdated = category?.transactions[0] ? category?.transactions[0].createdAt : new Date();
 
     return {lastUpdated, ...category}
   });
