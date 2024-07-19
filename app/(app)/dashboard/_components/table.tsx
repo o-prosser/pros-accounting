@@ -20,7 +20,7 @@ import Link from "next/link";
 export type Transaction = {
   id: string;
   name: string;
-  date: string;
+  date: string|Date;
   income: string | null;
   expense: string | null;
   notes: string | null;
