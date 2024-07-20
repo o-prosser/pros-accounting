@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate:key": "npx tsx cli/generateKey.ts",
-    "postinstall": "npx drizzle-kit migrate"
+    "postinstall": "npx drizzle-kit migrate",
+    "email:dev": "email dev"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.4",
@@ -18,6 +19,7 @@
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@react-email/components": "^0.0.21",
     "@react-pdf/renderer": "^3.4.4",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-table": "^8.19.3",
@@ -35,8 +37,10 @@
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
+    "react-email": "^2.1.5",
     "react-pdf-tailwind": "^2.3.0",
     "recharts": "^2.12.7",
+    "resend": "^3.4.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1",

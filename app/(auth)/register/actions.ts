@@ -1,6 +1,7 @@
 "use server";
 
 import { createSession } from "@/lib/auth";
+import { resend } from "@/lib/resend";
 import { insertSession } from "@/models/session";
 import { insertUser } from "@/models/user";
 import { hashPassword } from "@/utils/auth";
@@ -8,6 +9,7 @@ import { addMonths } from "date-fns";
 import { DrizzleError } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import WelcomeEmail from "@/emails/welcome";
 
 const schema = z.object({
   name: z.string().min(3).max(50),
@@ -35,6 +37,13 @@ export const registerAction = async (formData: FormData) => {
     const session = await insertSession({userId: user.id, expiresAt: addMonths(new Date(), 1)});
 
     await createSession(session.id);
+
+    await resend.emails.send({
+      from: "prosaccounting@prossermedia.co.uk",
+      to: fields.data.email,
+      subject: "Welcome to ProsAccounting",
+      react: WelcomeEmail({name: fields.data.name.split(" ")[0]})
+    })
   } catch (error) {
     if (error instanceof DrizzleError && error.message === "AUTH_DUPLICATE_KEY_ID") {
       return {
