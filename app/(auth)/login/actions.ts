@@ -13,12 +13,12 @@ const schema = z.object({
   password: z.string().max(255),
 })
 
-export const loginAction = async (formData: FormData) => {
+export const loginAction = async (prevState: any, formData: FormData) => {
   const fields = schema.safeParse(Object.fromEntries(formData));
 
   if (!fields.success) {
     return {
-      error: fields.error.flatten().fieldErrors,
+      errors: fields.error.flatten().fieldErrors,
     }
   }
 
@@ -36,7 +36,7 @@ export const loginAction = async (formData: FormData) => {
     await createSession(session.id);
   } catch (error) {
     return {
-      error: {
+      errors: {
         email: ["Incorrect email or password."],
       }
     }

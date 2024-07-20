@@ -12,6 +12,12 @@ export const Muted = ({className, ...props}: React.ComponentProps<"p">) => {
   )
 }
 
+export const ErrorMessage = ({className, ...props}: React.ComponentProps<"p">) => {
+  return (
+    <p className={cn("text-destructive text-sm leading-none", className)} {...props} />
+  )
+}
+
 export const Title = ({className, ...props}: React.ComponentProps<"h1">) => {
   return (
     <h1 className={cn("cd text-3xl font-[590] mb-6", className)} {...props} />
