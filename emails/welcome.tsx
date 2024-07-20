@@ -86,7 +86,7 @@ export const WelcomeEmail = ({
       >
         <Body className="bg-offwhite text-base font-sans">
           <Img
-            src={`${baseUrl}/pros-accounting-logo.png`}
+            src="https://prosaccounting.owenprosser.co.uk/pros-accounting-logo.png"
             width="241.9"
             height="30"
             alt="ProsAccounting"
