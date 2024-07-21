@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate:key": "npx tsx cli/generateKey.ts",
+    "invite": "npx tsx cli/invite.ts",
     "postinstall": "npx drizzle-kit migrate",
     "email:dev": "email dev"
   },
@@ -52,6 +53,7 @@
     "@types/react-dom": "^18.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "inquirer": "^10.0.4",
     "postcss": "^8",
     "react-lorem-ipsum": "^1.4.10",
     "tailwindcss": "^3.4.1",
