@@ -6,7 +6,7 @@ export const middleware = async (request: NextRequest) => {
 
   const pathname = request.nextUrl.pathname;
 
-  const protectedRoute = pathname.startsWith("/dashboard") || pathname.startsWith("/categories") || pathname.startsWith("/reports") || pathname.startsWith("/settings") || pathname.startsWith("/transactions");
+  const protectedRoute = pathname.startsWith("/dashboard") || pathname.startsWith("/categories") || pathname.startsWith("/reports") || pathname.startsWith("/settings") || pathname.startsWith("/transactions") || pathname.startsWith("/setup");
 
   const guestRoute = pathname.startsWith("/login") || pathname.startsWith("/register");
 
