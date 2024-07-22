@@ -33,7 +33,7 @@ export const createTransactionAction = async (formData: FormData) => {
     const transaction = await db.insert(transactionsTable).values({
       // @ts-ignore
       name: fields.data.name,
-      date: fields.data.date,
+      date: new Date(fields.data.date),
       income: (fields.data.income !== "" && fields.data.income !== null) ? parseFloat(fields.data.income) : undefined,
       expense: (fields.data.expense !== "" && fields.data.expense !== null) ? parseFloat(fields.data.expense) : undefined,
       categoryId: fields.data.category,
