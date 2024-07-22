@@ -3,6 +3,7 @@
 import { categoriesTable, subCategoriesTable } from "@/drizzle/schema";
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "@/models/organisation";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -11,12 +12,13 @@ const schema = z.object({
   account: z.string().max(100),
 })
 
-export const createCategoryAction = async (formData: FormData) => {
+export const createCategoryAction = async (prevState: any, formData: FormData) => {
   const fields = schema.safeParse(Object.fromEntries(formData));
 
   if (!fields.success) {
     return {
       error: fields.error.flatten().fieldErrors,
+      success: false,
     }
   }
 
@@ -25,28 +27,23 @@ export const createCategoryAction = async (formData: FormData) => {
   try {
     const organisation = await selectCurrentOrganisation();
 
-    console.log(organisation)
-
     const category = await db.insert(categoriesTable).values({
       name: fields.data.name,
       account: fields.data.account === 'club' ? 'club' : 'charity',
       organisationId: organisation.id
     }).returning({id: categoriesTable.id});
 
-    console.log(category)
-
     id = category[0].id
   } catch (error) {
-    throw error;
-
     return {
-      error: {
+      success: false,
+      errors: {
         name: ["An error occurred. Please try again"]
       }
     }
   }
 
-  redirect(`/categories/${id}`)
+  revalidatePath(`/categories`)
 }
 
 const schemaTwo = z.object({
