@@ -5,6 +5,7 @@ import Link from "next/link";
 import { registerAction } from "./actions";
 import { Metadata } from "next";
 import { Title } from "@/components/ui/typography";
+import { FormButton } from "@/components/form-button";
 
 export const metadata: Metadata = { title: "Register" };
 
@@ -23,7 +24,7 @@ const RegisterPage = () => {
         <Label htmlFor="password">Password</Label>
         <Input id="password" name="password" type="password" autoComplete="password" required autoFocus className="mt-1 w-full mb-8" />
 
-        <Button type="submit" className="w-full">Register</Button>
+        <FormButton type="submit" className="w-full">Register</FormButton>
       </form>
 
       <p className="text-sm text-muted-foreground pt-6 text-center">

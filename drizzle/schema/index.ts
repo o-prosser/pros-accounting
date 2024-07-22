@@ -1,5 +1,6 @@
 export * from './categories'
 export * from './organisations'
+export * from './reset-password-tokens'
 export * from './sessions'
 export * from './subCategories'
 export * from './transactions'
