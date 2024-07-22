@@ -5,7 +5,7 @@ import Link from "next/link"
 
 const ReportLink = ({title, description, href}: {title: string; description: string; href: string}) => {
   return (
-    <Button variant="outline" className="flex-col whitespace-normal" size={null} asChild>
+    <Button variant="outline" className="flex-col justify-start whitespace-normal" size={null} asChild>
       <Link href={href}>
         <div className="h-48 w-full bg-muted flex justify-center items-end overflow-hidden">
           <div className="rounded-t-xl h-44 w-44 bg-background drop-shadow-lg -mb-4 p-4 space-y-1">
