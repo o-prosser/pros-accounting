@@ -4,6 +4,7 @@ import { Suspense } from "react"
 import CategoriesIndex from "./_components"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Metadata } from "next"
+import { LoaderCircleIcon } from "lucide-react"
 
 export const metadata: Metadata = {title: "Categories"}
 
@@ -14,7 +15,7 @@ const CategoriesPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>Dashboard</BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>Transactions</BreadcrumbItem>
+          <BreadcrumbItem>Categories</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
@@ -23,11 +24,18 @@ const CategoriesPage = () => {
         <CreateCategory />
       </div>
 
-      <Suspense fallback={<>Loading categories</>}>
+      <Suspense
+        fallback={
+          <div className="rounded-lg bg-muted flex items-center justify-center gap-2 h-[80vh]">
+            <LoaderCircleIcon className="h-5 w-5 animate-spin" />
+            <span className="font-medium text-sm">Loading categories...</span>
+          </div>
+        }
+      >
         <CategoriesIndex />
       </Suspense>
     </>
-  )
+  );
 }
 
 export default CategoriesPage
