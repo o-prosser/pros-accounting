@@ -44,6 +44,7 @@ const CreateCategory = () => {
       toast({
         title: "Category added successfully",
         description: "The category has beeen added.",
+        variant: "success"
       });
     };
   }, [state?.success, state?.newId]);
