@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { date, numeric, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { date, integer, numeric, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { categoriesTable } from "./categories";
 import { subCategoriesTable } from "./subCategories";
 import { organisationsTable } from "./organisations";
@@ -8,10 +8,11 @@ export const transactionsTable = pgTable("transactions", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name", {length: 50}).notNull(),
   date: date("date", {mode: "date"}).notNull(),
+  receiptBookNumber: integer("receiptBookNumber"),
   income: numeric("income"),
   expense: numeric("expense"),
   categoryId: uuid("categoryId").notNull().references(() => categoriesTable.id, {onDelete: 'cascade'}),
-  subCategoryId: uuid("subCategoryId").notNull().references(() => subCategoriesTable.id, {onDelete: 'cascade'}),
+  subCategoryId: uuid("subCategoryId").references(() => subCategoriesTable.id, {onDelete: 'set null'}),
   organisationId: uuid("organisationId").notNull().references(() => organisationsTable.id, {onDelete: 'cascade'}),
   notes: text("notes"),
   createdAt: timestamp("createdAt").defaultNow(),

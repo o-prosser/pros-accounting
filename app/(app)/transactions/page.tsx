@@ -16,12 +16,12 @@ const TransactionsPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>Dashboard</BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>Transactions</BreadcrumbItem>
+          <BreadcrumbItem>Cash book</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div className="flex items-start justify-between">
-        <Title>Transactions</Title>
+        <Title>Cash book</Title>
         <Button asChild>
           <Link href="/transactions/create">
             <PlusIcon />

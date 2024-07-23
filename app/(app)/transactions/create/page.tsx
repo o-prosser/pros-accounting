@@ -54,6 +54,16 @@ const TransactionsCreatePage = async () => {
           className="mt-1 w-full min-w-[20rem] mb-6"
         />
 
+        <Label htmlFor="receiptBookNumber">Receipt book number</Label>
+        <Input
+          id="number"
+          name="receiptBookNumber"
+          type="receiptBookNumber"
+          autoComplete="off"
+          step={1}
+          className="mt-1 w-full mb-6"
+        />
+
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-6">
           <div>
             <Label htmlFor="income">Income</Label>

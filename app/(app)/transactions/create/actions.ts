@@ -9,10 +9,11 @@ import { z } from "zod";
 const schema = z.object({
   name: z.string().min(3).max(50),
   date: z.string().max(100),
+  receiptBookNumber: z.string(),
   income: z.string().nullable(),
   expense: z.string().nullable(),
   category: z.string().max(100),
-  subCategory: z.string().nullable(),
+  subCategory: z.string().optional().nullable(),
   notes: z.string().nullable(),
 })
 
@@ -34,6 +35,7 @@ export const createTransactionAction = async (formData: FormData) => {
       // @ts-ignore
       name: fields.data.name,
       date: new Date(fields.data.date),
+      receiptBookNumber: fields.data.receiptBookNumber,
       income: (fields.data.income !== "" && fields.data.income !== null) ? parseFloat(fields.data.income) : undefined,
       expense: (fields.data.expense !== "" && fields.data.expense !== null) ? parseFloat(fields.data.expense) : undefined,
       categoryId: fields.data.category,
@@ -53,5 +55,5 @@ export const createTransactionAction = async (formData: FormData) => {
     }
   }
 
-  redirect(`/transactions/${id}`)
+  redirect(`/transactions/`)
 }

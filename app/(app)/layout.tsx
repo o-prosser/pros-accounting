@@ -97,7 +97,7 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
         </DesktopLink>
         <DesktopLink href="/transactions">
           <BanknoteIcon />
-          Transactions
+          Cash book
         </DesktopLink>
         <DesktopLink href="/categories">
           <TagIcon />
