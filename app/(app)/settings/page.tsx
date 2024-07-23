@@ -8,6 +8,7 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { Metadata } from "next";
 import { invite, updateOrganisation } from "./actions";
 import { format } from "date-fns";
+import { PoundSterlingIcon } from "lucide-react";
 
 export const metadata: Metadata = {title: "Settings"}
 
@@ -36,6 +37,46 @@ const SettingsPage = async () => {
             defaultValue={organisation.name}
             className="mt-1 w-full mb-4"
           />
+
+          <Label htmlFor="endOfFinancialYear">End of financial year</Label>
+          <Input
+            id="endOfFinancialYear"
+            name="endOfFinancialYear"
+            type="date"
+            required
+            defaultValue={format(organisation.endOfFinancialYear, "yyyy-MM-dd")}
+            className="mt-1 w-full min-w-[28rem] mb-4"
+          />
+
+          <Label htmlFor="initialCharityBalance">Initial charity balance</Label>
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
+              <PoundSterlingIcon className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <Input
+              id="initialCharityBalance"
+              name="initialCharityBalance"
+              type="number"
+              step={0.01}
+              defaultValue={organisation.initialCharityBalance?.toString()}
+              className="mt-1 w-full mb-4 pl-7"
+            />
+          </div>
+
+          <Label htmlFor="initialClubBalance">Initial club balance</Label>
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
+              <PoundSterlingIcon className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <Input
+              id="initialClubBalance"
+              name="initialClubBalance"
+              type="number"
+              step={0.01}
+              defaultValue={organisation.initialClubBalance?.toString()}
+              className="mt-1 w-full mb-4 pl-7"
+            />
+          </div>
 
           <Label htmlFor="endOfFinancialYear">End of financial year</Label>
           <Input

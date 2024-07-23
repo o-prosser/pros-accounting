@@ -1,0 +1,1 @@
+ALTER TABLE "organisations" RENAME COLUMN "initial_cash_balance" TO "initial_club_balance";

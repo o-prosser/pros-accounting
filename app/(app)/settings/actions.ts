@@ -28,6 +28,8 @@ export const invite = async (formData: FormData) => {
 const updateOrganisationSchema = z.object({
   name: z.string().min(3).max(255),
   endOfFinancialYear: z.string().min(3).max(255),
+  initialClubBalance: z.string().nullable(),
+  initialCharityBalance: z.string().nullable(),
   themeColour: z.string().nullable(),
 })
 
@@ -45,6 +47,8 @@ export const updateOrganisation = async (formData: FormData) => {
   await db.update(organisationsTable).set({
     name: fields.data.name,
     endOfFinancialYear: new Date(fields.data.endOfFinancialYear),
+    initialCharityBalance: fields.data.initialCharityBalance,
+    initialClubBalance: fields.data.initialClubBalance,
     themeColour: fields.data.themeColour?.replace("#",""),
   }).where(eq(organisationsTable.id, organisationId));
 

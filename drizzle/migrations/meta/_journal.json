@@ -50,6 +50,20 @@
       "when": 1721744932558,
       "tag": "0006_known_red_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1721745179746,
+      "tag": "0007_happy_valeria_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1721745280541,
+      "tag": "0008_lyrical_wiccan",
+      "breakpoints": true
     }
   ]
 }

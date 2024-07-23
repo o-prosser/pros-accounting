@@ -1,9 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Caption } from "@/components/ui/typography";
+import { selectCurrentOrganisation } from "@/models/organisation";
 import { selectTransactions } from "@/models/transaction";
 
 const Totals = async () => {
+  const organisation = await selectCurrentOrganisation();
   const transactions = await selectTransactions();
 
   const total = (account: "club" | "charity", type: "income" | "expense") => {
@@ -29,8 +31,10 @@ const Totals = async () => {
 
   const charityIncome = total("charity", "income");
   const charityExpense = total("charity", "expense");
+  const charityInitial = organisation.initialCharityBalance ? parseFloat(organisation.initialCharityBalance) : 0;
   const clubIncome = total("club", "income");
   const clubExpense = total("club", "expense");
+  const clubInitial = organisation.initialClubBalance ? parseFloat(organisation.initialClubBalance) : 0;
 
   return (
     <>
@@ -42,10 +46,10 @@ const Totals = async () => {
               Balance <span className="italic text-sm">(to date)</span>
             </Caption>
             <p className="text-3xl font-mono font-semibold tracking-tight">
-              {charityIncome - charityExpense > 0 ? "+" : ""}{charityIncome - charityExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
+              {charityIncome + charityInitial - charityExpense > 0 ? "+" : ""}{charityIncome + charityInitial - charityExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
                 style: "currency",
                 currency: "GBP",
-              }).format(charityIncome - charityExpense)}
+              }).format(charityIncome + charityInitial - charityExpense)}
             </p>
           </div>
           <div className="flex gap-6 mt-2">
@@ -76,10 +80,10 @@ const Totals = async () => {
               Balance <span className="italic text-sm">(to date)</span>
             </Caption>
             <p className="text-3xl font-mono font-semibold tracking-tight">
-            {clubIncome - clubExpense > 0 ? "+" : ""}{clubIncome - clubExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
+            {clubIncome + clubInitial - clubExpense > 0 ? "+" : ""}{clubIncome + clubInitial - clubExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
                 style: "currency",
                 currency: "GBP",
-              }).format(clubIncome - clubExpense)}
+              }).format(clubIncome + clubInitial - clubExpense)}
             </p>
           </div>
           <div className="flex gap-6 mt-2">
