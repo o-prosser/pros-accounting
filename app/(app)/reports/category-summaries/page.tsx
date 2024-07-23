@@ -9,6 +9,7 @@ import { selectCategoriesMin } from "@/models/category"
 import Link from "next/link"
 import { generateReport } from "./actions"
 import { FormButton } from "@/components/form-button"
+import { Font } from "@react-pdf/renderer"
 
 const CategorySummariesPage = async () => {
   const categories = await selectCategoriesMin();

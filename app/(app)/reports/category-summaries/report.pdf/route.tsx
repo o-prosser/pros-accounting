@@ -5,13 +5,8 @@ import {
   Page,
   View,
   Text,
-  StyleSheet,
   renderToBuffer,
   Font,
-  Svg,
-  G,
-  Path,
-  Circle,
 } from "@react-pdf/renderer";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -22,10 +17,20 @@ import PdfLogo from "@/components/pdf-logo";
 const GeneralSansRegular =
   "https://pros-accounting.vercel.app/GeneralSans-Regular.ttf";
 const GeneralSansMedium =
-  "https://pros-accounting.vercel.app//GeneralSans-Medium.ttf";
+  "https://pros-accounting.vercel.app/GeneralSans-Medium.ttf";
   const GeneralSansBold =
-  "https://pros-accounting.vercel.app//GeneralSans-Bold.ttf";
+  "https://pros-accounting.vercel.app/GeneralSans-Bold.ttf";
 const Mono = "https://owenprosser.co.uk/fonts/PoeVeticaMonospace-6B7Y.ttf";
+
+Font.register({
+  family: "GeneralSansMedium",
+  src: GeneralSansMedium
+})
+
+Font.register({
+  family: "GeneralSansBold",
+  src: GeneralSansBold,
+})
 
 Font.register({
   family: "General Sans",
@@ -39,7 +44,7 @@ Font.register({
       fontWeight: "medium",
     },
     {
-      src: GeneralSansBold,
+      src: "https://pros-accounting.vercel.app/GeneralSans-Bold.ttf",
       fontWeight: "bold"
     }
   ],
@@ -132,9 +137,9 @@ export const GET = async (request: NextRequest) => {
   const buffer = await renderToBuffer(
     <Document>
       <Page size="A4" style={tw("font-sans text-[12pt] p-[2cm]")}>
-        <Text style={tw("text-[20pt]")}>Rotary Club of Crickhowell</Text>
+        <Text style={tw("text-[20pt] font-sans")}>Rotary Club of Crickhowell</Text>
 
-        <Text style={{ fontWeight: 500, ...tw("text-[16pt] font-medium") }}>
+        <Text style={{ fontFamily: "General Sans", ...tw("text-[16pt]") }}>
           Summary of transactions &mdash; {category.name}
         </Text>
 
@@ -149,7 +154,7 @@ export const GET = async (request: NextRequest) => {
             <View style={tw("w-1/4 text-right font-medium uppercase text-[10pt]")}>
               <Text>Income</Text>
             </View>
-            <View style={tw("w-1/4 text-right font-sans-medium uppercase text-[10pt]")}>
+            <View style={tw("w-1/4 text-right font-medium uppercase text-[10pt]")}>
               <Text>Expense</Text>
             </View>
           </View>

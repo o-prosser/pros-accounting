@@ -27,7 +27,7 @@ export function ResponsiveDialog({
   children,
   title,
   description,
-  open,
+  open = false,
   setOpen,
 }: {
   trigger: React.ReactNode;
@@ -37,7 +37,7 @@ export function ResponsiveDialog({
   open?: boolean
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const [dialogOpen, setDialogOpen] = open === undefined ? useState(false) : [open, setOpen];
+  const [dialogOpen, setDialogOpen] = useState(open)
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
