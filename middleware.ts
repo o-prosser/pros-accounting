@@ -18,7 +18,8 @@ export const middleware = async (request: NextRequest) => {
     pathname.startsWith("/login") ||
     pathname.startsWith("/register") ||
     pathname.startsWith("/forgot-password") ||
-    pathname.startsWith("/reset-password");
+    pathname.startsWith("/reset-password") ||
+    pathname === '/';
 
   let response = NextResponse.next();
   if (protectedRoute && !session)

@@ -47,8 +47,8 @@ export const updateOrganisation = async (formData: FormData) => {
   await db.update(organisationsTable).set({
     name: fields.data.name,
     endOfFinancialYear: new Date(fields.data.endOfFinancialYear),
-    initialCharityBalance: fields.data.initialCharityBalance,
-    initialClubBalance: fields.data.initialClubBalance,
+    initialCharityBalance: fields.data.initialCharityBalance || null,
+    initialClubBalance: fields.data.initialClubBalance || null,
     themeColour: fields.data.themeColour?.replace("#",""),
   }).where(eq(organisationsTable.id, organisationId));
 
