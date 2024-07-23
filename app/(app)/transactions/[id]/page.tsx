@@ -45,7 +45,7 @@ const TransactionPage = async ({params}: {params: {id: string}}) => {
             <Link href={`/transactions/create`}><CopyPlusIcon /> Duplicate transaction</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href={`/transactions/create`}><DownloadIcon /> Export PDF</Link>
+            <Link href={`/transactions/${transaction.id}/transaction.pdf`}><DownloadIcon /> Export PDF</Link>
           </Button>
           <Button asChild variant="destructive">
             <Link href={`/transactions/create`}><TrashIcon /> Delete transaction</Link>
