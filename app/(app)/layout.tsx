@@ -32,6 +32,7 @@ import { Metadata } from "next";
 import db from "@/lib/db";
 import { sessionsTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
@@ -151,6 +152,8 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
       <main className="px-6 pt-6 pb-30 md:pb-6 min-h-screen md:pl-[22rem]">
         {children}
       </main>
+
+      <Toaster />
     </>
   );
 };

@@ -19,6 +19,7 @@ export const createCategoryAction = async (prevState: any, formData: FormData) =
     return {
       error: fields.error.flatten().fieldErrors,
       success: false,
+      newId: "",
     }
   }
 
@@ -37,6 +38,7 @@ export const createCategoryAction = async (prevState: any, formData: FormData) =
   } catch (error) {
     return {
       success: false,
+      newId: "",
       errors: {
         name: ["An error occurred. Please try again"]
       }
@@ -44,6 +46,14 @@ export const createCategoryAction = async (prevState: any, formData: FormData) =
   }
 
   revalidatePath(`/categories`)
+
+    return {
+      success: true,
+      newId: id,
+      errors: {
+        name: "",
+      },
+    };
 }
 
 const schemaTwo = z.object({
