@@ -46,7 +46,7 @@ const Totals = async () => {
               Balance <span className="italic text-sm">(to date)</span>
             </Caption>
             <p className="text-3xl font-mono font-semibold tracking-tight">
-              {charityIncome + charityInitial - charityExpense > 0 ? "+" : ""}{charityIncome + charityInitial - charityExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
+              {/* {charityIncome + charityInitial - charityExpense > 0 ? "+" : ""} */}{charityIncome + charityInitial - charityExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
                 style: "currency",
                 currency: "GBP",
               }).format(charityIncome + charityInitial - charityExpense)}
@@ -80,7 +80,7 @@ const Totals = async () => {
               Balance <span className="italic text-sm">(to date)</span>
             </Caption>
             <p className="text-3xl font-mono font-semibold tracking-tight">
-            {clubIncome + clubInitial - clubExpense > 0 ? "+" : ""}{clubIncome + clubInitial - clubExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
+            {/* {clubIncome + clubInitial - clubExpense > 0 ? "+" : ""} */}{clubIncome + clubInitial - clubExpense == 0 ? "---" : new Intl.NumberFormat("en-GB", {
                 style: "currency",
                 currency: "GBP",
               }).format(clubIncome + clubInitial - clubExpense)}
