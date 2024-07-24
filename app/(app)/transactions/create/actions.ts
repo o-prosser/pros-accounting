@@ -36,13 +36,13 @@ export const createTransactionAction = async (formData: FormData) => {
       // @ts-ignore
       name: fields.data.name,
       date: new Date(fields.data.date),
-      receiptBookNumber: fields.data.receiptBookNumber,
+      receiptBookNumber: fields.data.receiptBookNumber ? parseInt(fields.data.receiptBookNumber) : null,
       income: (fields.data.income !== "" && fields.data.income !== null) ? parseFloat(fields.data.income) : undefined,
       expense: (fields.data.expense !== "" && fields.data.expense !== null) ? parseFloat(fields.data.expense) : undefined,
       categoryId: fields.data.category,
       subCategoryId: fields.data.subCategory,
       notes: fields.data.notes,
-      fileId: fields.data.fileId,
+      fileId: fields.data.fileId || null,
       organisationId: organisation.id,
     }).returning({id: transactionsTable.id});
 
