@@ -64,6 +64,20 @@
       "when": 1721745280541,
       "tag": "0008_lyrical_wiccan",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1721826526648,
+      "tag": "0009_magical_speed",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1721827822049,
+      "tag": "0010_sturdy_puppet_master",
+      "breakpoints": true
     }
   ]
 }

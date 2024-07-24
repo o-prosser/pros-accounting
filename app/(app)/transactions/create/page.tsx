@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { PoundSterlingIcon } from "lucide-react";
 import { FormButton } from "@/components/form-button";
+import UploadFiles from "./_components/upload";
 
 const TransactionsCreatePage = async () => {
   const categories = await selectCategoriesMin();
@@ -103,6 +104,9 @@ const TransactionsCreatePage = async () => {
 
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" name="notes" className="mt-1 w-full mb-6" />
+
+        <Label htmlFor="fileId">File</Label>
+        <UploadFiles />
 
         <FormButton type="submit">Add transaction</FormButton>
       </form>

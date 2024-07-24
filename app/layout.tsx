@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 // import { ThemeProvider } from "@/components/theme-provider";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const generalSans = localFont({
   src: [
@@ -33,14 +37,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={generalSans.className + " antialiased"}>
+        <NextSSRPlugin
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
-          </ThemeProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

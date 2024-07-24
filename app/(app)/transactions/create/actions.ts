@@ -15,6 +15,7 @@ const schema = z.object({
   category: z.string().max(100),
   subCategory: z.string().optional().nullable(),
   notes: z.string().nullable(),
+  fileId: z.string().nullable(),
 })
 
 export const createTransactionAction = async (formData: FormData) => {
@@ -41,6 +42,7 @@ export const createTransactionAction = async (formData: FormData) => {
       categoryId: fields.data.category,
       subCategoryId: fields.data.subCategory,
       notes: fields.data.notes,
+      fileId: fields.data.fileId,
       organisationId: organisation.id,
     }).returning({id: transactionsTable.id});
 

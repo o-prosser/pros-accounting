@@ -3,6 +3,7 @@ import { date, integer, numeric, pgTable, text, timestamp, uuid, varchar } from 
 import { categoriesTable } from "./categories";
 import { subCategoriesTable } from "./subCategories";
 import { organisationsTable } from "./organisations";
+import { filesTable } from "./files";
 
 export const transactionsTable = pgTable("transactions", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),
@@ -15,6 +16,7 @@ export const transactionsTable = pgTable("transactions", {
   subCategoryId: uuid("subCategoryId").references(() => subCategoriesTable.id, {onDelete: 'set null'}),
   organisationId: uuid("organisationId").notNull().references(() => organisationsTable.id, {onDelete: 'cascade'}),
   notes: text("notes"),
+  fileId: uuid("fileId").references(() => filesTable.id, {onDelete: "set null"}),
   createdAt: timestamp("createdAt").defaultNow(),
 });
 
@@ -33,5 +35,9 @@ export const transactionsRelations = relations(transactionsTable, ({one}) => ({
   organisation: one(organisationsTable, {
     fields: [transactionsTable.organisationId],
     references: [organisationsTable.id]
+  }),
+  file: one(filesTable, {
+    fields: [transactionsTable.fileId],
+    references: [filesTable.id]
   })
 }));
