@@ -24,6 +24,8 @@ export type Transaction = {
   income: string | null;
   expense: string | null;
   notes: string | null;
+  categoryId: string;
+  subCategoryId: string | null;
 };
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -122,20 +124,28 @@ export const columns: ColumnDef<Transaction>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(row.original.name)}
-            >
-              Copy name
-            </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href={`/transactions/${row.original.id}`}>
-                View transaction
+              <Link
+                href={`/transactions/create?name=${encodeURIComponent(
+                  row.original.name,
+                )}&income=${encodeURIComponent(
+                  row.original.income || "",
+                )}&expense=${encodeURIComponent(
+                  row.original.expense || "",
+                )}&category=${encodeURIComponent(
+                  row.original.categoryId,
+                )}&subCategory=${encodeURIComponent(
+                  row.original.subCategoryId || "",
+                )}`}
+              >
+                Duplicate
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href={`/transactions/${row.original.id}/edit`}>
-                Edit transaction
-              </Link>
+              <Link href={`/transactions/${row.original.id}`}>View</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/transactions/${row.original.id}/edit`}>Edit</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

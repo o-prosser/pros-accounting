@@ -16,7 +16,7 @@ import { PoundSterlingIcon } from "lucide-react";
 import { FormButton } from "@/components/form-button";
 import UploadFiles from "./_components/upload";
 
-const TransactionsCreatePage = async () => {
+const TransactionsCreatePage = async ({searchParams}: {searchParams: {[key: string]: string}}) => {
   const categories = await selectCategoriesMin();
 
   return (
@@ -42,6 +42,7 @@ const TransactionsCreatePage = async () => {
           autoComplete="off"
           required
           autoFocus
+          defaultValue={searchParams.name || ""}
           className="mt-1 w-full max-w-lg mb-6"
         />
 
@@ -78,6 +79,7 @@ const TransactionsCreatePage = async () => {
                 type="income"
                 autoComplete="off"
                 className="mt-1 w-full pl-7"
+                defaultValue={searchParams.income || ""}
                 step="0.01"
               />
             </div>
@@ -93,6 +95,7 @@ const TransactionsCreatePage = async () => {
                 name="expense"
                 type="income"
                 autoComplete="off"
+                defaultValue={searchParams.expense || ""}
                 className="mt-1 w-full pl-7"
                 step="0.01"
               />
@@ -100,7 +103,7 @@ const TransactionsCreatePage = async () => {
           </div>
         </div>
 
-        <SelectCategory categories={categories} />
+        <SelectCategory defaultValues={searchParams} categories={categories} />
 
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" name="notes" className="mt-1 w-full mb-6" />

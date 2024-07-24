@@ -5,13 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 
-const SelectCategory = ({categories}: {categories: {id: string; name: string; account: "charity"|"club", subCategories: {id: string; name: string}[]}[]}) => {
-  const [selected, setSelected]= useState<string|undefined>();
+const SelectCategory = ({defaultValues, categories}: {defaultValues: {[key: string]: string}, categories: {id: string; name: string; account: "charity"|"club", subCategories: {id: string; name: string}[]}[]}) => {
+  const [selected, setSelected]= useState<string|undefined>(defaultValues.category || undefined);
 
   return (
     <>
         <Label htmlFor="category">Category</Label>
-        <Select name="category" onValueChange={setSelected} defaultValue={selected} >
+        <Select name="category" onValueChange={setSelected} defaultValue={selected}>
           <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
@@ -37,7 +37,7 @@ const SelectCategory = ({categories}: {categories: {id: string; name: string; ac
         {(selected && ((categories.find((c) => c.id === selected)?.subCategories?.length || 0) > 0)) ? (
           <>
           <Label htmlFor="subCategory">Sub category</Label>
-          <Select name="subCategory">
+          <Select name="subCategory" defaultValue={defaultValues.subCategory || ""}>
             <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
               <SelectValue placeholder="Select a sub category" />
             </SelectTrigger>

@@ -11,7 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown, FilterIcon, MoreHorizontal } from "lucide-react";
@@ -20,7 +24,7 @@ import Link from "next/link";
 export type Transaction = {
   id: string;
   name: string;
-  date: string|Date;
+  date: string | Date;
   income: string | null;
   expense: string | null;
   notes: string | null;
@@ -67,7 +71,7 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "category",
-    header: ({column}) => {
+    header: ({ column }) => {
       return (
         <div className="flex items-center gap-1">
           <span>Category</span>
@@ -77,12 +81,10 @@ export const columns: ColumnDef<Transaction>[] = [
                 <FilterIcon />
               </Button>
             </PopoverTrigger>
-            <PopoverContent>
-              Todo
-            </PopoverContent>
+            <PopoverContent>Todo</PopoverContent>
           </Popover>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
       const category = row.original.category;
@@ -183,20 +185,28 @@ export const columns: ColumnDef<Transaction>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(row.original.name)}
-            >
-              Copy name
-            </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href={`/transactions/${row.original.id}`}>
-                View transaction
+              <Link
+                href={`/transactions/create?name=${encodeURIComponent(
+                  row.original.name,
+                )}&income=${encodeURIComponent(
+                  row.original.income || "",
+                )}&expense=${encodeURIComponent(
+                  row.original.expense || "",
+                )}&category=${encodeURIComponent(
+                  row.original.category.id,
+                )}&subCategory=${encodeURIComponent(
+                  row.original.subCategory?.id || "",
+                )}`}
+              >
+                Duplicate
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href={`/transactions/${row.original.id}/edit`}>
-                Edit transaction
-              </Link>
+              <Link href={`/transactions/${row.original.id}`}>View</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/transactions/${row.original.id}/edit`}>Edit</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

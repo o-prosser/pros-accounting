@@ -194,7 +194,7 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={`/transactions/create`}>
+              <Link href={`/transactions/create?name=${encodeURIComponent(transaction.name)}&income=${encodeURIComponent(transaction.income || "")}&expense=${encodeURIComponent(transaction.expense || "")}&category=${encodeURIComponent(transaction.categoryId)}&subCategory=${encodeURIComponent(transaction.subCategoryId || "")}`}>
                 <CopyPlusIcon /> Duplicate transaction
               </Link>
             </Button>
