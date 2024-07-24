@@ -149,8 +149,8 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6">Files</dt>
                 <dd className="mt-2 text-sm sm:col-span-2 sm:mt-0">
-                  <ul role="list" className="divide-y rounded-md border">
                     {transaction.file ? (
+                  <ul role="list" className="divide-y rounded-md border">
                       <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                         <div className="flex w-0 flex-1 items-center">
                           <PaperclipIcon
@@ -177,10 +177,10 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
                           </Button>
                         </div>
                       </li>
+                  </ul>
                     ) : (
                       ""
                     )}
-                  </ul>
                 </dd>
               </div>
             </dl>
