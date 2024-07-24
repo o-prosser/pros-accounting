@@ -33,6 +33,7 @@ import db from "@/lib/db";
 import { sessionsTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { Toaster } from "@/components/ui/toaster";
+import ActivePage from "@/components/active-page";
 
 export const metadata: Metadata = {
   title: {
@@ -92,26 +93,36 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
       <div className="hidden md:flex fixed left-4 inset-y-4 bg-muted w-80 py-6 px-3 gap-y-2 flex-col items-start rounded-2xl">
         <Logo className="h-6 pl-3 w-auto mb-4 fill-foreground" />
 
-        <DesktopLink href="/dashboard">
-          <HomeIcon />
-          Dashboard
-        </DesktopLink>
-        <DesktopLink href="/transactions">
-          <BanknoteIcon />
-          Cash book
-        </DesktopLink>
-        <DesktopLink href="/categories">
-          <TagIcon />
-          Categories
-        </DesktopLink>
-        <DesktopLink href="/reports">
-          <FileTextIcon />
-          Reports
-        </DesktopLink>
-        <DesktopLink href="/settings">
-          <SettingsIcon />
-          Settings
-        </DesktopLink>
+        <ActivePage pathname="/dashboard" match="eq">
+          <DesktopLink href="/dashboard">
+            <HomeIcon />
+            Dashboard
+          </DesktopLink>
+        </ActivePage>
+        <ActivePage pathname="/transactions">
+          <DesktopLink href="/transactions">
+            <BanknoteIcon />
+            Cash book
+          </DesktopLink>
+        </ActivePage>
+        <ActivePage pathname="/categories">
+          <DesktopLink href="/categories">
+            <TagIcon />
+            Categories
+          </DesktopLink>
+        </ActivePage>
+        <ActivePage pathname="/reports">
+          <DesktopLink href="/reports">
+            <FileTextIcon />
+            Reports
+          </DesktopLink>
+        </ActivePage>
+        <ActivePage pathname="/settings" match="eq">
+          <DesktopLink href="/settings">
+            <SettingsIcon />
+            Settings
+          </DesktopLink>
+        </ActivePage>
 
         <div className="flex-1" />
 
