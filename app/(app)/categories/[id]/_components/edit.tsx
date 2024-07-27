@@ -7,18 +7,34 @@ import { EditIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { updateCategoryAction } from "../actions";
 import { FormButton } from "@/components/form-button";
+import { colours } from "@/utils/colours";
 
 const EditCategory = ({category}: {category: {id: string; name: string; account: "club"|"charity"}}) => {
   return (
-    <ResponsiveDialog trigger={<Button><EditIcon /><span className="hidden sm:inline">Edit category</span></Button>}
-    title="Edit category"
-    description="Edit the details of the category."
+    <ResponsiveDialog
+      trigger={
+        <Button>
+          <EditIcon />
+          <span className="hidden sm:inline">Edit category</span>
+        </Button>
+      }
+      title="Edit category"
+      description="Edit the details of the category."
     >
       <form action={updateCategoryAction}>
         <input type="hidden" name="id" defaultValue={category.id} />
 
         <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" type="text" autoComplete="off" defaultValue={category.name} required autoFocus className="mt-1 w-full mb-6" />
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          autoComplete="off"
+          defaultValue={category.name}
+          required
+          autoFocus
+          className="mt-1 w-full mb-6"
+        />
 
         <Label htmlFor="account">Account</Label>
         <Select name="account" defaultValue={category.account}>
@@ -33,10 +49,32 @@ const EditCategory = ({category}: {category: {id: string; name: string; account:
           </SelectContent>
         </Select>
 
+        <Label htmlFor="colour">Colour</Label>
+        <Select name="colour">
+          <SelectTrigger className="mt-1 w-full mb-6">
+            <SelectValue placeholder="Select a theme colour" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {colours.map((colour, idx) => (
+                <SelectItem key={idx} value={colour.name}>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="h-3 w-3 rounded-full"
+                      style={{ backgroundColor: colour.foreground }}
+                    />
+                    <span className="capitalize">{colour.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
         <FormButton type="submit">Update category</FormButton>
       </form>
     </ResponsiveDialog>
-  )
+  );
 }
 
 export default EditCategory;

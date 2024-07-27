@@ -22,6 +22,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { colours } from "@/utils/colours";
 
 const initialState = {
   success: false,
@@ -72,6 +73,28 @@ const CreateCategory = () => {
           <SelectGroup>
             <SelectItem value="charity">Charity</SelectItem>
             <SelectItem value="club">Club</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
+      <Label htmlFor="colour">Colour</Label>
+      <Select name="colour">
+        <SelectTrigger className="mt-1 w-full mb-6">
+          <SelectValue placeholder="Select a theme colour" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {colours.map((colour, idx) => (
+              <SelectItem key={idx} value={colour.name}>
+                <div className="flex items-center gap-2">
+                  <div
+                    className="h-3 w-3 rounded-full"
+                    style={{ backgroundColor: colour.foreground }}
+                  />
+                  <span className="capitalize">{colour.name}</span>
+                </div>
+              </SelectItem>
+            ))}
           </SelectGroup>
         </SelectContent>
       </Select>

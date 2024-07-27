@@ -3,6 +3,7 @@
 import { categoriesTable, subCategoriesTable } from "@/drizzle/schema";
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "@/models/organisation";
+import { colours } from "@/utils/colours";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -10,7 +11,12 @@ import { z } from "zod";
 const schema = z.object({
   name: z.string().min(3).max(50),
   account: z.string().max(100),
+  colour: z.string().nullable(),
 })
+
+function randomIntFromInterval(min: number, max: number) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 export const createCategoryAction = async (prevState: any, formData: FormData) => {
   const fields = schema.safeParse(Object.fromEntries(formData));
@@ -31,6 +37,7 @@ export const createCategoryAction = async (prevState: any, formData: FormData) =
     const category = await db.insert(categoriesTable).values({
       name: fields.data.name,
       account: fields.data.account === 'club' ? 'club' : 'charity',
+      colour: fields.data.colour || colours[randomIntFromInterval(0,16)].name,
       organisationId: organisation.id
     }).returning({id: categoriesTable.id});
 
@@ -75,7 +82,7 @@ export const createSubCategoryAction = async (formData: FormData) => {
   try {
     const subCategory = await db.insert(subCategoriesTable).values({
       name: fields.data.name,
-      categoryId: fields.data.categoryId
+      categoryId: fields.data.categoryId,
     }).returning({id: subCategoriesTable.id});
 
     id = subCategory[0].id

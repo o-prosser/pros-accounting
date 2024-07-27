@@ -1,4 +1,4 @@
-import { Title } from "@/components/ui/typography"
+import { Caption, Title } from "@/components/ui/typography"
 import { Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -21,7 +21,10 @@ const TransactionsPage = () => {
       </Breadcrumb>
 
       <div className="flex items-start justify-between">
-        <Title>Cash book</Title>
+        <div>
+          <Title className="mb-0">Cash book</Title>
+          <Caption className="mb-6">Search and sort the log of your transactions.</Caption>
+        </div>
         <Button asChild>
           <Link href="/transactions/create">
             <PlusIcon />

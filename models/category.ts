@@ -26,6 +26,7 @@ export const selectCategories = async () => {
 
   const categories = await db.query.categoriesTable.findMany({
     where: (fields, {eq}) => eq(fields.organisationId, organisation.id),
+    orderBy: (fields, {asc}) => asc(fields.name),
     with: {
       subCategories: true,
       transactions: {

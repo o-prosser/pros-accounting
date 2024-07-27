@@ -10,7 +10,7 @@ export const selectTransactions = cache(async () => {
     orderBy: (fields, {desc}) => desc(fields.date),
     with: {
       category: {
-        columns: {name: true, id: true, account: true},
+        columns: {name: true, id: true, account: true, colour: true},
       },
       subCategory: {
         columns: {name: true, id: true}
