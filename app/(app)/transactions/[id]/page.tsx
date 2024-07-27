@@ -24,7 +24,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const TransactionPage = async ({ params }: { params: { id: string } }) => {
-  const organisation = await selectCurrentOrganisation();
+  const organisation =  await selectCurrentOrganisation();
 
   const transaction = await db.query.transactionsTable.findFirst({
     where: (fields, { eq, and }) =>
