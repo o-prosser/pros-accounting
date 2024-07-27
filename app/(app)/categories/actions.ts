@@ -62,39 +62,3 @@ export const createCategoryAction = async (prevState: any, formData: FormData) =
       },
     };
 }
-
-const schemaTwo = z.object({
-  name: z.string().min(3).max(50),
-  categoryId: z.string().uuid(),
-})
-
-export const createSubCategoryAction = async (formData: FormData) => {
-  const fields = schemaTwo.safeParse(Object.fromEntries(formData));
-
-  if (!fields.success) {
-    return {
-      error: fields.error.flatten().fieldErrors,
-    }
-  }
-
-  let id = "";
-
-  try {
-    const subCategory = await db.insert(subCategoriesTable).values({
-      name: fields.data.name,
-      categoryId: fields.data.categoryId,
-    }).returning({id: subCategoriesTable.id});
-
-    id = subCategory[0].id
-  } catch (error) {
-    throw error;
-
-    return {
-      error: {
-        name: ["An error occurred. Please try again"]
-      }
-    }
-  }
-
-  redirect(`/categories`)
-}

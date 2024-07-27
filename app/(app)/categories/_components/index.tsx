@@ -1,7 +1,13 @@
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { selectCategories } from "@/models/category"
-import CreateSubCategory from "./sub-categories/create";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { selectCategories } from "@/models/category";
+import CreateSubCategory from "../[id]/_components/sub-categories/create";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
@@ -16,26 +22,22 @@ const CategoriesIndex = async () => {
   return (
     <div className="grid md:grid-cols-2 gap-6">
       {categories.map((category, idx) => {
-        
-  const total = ( type: "income" | "expense") => {
-    const filtered = category.transactions
-      .filter((transaction) => {
-        const transactionType =
-          transaction.income !== null ? "income" : "expense";
-        if (
-          type === transactionType
-        )
-          return true;
-      })
-      .map((transaction) => transaction[type]);
+        const total = (type: "income" | "expense") => {
+          const filtered = category.transactions
+            .filter((transaction) => {
+              const transactionType =
+                transaction.income !== null ? "income" : "expense";
+              if (type === transactionType) return true;
+            })
+            .map((transaction) => transaction[type]);
 
-    const total = filtered.reduce(
-      (total, current) => total + parseFloat(current || ""),
-      0,
-    );
+          const total = filtered.reduce(
+            (total, current) => total + parseFloat(current || ""),
+            0,
+          );
 
-    return total;
-  };
+          return total;
+        };
 
         return (
           <Card
@@ -70,7 +72,10 @@ const CategoriesIndex = async () => {
               </CardTitle>
               <CardDescription>
                 Last updated{" "}
-                {formatDistance(category.lastUpdated || category.createdAt || new Date(), new Date())}{" "}
+                {formatDistance(
+                  category.lastUpdated || category.createdAt || new Date(),
+                  new Date(),
+                )}{" "}
                 ago
               </CardDescription>
             </CardHeader>
@@ -107,7 +112,9 @@ const CategoriesIndex = async () => {
                 </Caption>
               </div>
 
-              {total("income") == total("expense") ? "" : (
+              {total("income") == total("expense") ? (
+                ""
+              ) : (
                 <div className="flex items-end gap-1 mt-2">
                   <p className="text-3xl font-mono font-semibold tracking-tight pr-1">
                     {total("income") > total("expense") ? "+" : ""}
@@ -122,7 +129,6 @@ const CategoriesIndex = async () => {
                 </div>
               )}
 
-
               <div className="flex justify-end -mr-3 -mb-2">
                 <Button asChild variant={null} size="sm" className="group">
                   <Link href={`/categories/${category.id}`}>
@@ -136,9 +142,10 @@ const CategoriesIndex = async () => {
               </div>
             </CardContent>
           </Card>
-        );})}
+        );
+      })}
     </div>
   );
-}
+};
 
-export default CategoriesIndex
+export default CategoriesIndex;

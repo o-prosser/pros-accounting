@@ -6,11 +6,11 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 const chartConfig = {
   income: {
     label: "Income",
-    color: "#2563eb",
+    color: "#16a34a",
   },
   expense: {
     label: "Expense",
-    color: "#60a5fa",
+    color: "#dc2626",
   },
 } satisfies ChartConfig;
 
@@ -20,7 +20,7 @@ const MonthlyChart = ({
   data: { month: string; income: number; expense: number }[];
 }) => {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[150px] w-full">
+    <ChartContainer config={chartConfig} className="min-h-[150px] max-h-[400px] w-full">
       <BarChart accessibilityLayer data={data}>
         <CartesianGrid vertical={false} />
         <ChartTooltip content={<ChartTooltipContent />} />

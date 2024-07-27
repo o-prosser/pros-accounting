@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { EditIcon, PlusIcon } from "lucide-react";
+import { EditIcon, PencilIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { updateCategoryAction } from "../actions";
 import { FormButton } from "@/components/form-button";
@@ -13,9 +13,9 @@ const EditCategory = ({category}: {category: {id: string; name: string; account:
   return (
     <ResponsiveDialog
       trigger={
-        <Button>
-          <EditIcon />
-          <span className="hidden sm:inline">Edit category</span>
+        <Button variant="outline">
+          <PencilIcon />
+          <span className="hidden sm:inline">Edit</span>
         </Button>
       }
       title="Edit category"

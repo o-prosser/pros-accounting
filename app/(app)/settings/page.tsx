@@ -78,16 +78,6 @@ const SettingsPage = async () => {
             />
           </div>
 
-          <Label htmlFor="endOfFinancialYear">End of financial year</Label>
-          <Input
-            id="endOfFinancialYear"
-            name="endOfFinancialYear"
-            type="date"
-            required
-            defaultValue={format(organisation.endOfFinancialYear, "yyyy-MM-dd")}
-            className="mt-1 w-full min-w-[28rem] mb-4"
-          />
-
           <Label htmlFor="themeColour">Theme colour</Label>
           <Input
             id="themeColour"
