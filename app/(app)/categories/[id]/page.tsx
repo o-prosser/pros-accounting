@@ -8,7 +8,6 @@ import {
 import { Caption, Heading, Title } from "@/components/ui/typography";
 import { selectCategory } from "@/models/category";
 import { notFound } from "next/navigation";
-import EditCategory from "./_components/edit";
 import {
   addDays,
   addMonths,
@@ -41,6 +40,9 @@ import { Metadata } from "next";
 import clsx from "clsx";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import CreateSubCategory from "./_components/sub-categories/create";
+import dynamic from "next/dynamic";
+
+const EditCategory = dynamic(() => import("./_components/edit"));
 
 export const generateMetadata = async ({
   params,
@@ -51,6 +53,8 @@ export const generateMetadata = async ({
 
   return { title: category?.name };
 };
+
+export const runtime = "edge";
 
 const monthNames = [
   "January",
@@ -247,10 +251,12 @@ const CategoryPage = async ({ params }: { params: { id: string } }) => {
                 Balance <span className="italic text-sm">(to date)</span>
               </Caption>
               <p className="text-3xl font-mono font-semibold tracking-tight text-red-600">
-                {expense == income ? "break even" : new Intl.NumberFormat("en-GB", {
-                  style: "currency",
-                  currency: "GBP",
-                }).format(income - expense)}
+                {expense == income
+                  ? "break even"
+                  : new Intl.NumberFormat("en-GB", {
+                      style: "currency",
+                      currency: "GBP",
+                    }).format(income - expense)}
               </p>
             </div>
           ) : (

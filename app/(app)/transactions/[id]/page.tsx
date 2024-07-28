@@ -25,8 +25,10 @@ import { notFound } from "next/navigation";
 import { deleteTransaction } from "./actions";
 import { FormButton } from "@/components/form-button";
 
+export const runtime = "edge";
+
 const TransactionPage = async ({ params }: { params: { id: string } }) => {
-  const organisation =  await selectCurrentOrganisation();
+  const organisation = await selectCurrentOrganisation();
 
   const transaction = await db.query.transactionsTable.findFirst({
     where: (fields, { eq, and }) =>
@@ -151,8 +153,8 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6">Files</dt>
                 <dd className="mt-2 text-sm sm:col-span-2 sm:mt-0">
-                    {transaction.file ? (
-                  <ul role="list" className="divide-y rounded-md border">
+                  {transaction.file ? (
+                    <ul role="list" className="divide-y rounded-md border">
                       <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                         <div className="flex w-0 flex-1 items-center">
                           <PaperclipIcon
@@ -164,7 +166,9 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
                               {transaction.file.name}
                             </span>
                             <span className="flex-shrink-0 text-gray-400">
-                              {formatSize(parseInt(transaction.file.size || ""))}
+                              {formatSize(
+                                parseInt(transaction.file.size || ""),
+                              )}
                             </span>
                           </div>
                         </div>
@@ -179,10 +183,10 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
                           </Button>
                         </div>
                       </li>
-                  </ul>
-                    ) : (
-                      ""
-                    )}
+                    </ul>
+                  ) : (
+                    ""
+                  )}
                 </dd>
               </div>
             </dl>
@@ -196,7 +200,19 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={`/transactions/create?name=${encodeURIComponent(transaction.name)}&income=${encodeURIComponent(transaction.income || "")}&expense=${encodeURIComponent(transaction.expense || "")}&category=${encodeURIComponent(transaction.categoryId)}&subCategory=${encodeURIComponent(transaction.subCategoryId || "")}`}>
+              <Link
+                href={`/transactions/create?name=${encodeURIComponent(
+                  transaction.name,
+                )}&income=${encodeURIComponent(
+                  transaction.income || "",
+                )}&expense=${encodeURIComponent(
+                  transaction.expense || "",
+                )}&category=${encodeURIComponent(
+                  transaction.categoryId,
+                )}&subCategory=${encodeURIComponent(
+                  transaction.subCategoryId || "",
+                )}`}
+              >
                 <CopyPlusIcon /> Duplicate transaction
               </Link>
             </Button>
@@ -208,7 +224,10 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
             <form action={deleteTransaction}>
               <input type="hidden" name="id" defaultValue={transaction.id} />
 
-              <FormButton variant="destructive" className="[&>.animate-spin]:absolute w-full justify-start [&>.animate-spin]:mt-2.5 [&>.animate-spin]:right-2.5 [&>.animate-spin]:top-0 relative">
+              <FormButton
+                variant="destructive"
+                className="[&>.animate-spin]:absolute w-full justify-start [&>.animate-spin]:mt-2.5 [&>.animate-spin]:right-2.5 [&>.animate-spin]:top-0 relative"
+              >
                 <TrashIcon /> Delete transaction
               </FormButton>
             </form>

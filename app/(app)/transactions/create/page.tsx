@@ -16,6 +16,8 @@ import { PoundSterlingIcon } from "lucide-react";
 import { FormButton } from "@/components/form-button";
 import UploadFiles from "./_components/upload";
 
+export const runtime = 'edge';
+
 const TransactionsCreatePage = async ({searchParams}: {searchParams: {[key: string]: string}}) => {
   const categories = await selectCategoriesMin();
 

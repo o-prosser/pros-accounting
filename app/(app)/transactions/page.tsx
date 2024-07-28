@@ -9,6 +9,8 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {title: "Transactions"}
 
+export const runtime = 'edge';
+
 const TransactionsPage = () => {
   return (
     <>

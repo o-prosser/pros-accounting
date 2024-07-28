@@ -3,14 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Muted, Heading, Title } from "@/components/ui/typography"
+import { Muted, Heading, Title } from "@/components/ui/typography";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { Metadata } from "next";
 import { invite, updateOrganisation } from "./actions";
 import { format } from "date-fns";
 import { PoundSterlingIcon } from "lucide-react";
 
-export const metadata: Metadata = {title: "Settings"}
+export const metadata: Metadata = { title: "Settings" };
+
+export const runtime = "edge";
 
 const SettingsPage = async () => {
   const organisation = await selectCurrentOrganisation();
@@ -110,6 +112,6 @@ const SettingsPage = async () => {
       </div>
     </>
   );
-}
+};
 
 export default SettingsPage;

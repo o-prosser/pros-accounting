@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Muted, Title } from "@/components/ui/typography"
 import { selectCategoriesMin } from "@/models/category"
 
+export const runtime = "edge";
+
 const RawDataExportsPage = async () => {
   const categories = await selectCategoriesMin();
 

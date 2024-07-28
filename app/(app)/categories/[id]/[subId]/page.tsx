@@ -15,21 +15,39 @@ import { columns } from "./_components/table";
 
 import { Metadata } from "next";
 
-export const generateMetadata = async ({params}: {params: {id: string, subId: string}}): Promise<Metadata> => {
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { id: string; subId: string };
+}): Promise<Metadata> => {
   const category = await selectCategory(params.id);
-  const subCategory = category?.subCategories.find(subCategory => subCategory.id === params.subId);
+  const subCategory = category?.subCategories.find(
+    (subCategory) => subCategory.id === params.subId,
+  );
 
-  return {title: subCategory?.name + ' / ' + category?.name}
-}
+  return { title: subCategory?.name + " / " + category?.name };
+};
 
-const CategoryPage = async ({ params }: { params: { id: string, subId: string } }) => {
+export const runtime = "edge";
+
+const CategoryPage = async ({
+  params,
+}: {
+  params: { id: string; subId: string };
+}) => {
   const category = await selectCategory(params.id);
   if (!category) notFound();
 
-  const subCategory = category.subCategories.find(subCategory => subCategory.id === params.subId);
+  const subCategory = category.subCategories.find(
+    (subCategory) => subCategory.id === params.subId,
+  );
   if (!subCategory) notFound();
 
-  const monthlyTotal = (month: number | null, type: "income" | "expense", subCategory?: string) => {
+  const monthlyTotal = (
+    month: number | null,
+    type: "income" | "expense",
+    subCategory?: string,
+  ) => {
     const transactions = category.transactions
       .filter((transaction) => {
         const transactionType =
@@ -45,14 +63,14 @@ const CategoryPage = async ({ params }: { params: { id: string, subId: string } 
 
     const total = transactions.reduce(
       (total, current) => total + parseFloat(current || ""),
-      0
+      0,
     );
 
     return total;
   };
 
-  const income = monthlyTotal(null, "income", subCategory.id)
-  const expense = monthlyTotal(null, "expense", subCategory.id)
+  const income = monthlyTotal(null, "income", subCategory.id);
+  const expense = monthlyTotal(null, "expense", subCategory.id);
 
   return (
     <>
@@ -75,7 +93,10 @@ const CategoryPage = async ({ params }: { params: { id: string, subId: string } 
       </Badge>
 
       <div className="flex items-baseline justify-between">
-        <Title>{category.name} <span className="text-muted-foreground px-1">/</span> {subCategory.name}</Title>
+        <Title>
+          {category.name} <span className="text-muted-foreground px-1">/</span>{" "}
+          {subCategory.name}
+        </Title>
       </div>
 
       <div className="flex gap-6">
@@ -98,7 +119,9 @@ const CategoryPage = async ({ params }: { params: { id: string, subId: string } 
           </p>
         </div>
         <div>
-          <Caption>Balance <span className="italic text-sm">(to date)</span></Caption>
+          <Caption>
+            Balance <span className="italic text-sm">(to date)</span>
+          </Caption>
           <p className="text-3xl font-mono font-semibold tracking-tight">
             {new Intl.NumberFormat("en-GB", {
               style: "currency",
@@ -109,12 +132,23 @@ const CategoryPage = async ({ params }: { params: { id: string, subId: string } 
       </div>
 
       <div className="my-6 flex">
-        <div style={{width: `${(income*100)/(income + expense)}%`}} className="bg-[#2563eb] h-8 rounded-l-md" />
-        <div style={{width: `${(expense*100)/(income + expense)}%`}} className="bg-[#60a5fa] h-8 rounded-r-md" />
+        <div
+          style={{ width: `${(income * 100) / (income + expense)}%` }}
+          className="bg-[#2563eb] h-8 rounded-l-md"
+        />
+        <div
+          style={{ width: `${(expense * 100) / (income + expense)}%` }}
+          className="bg-[#60a5fa] h-8 rounded-r-md"
+        />
       </div>
 
       <Heading className="mt-6">Transactions</Heading>
-      <DataTable columns={columns} data={category.transactions.filter(transaction => transaction.subCategoryId === subCategory.id)} />
+      <DataTable
+        columns={columns}
+        data={category.transactions.filter(
+          (transaction) => transaction.subCategoryId === subCategory.id,
+        )}
+      />
     </>
   );
 };

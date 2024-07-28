@@ -11,6 +11,8 @@ import { generateReport } from "./actions"
 import { FormButton } from "@/components/form-button"
 import { Font } from "@react-pdf/renderer"
 
+export const runtime = 'edge';
+
 const CategorySummariesPage = async () => {
   const categories = await selectCategoriesMin();
 

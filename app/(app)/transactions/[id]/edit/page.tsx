@@ -20,15 +20,18 @@ import db from "@/lib/db";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 
-const TransactionsEditPage = async ({params}: {params: {id: string}}) => {
+export const runtime = "edge";
+
+const TransactionsEditPage = async ({ params }: { params: { id: string } }) => {
   const categories = await selectCategoriesMin();
   const organisation = await selectCurrentOrganisation();
 
   const transaction = await db.query.transactionsTable.findFirst({
-    where: (fields, {and, eq}) => and(eq(fields.id, params.id), eq(fields.organisationId, organisation.id)),
+    where: (fields, { and, eq }) =>
+      and(eq(fields.id, params.id), eq(fields.organisationId, organisation.id)),
     with: {
       file: true,
-    }
+    },
   });
   if (!transaction) notFound();
 
@@ -120,10 +123,19 @@ const TransactionsEditPage = async ({params}: {params: {id: string}}) => {
           </div>
         </div>
 
-        <SelectCategory categoryId={transaction.categoryId} subCategoryId={transaction.subCategoryId} categories={categories} />
+        <SelectCategory
+          categoryId={transaction.categoryId}
+          subCategoryId={transaction.subCategoryId}
+          categories={categories}
+        />
 
         <Label htmlFor="notes">Notes</Label>
-        <Textarea id="notes" name="notes" defaultValue={transaction.notes || ""} className="mt-1 w-full mb-6" />
+        <Textarea
+          id="notes"
+          name="notes"
+          defaultValue={transaction.notes || ""}
+          className="mt-1 w-full mb-6"
+        />
 
         <Label htmlFor="fileId">File</Label>
         <UploadFiles defaultValue={transaction.file || undefined} />
