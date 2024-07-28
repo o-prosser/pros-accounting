@@ -22,6 +22,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { deleteTransaction } from "./actions";
+import { FormButton } from "@/components/form-button";
 
 const TransactionPage = async ({ params }: { params: { id: string } }) => {
   const organisation =  await selectCurrentOrganisation();
@@ -203,11 +205,13 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
                 <DownloadIcon /> Export PDF
               </Link>
             </Button>
-            <Button asChild variant="destructive">
-              <Link href={`/transactions/create`}>
+            <form action={deleteTransaction}>
+              <input type="hidden" name="id" defaultValue={transaction.id} />
+
+              <FormButton variant="destructive" className="[&>.animate-spin]:absolute w-full justify-start [&>.animate-spin]:mt-2.5 [&>.animate-spin]:right-2.5 [&>.animate-spin]:top-0 relative">
                 <TrashIcon /> Delete transaction
-              </Link>
-            </Button>
+              </FormButton>
+            </form>
           </div>
         </div>
       </div>
