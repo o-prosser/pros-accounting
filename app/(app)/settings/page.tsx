@@ -12,8 +12,6 @@ import { PoundSterlingIcon } from "lucide-react";
 
 export const metadata: Metadata = { title: "Settings" };
 
-export const runtime = "edge";
-
 const SettingsPage = async () => {
   const organisation = await selectCurrentOrganisation();
 
