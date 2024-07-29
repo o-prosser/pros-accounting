@@ -26,8 +26,15 @@ const generalSans = localFont({
 export const metadata: Metadata = {
   title: {
     default: "ProsAccounting",
-    template: "%s – ProsAccounting"
+    template: "%s – ProsAccounting",
   },
+  other: {
+    "twitter:image": "https://prosaccounting.owenprosser.co.uk/thumbnail.jpg",
+    "twitter:card": "summary_large_image",
+    "og:url": "https://prosaccounting.owenprosser.co.uk",
+    "og:image": "https://prosaccounting.owenprosser.co.uk/thumbnail.jpg",
+    "og:type": "website"
+  }
 };
 
 export default function RootLayout({
