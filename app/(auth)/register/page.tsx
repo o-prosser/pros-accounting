@@ -28,7 +28,7 @@ const RegisterPage = () => {
       </form>
 
       <p className="text-sm text-muted-foreground pt-6 text-center">
-        Already registered? <Button asChild variant="link" size={null}><Link href="/register">Login</Link></Button>
+        Already registered? <Button asChild variant="link" size={null}><Link href="/login">Login</Link></Button>
       </p>
     </>
   )
