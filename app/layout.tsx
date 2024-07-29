@@ -28,6 +28,7 @@ export const metadata: Metadata = {
     default: "ProsAccounting",
     template: "%s – ProsAccounting",
   },
+  description: "Your accounts, made simple.",
   other: {
     "twitter:image": "https://prosaccounting.owenprosser.co.uk/thumbnail.jpg",
     "twitter:card": "summary_large_image",
