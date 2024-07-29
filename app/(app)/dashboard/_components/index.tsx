@@ -4,10 +4,10 @@ import { columns } from "./table";
 
 
 const Transactions = async () => {
-  const transactions = await selectTransactions();
+  const transactions = await selectTransactions({account: null});
 
   return (
-    <DataTable searchable={false} columns={columns} data={transactions.slice(0,9)} />
+    <DataTable searchable={false} columns={columns} data={transactions.slice(0,4)} />
   )
 }
 
