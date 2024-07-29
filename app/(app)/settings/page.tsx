@@ -1,6 +1,4 @@
 import { FormButton } from "@/components/form-button";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Muted, Heading, Title } from "@/components/ui/typography";
@@ -9,6 +7,12 @@ import { Metadata } from "next";
 import { invite, updateOrganisation } from "./actions";
 import { format } from "date-fns";
 import { PoundSterlingIcon } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -17,6 +21,14 @@ const SettingsPage = async () => {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>Dashboard</BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>Settings</BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <Title>Settings</Title>
 
       <div className="max-w-2xl">
