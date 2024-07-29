@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import { selectCurrentOrganisation } from "./organisation"
 import { cache } from "react";
 
-export const selectTransactions = cache(async () => {
+export const selectTransactions = cache(async (params: {account: "club"|"charity"|null}|undefined) => {
   const organisation = await selectCurrentOrganisation();
 
   const transactions = await db.query.transactionsTable.findMany({
@@ -18,5 +18,5 @@ export const selectTransactions = cache(async () => {
     }
   });
 
-  return transactions;
+  return params?.account ? transactions.filter(t => t.category.account === params.account): transactions;
 });

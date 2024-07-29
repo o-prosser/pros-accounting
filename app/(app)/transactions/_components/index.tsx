@@ -3,8 +3,8 @@ import { selectTransactions } from "@/models/transaction"
 import { columns } from "./table";
 
 
-const TransactionsIndex = async () => {
-  const transactions = await selectTransactions();
+const TransactionsIndex = async ({account}: {account: "club"|"charity"|null}) => {
+  const transactions = await selectTransactions({account});
 
   return (
     <DataTable columns={columns} data={transactions} />

@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 
 const SelectCategory = ({defaultValues, categories}: {defaultValues: {[key: string]: string}, categories: {id: string; name: string; account: "charity"|"club", subCategories: {id: string; name: string}[]}[]}) => {
@@ -17,16 +17,17 @@ const SelectCategory = ({defaultValues, categories}: {defaultValues: {[key: stri
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {categories.map((category,idx) => (
+              <SelectLabel>Charity account</SelectLabel>
+              {categories.filter(c => c.account === 'charity').map((category,idx) => (
                 <SelectItem value={category.id} key={idx}>
-                  <Badge
-                    className="mr-2 py-0 leading-none px-1 mb-px text-[0.625rem]"
-                    variant={`outline-accent${
-                      category.account === "charity" ? "1" : "2"
-                    }`}
-                  >
-                    {category.account}
-                  </Badge>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+            <SelectGroup>
+              <SelectLabel>Club account</SelectLabel>
+              {categories.filter(c => c.account === 'club').map((category,idx) => (
+                <SelectItem value={category.id} key={idx}>
                   {category.name}
                 </SelectItem>
               ))}
