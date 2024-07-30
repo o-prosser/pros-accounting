@@ -58,7 +58,7 @@ const ReportsPage = () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ReportLink title="Category summaries" description="Income and expense totals for each sub category, in a specified time period." href={`/reports/category-summaries`} />
-        <ReportLink title="Transaction logs" description="Logs of all transactions by category, account type and income/expense." href={`/reports/category-summaries`} />
+        <ReportLink title="Transaction logs" description="Logs of all transactions by category, account type and income/expense." href={`/reports/transaction-log`} />
         <ReportLink title="Raw data exports" description="Exports of transactions as CSV to import into an Excel spreadsheet. Useful for data backups." href={`/reports/raw-data-exports`} />
       </div>
     </>
