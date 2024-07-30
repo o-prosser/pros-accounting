@@ -19,10 +19,10 @@ const RegisterPage = () => {
         <Input id="name" name="name" type="text" autoComplete="name" required autoFocus className="mt-1 w-full mb-6" />
 
         <Label htmlFor="email">Email address</Label>
-        <Input id="email" name="email" type="email" autoComplete="email" required autoFocus className="mt-1 w-full mb-6" />
+        <Input id="email" name="email" type="email" autoComplete="email" required className="mt-1 w-full mb-6" />
 
         <Label htmlFor="password">Password</Label>
-        <Input id="password" name="password" type="password" autoComplete="password" required autoFocus className="mt-1 w-full mb-8" />
+        <Input id="password" name="password" type="password" autoComplete="password" required className="mt-1 w-full mb-8" />
 
         <FormButton type="submit" className="w-full">Register</FormButton>
       </form>

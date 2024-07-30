@@ -47,7 +47,6 @@ const LoginForm = () => {
           type="password"
           autoComplete="password"
           required
-          autoFocus
           className="mt-1 w-full mb-8"
         />
 
