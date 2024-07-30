@@ -53,7 +53,7 @@ const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string
         <p className="w-[1.7cm] text-right">Amount</p>
       </div>
 
-      {[transactions[0], transactions[1], transactions[0], transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],transactions[0],transactions[1],].map(
+      {transactions.map(
         (transaction, idx) => {
           const amount =
             transaction.income !== null
