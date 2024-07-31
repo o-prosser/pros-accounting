@@ -130,6 +130,11 @@ const DesktopSidebar = ({
                 </button>
               </DropdownMenuItem>
             </form>
+            <DropdownMenuItem asChild className="w-full">
+              <Link href='/user-guidance-v1.pdf' download target="_blank">
+                Help
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
