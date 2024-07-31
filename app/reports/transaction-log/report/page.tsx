@@ -10,10 +10,10 @@ const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string
   const organisation = await selectCurrentOrganisation();
 
   const transactions = await db.query.transactionsTable.findMany({
-    where: (fields, {and, eq, lt, gt}) => and(
+    where: (fields, {and, eq, lte, gt, gte}) => and(
       eq(fields.organisationId, organisation.id),
-      gt(fields.date, searchParams.from ? new Date(searchParams.from) : organisation.endOfFinancialYear),
-      searchParams.to ? lt(fields.date, new Date(searchParams.to)) : undefined,
+      searchParams.from ? gte(fields.date, new Date(searchParams.from)) : gt(fields.date, organisation.endOfFinancialYear),
+      searchParams.to ? lte(fields.date, new Date(searchParams.to)) : undefined,
       searchParams.categoryId ? eq(fields.categoryId, searchParams.categoryId) : undefined,
       searchParams.subCategoryId ? eq(fields.subCategoryId, searchParams.subCategoryId) : undefined,
     ),
