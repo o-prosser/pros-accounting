@@ -9,7 +9,7 @@ import { HashIcon } from "lucide-react";
 const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string]: string|null}}) => {
   const organisation = await selectCurrentOrganisation();
 
-  const transactions = await db.query.transactionsTable.findMany({
+  const transactionsData = await db.query.transactionsTable.findMany({
     where: (fields, {and, eq, lte, gt, gte}) => and(
       eq(fields.organisationId, organisation.id),
       searchParams.from ? gte(fields.date, new Date(searchParams.from)) : gt(fields.date, organisation.endOfFinancialYear),
@@ -23,6 +23,8 @@ const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string
       subCategory: true,
     }
   });
+
+  const transactions = searchParams.account ? transactionsData.filter(t => t.category.account === searchParams.account) : transactionsData;
 
   return (
     <div className="text-[12pt]">
