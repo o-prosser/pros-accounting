@@ -11,5 +11,5 @@ export const deleteTransaction = async (formData: FormData) => {
   
   await db.delete(transactionsTable).where(eq(transactionsTable.id, id));
 
-  redirect("/transactions");
+  redirect("/transactions/cash-book/all");
 }

@@ -57,5 +57,5 @@ export const createTransactionAction = async (formData: FormData) => {
     }
   }
 
-  redirect(`/transactions/`)
+  redirect(`/transactions/cash-book/all`)
 }

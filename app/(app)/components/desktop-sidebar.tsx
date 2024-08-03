@@ -63,21 +63,21 @@ const DesktopSidebar = ({
           Dashboard
         </DesktopLink>
       </ActivePage>
-      <ActivePage pathname="/transactions">
-        <DesktopLink href="/transactions">
+      <ActivePage pathname="/transactions/cash-book/all">
+        <DesktopLink href="/transactions/cash-book/all">
           <BanknoteIcon />
           Cash book
         </DesktopLink>
       </ActivePage>
       <div className="ml-[1.375rem] border-l pl-[1.125rem] flex flex-col items-stretch [&>a]:justify-start [&>a]:pl-0">
-        <ActivePage pathname="/transactions?account=charity">
+        <ActivePage pathname="/transactions/cash-book/charity">
           <Button variant={null} asChild>
-            <Link href="/transactions?account=charity">Charity</Link>
+            <Link href="/transactions/cash-book/charity">Charity</Link>
           </Button>
         </ActivePage>
-        <ActivePage pathname="/transactions?account=club">
+        <ActivePage pathname="/transactions/cash-book/club">
           <Button variant={null} asChild>
-            <Link href="/transactions?account=club">Club</Link>
+            <Link href="/transactions/cash-book/club">Club</Link>
           </Button>
         </ActivePage>
       </div>

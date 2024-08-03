@@ -92,7 +92,7 @@ const Totals = async () => {
             </div>
           </div>
           <Button asChild variant={null} size="sm" className="group -ml-3 my-2">
-            <Link href="/transactions?account=charity">
+            <Link href="/transactions/cash-book/charity">
               View transactions
               <ArrowRightIcon className="h-4 w-4 ml-2 group-hover:translate-x-1 transition duration-100 text-orange-600" />
             </Link>
@@ -144,7 +144,7 @@ const Totals = async () => {
             </div>
           </div>
           <Button asChild variant={null} size="sm" className="group -ml-3 my-2">
-            <Link href="/transactions?account=club">
+            <Link href="/transactions/cash-book/club">
               View transactions
               <ArrowRightIcon className="h-4 w-4 ml-2 group-hover:translate-x-1 transition duration-100 text-cyan-600" />
             </Link>

@@ -7,7 +7,7 @@ const MobileNavbar = () => {
       <MobileLink href="/dashboard">
         <HomeIcon />
       </MobileLink>
-      <MobileLink href="/transactions">
+      <MobileLink href="/transactions/cash-book/all">
         <BanknoteIcon />
       </MobileLink>
       <MobileLink href="/categories">
