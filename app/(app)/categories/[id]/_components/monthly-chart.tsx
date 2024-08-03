@@ -20,7 +20,7 @@ const MonthlyChart = ({
   data: { month: string; income: number; expense: number }[];
 }) => {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[150px] max-h-[400px] w-full">
+    <ChartContainer config={chartConfig} className="min-h-[150px] max-h-[400px] h-[400px] w-full">
       <BarChart accessibilityLayer data={data}>
         <CartesianGrid vertical={false} />
         <ChartTooltip content={<ChartTooltipContent />} />
