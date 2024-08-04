@@ -7,6 +7,7 @@ import {
   FileTextIcon,
   HomeIcon,
   LogOutIcon,
+  PlusIcon,
   SettingsIcon,
   TagIcon,
   User,
@@ -101,6 +102,10 @@ const DesktopSidebar = ({
       </ActivePage>
 
       <div className="flex-1" />
+
+      <Button asChild variant="outline" className="w-full mb-2">
+        <Link href="/transactions/create"><PlusIcon /> Add transaction</Link>
+      </Button>
 
       <div className="flex items-center w-full">
         <div className="h-12 w-12 bg-background rounded-full overflow-hidden flex justify-center items-center">
