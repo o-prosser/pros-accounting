@@ -3,6 +3,7 @@ import { date, numeric, pgTable, text, timestamp, uuid, varchar } from "drizzle-
 import { usersTable } from "./users";
 import { categoriesTable } from "./categories";
 import { transactionsTable } from "./transactions";
+import { transfersTable } from "./transfers";
 
 export const organisationsTable = pgTable("organisations", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),
@@ -24,4 +25,5 @@ export const organisationsRelations = relations(organisationsTable, ({many}) => 
   users: many(usersTable),
   categories: many(categoriesTable),
   transactions: many(transactionsTable),
+  transfers: many(transfersTable)
 }))

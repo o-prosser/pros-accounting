@@ -3,8 +3,7 @@ import { pgEnum, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { organisationsTable } from "./organisations";
 import { transactionsTable } from "./transactions";
 import { subCategoriesTable } from "./subCategories";
-
-export const accountEnum = pgEnum("account", ["club", "charity"])
+import { accountEnum } from "./enums";
 
 export const categoriesTable = pgTable("categories", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),

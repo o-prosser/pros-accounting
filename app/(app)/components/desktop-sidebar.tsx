@@ -2,6 +2,7 @@ import ActivePage from "@/components/active-page";
 import Logo from "@/components/ui/logo";
 import DesktopLink from "./desktop-link";
 import {
+  ArrowRightLeftIcon,
   BanknoteIcon,
   ChevronDownIcon,
   FileTextIcon,
@@ -89,6 +90,12 @@ const DesktopSidebar = ({
         <DesktopLink href="/categories">
           <TagIcon />
           Categories
+        </DesktopLink>
+      </ActivePage>
+      <ActivePage pathname="/transfers">
+        <DesktopLink href="/transfers">
+          <ArrowRightLeftIcon />
+          Transfers
         </DesktopLink>
       </ActivePage>
       <ActivePage pathname="/reports">

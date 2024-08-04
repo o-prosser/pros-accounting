@@ -8,10 +8,12 @@ import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import IncomeExpenseChart from "./chart";
 import { getTotals } from "./data";
+import { selectTransfers } from "@/models/transfer";
 
 const Totals = async () => {
   const organisation = await selectCurrentOrganisation();
   const transactions = await selectTransactions({account: null});
+  const transfers = await selectTransfers();
 
   const total = (account: "club" | "charity", type: "income" | "expense") => {
     const filtered = transactions
@@ -31,7 +33,16 @@ const Totals = async () => {
       0,
     );
 
-    return total;
+    const transferTotal = transfers
+      .filter((transfer) => {
+        return type === "income"
+          ? transfer.to === account
+          : transfer.from === account;
+      })
+      .map((transfer) => transfer.amount)
+      .reduce((total, current) => total + parseFloat(current || ""), 0);
+
+    return total + transferTotal;
   };
 
   const charityIncome = total("charity", "income");
