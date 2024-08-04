@@ -111,7 +111,7 @@ export const columns: ColumnDef<Transaction>[] = [
           <div
             className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto"
             style={{
-              backgroundColor: getColour(category.colour).background + "80",
+              backgroundColor: getColour(category.colour).background,
               borderColor: getColour(category.colour).foreground,
             }}
           >

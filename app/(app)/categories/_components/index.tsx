@@ -44,7 +44,7 @@ const CategoriesIndex = async () => {
             key={idx}
             style={{
               borderColor: getColour(category.colour).foreground,
-              backgroundColor: getColour(category.colour).background + "80",
+              backgroundColor: getColour(category.colour).background,
             }}
           >
             <CardHeader>
