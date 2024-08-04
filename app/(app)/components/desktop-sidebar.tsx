@@ -5,6 +5,7 @@ import {
   BanknoteIcon,
   ChevronDownIcon,
   FileTextIcon,
+  HelpCircleIcon,
   HomeIcon,
   LogOutIcon,
   PlusIcon,
@@ -15,7 +16,9 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -109,7 +112,7 @@ const DesktopSidebar = ({
 
       <div className="flex items-center w-full">
         <div className="h-12 w-12 bg-background rounded-full overflow-hidden flex justify-center items-center">
-          <User className="fill-zinc-400 text-zinc-400 h-11 w-11 -mb-3.5 inline-block" />
+          <User className="fill-zinc-400 text-zinc-400 h-11 w-11 -mb-[15px] inline-block" />
         </div>
         <div className="flex flex-col items-start -gap-2 pl-2 flex-1 w-full">
           <span className="text-sm text-muted-foreground">
@@ -121,25 +124,31 @@ const DesktopSidebar = ({
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="-mr-2">
               <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-40">
-            <ModeToggle />
-            <form action={logout} className="w-full">
+            <DropdownMenuGroup>
+              <ModeToggle />
               <DropdownMenuItem asChild className="w-full">
-                <button type="submit">
-                  <LogOutIcon className="text-muted-foreground mr-2 h-4 w-4" />
-                  Log out
-                </button>
+                <Link href='/user-guidance-v1.pdf' download target="_blank">
+                <HelpCircleIcon className="text-muted-foreground mr-2 h-4 w-4" />
+                  Help
+                </Link>
               </DropdownMenuItem>
-            </form>
-            <DropdownMenuItem asChild className="w-full">
-              <Link href='/user-guidance-v1.pdf' download target="_blank">
-                Help
-              </Link>
-            </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <form action={logout} className="w-full">
+                <DropdownMenuItem asChild className="w-full">
+                  <button type="submit">
+                    <LogOutIcon className="text-muted-foreground mr-2 h-4 w-4" />
+                    Log out
+                  </button>
+                </DropdownMenuItem>
+              </form>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
