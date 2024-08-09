@@ -118,7 +118,7 @@ const EditTransfer = ({
       <Label htmlFor="from">Moving from</Label>
       <Select name="from" defaultValue={transfer.from}>
         <SelectTrigger className="mt-1 w-full mb-6">
-          <SelectValue placeholder="Select an account type" />
+          <SelectValue placeholder="Select account" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -131,7 +131,7 @@ const EditTransfer = ({
       <Label htmlFor="to">Moving to</Label>
       <Select name="to" defaultValue={transfer.to}>
         <SelectTrigger className="mt-1 w-full mb-6">
-          <SelectValue placeholder="Select an account type" />
+          <SelectValue placeholder="Select account" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

@@ -67,7 +67,7 @@ const CreateCategory = () => {
       <Label htmlFor="account">Account</Label>
       <Select name="account">
         <SelectTrigger className="mt-1 w-full mb-6">
-          <SelectValue placeholder="Select an account type" />
+          <SelectValue placeholder="Select account" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

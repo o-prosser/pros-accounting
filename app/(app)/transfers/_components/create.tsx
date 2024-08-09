@@ -102,7 +102,7 @@ const CreateTransfer = () => {
       <Label htmlFor="from">Moving from</Label>
       <Select name="from">
         <SelectTrigger className="mt-1 w-full mb-6">
-          <SelectValue placeholder="Select an account type" />
+          <SelectValue placeholder="Select account" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -115,7 +115,7 @@ const CreateTransfer = () => {
       <Label htmlFor="to">Moving to</Label>
       <Select name="to">
         <SelectTrigger className="mt-1 w-full mb-6">
-          <SelectValue placeholder="Select an account type" />
+          <SelectValue placeholder="Select account" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
