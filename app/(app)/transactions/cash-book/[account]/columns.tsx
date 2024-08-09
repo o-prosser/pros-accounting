@@ -21,6 +21,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { format } from "date-fns";
 import {
+  ArrowRightIcon,
   ArrowUpDown,
   FilterIcon,
   HashIcon,
@@ -30,19 +31,22 @@ import Link from "next/link";
 
 export type Transaction = {
   id: string;
-  name: string;
+  name?: string;
   date: string | Date;
-  receiptBookNumber: number | null;
-  income: string | null;
-  expense: string | null;
+  receiptBookNumber?: number | null;
+  income?: string | null;
+  expense?: string | null;
+  amount?: string;
+  from?: "club" |"charity";
+  to?: "club" |"charity";
   notes: string | null;
-  category: {
+  category?: {
     id: string;
     name: string;
     account: "club" | "charity";
     colour: string | null;
   };
-  subCategory: {
+  subCategory?: {
     id: string;
     name: string;
   } | null;
@@ -52,13 +56,16 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
     header: "Transaction",
-    cell: ({ row }) => (
-      <Button asChild variant="link" size={null}>
-        <Link href={`/transactions/${row.original.id}`}>
-          {row.getValue("name")}
-        </Link>
-      </Button>
-    ),
+    cell: ({ row }) =>
+      row.original.name ? (
+        <Button asChild variant="link" size={null}>
+          <Link href={`/transactions/${row.original.id}`}>
+            {row.original.name}
+          </Link>
+        </Button>
+      ) : (
+        <span className="font-medium">{row.original.notes}</span>
+      ),
   },
   {
     accessorKey: "date",
@@ -84,29 +91,61 @@ export const columns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => (
       <div className="flex items-center">
         {row.original.receiptBookNumber ? (
-          <HashIcon className="h-3 w-3 text-muted-foreground" />
+          <>
+            <HashIcon className="h-3 w-3 text-muted-foreground" />
+            {row.original.receiptBookNumber}
+          </>
+        ) : row.original.amount ? (
+          "Transfer"
         ) : (
           ""
         )}
-        {row.original.receiptBookNumber}
       </div>
     ),
   },
   {
     header: "Account",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-1">
-        <div
-          className={clsx(
-            "h-2 w-2 rounded-full flex-shrink-0",
-            row.original.category.account === "club"
-              ? "bg-cyan-600"
-              : "bg-orange-600",
-          )}
-        />
-        <span className="capitalize">{row.original.category.account}</span>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const from = row.original.category
+        ? row.original.category.account
+        : row.original?.from;
+
+      return (
+        <div className="flex">
+          <div className={clsx(row.original.to && "relative flex")}>
+            <div className="flex items-center gap-1">
+              <div
+                className={clsx(
+                  "h-2 w-2 rounded-full flex-shrink-0",
+                  from === "club" ? "bg-cyan-600" : "bg-orange-600",
+                )}
+              />
+              <span className="capitalize">{from}</span>
+            </div>
+
+            {row.original.to ? (
+              <div className="flex absolute left-full inset-y-0 items-center ml-1 gap-1">
+                <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
+
+                <div className="flex items-center gap-1">
+                  <div
+                    className={clsx(
+                      "h-2 w-2 rounded-full flex-shrink-0",
+                      row.original.to === "club"
+                        ? "bg-cyan-600"
+                        : "bg-orange-600",
+                    )}
+                  />
+                  <span className="capitalize">{row.original.to}</span>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "category",
@@ -115,7 +154,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const category = row.original.category;
       const subCategory = row.original.subCategory;
 
-      return (
+      return category ? (
         <div className="flex gap-2">
           <div
             className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto"
@@ -138,13 +177,15 @@ export const columns: ColumnDef<Transaction>[] = [
           {subCategory !== null ? (
             <div className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto bg-muted/50 border-muted-forergound">
               <span className="font-medium flex-shrink-0 text-muted-foreground">
-                {subCategory.name}
+                {subCategory?.name}
               </span>
             </div>
           ) : (
             ""
           )}
         </div>
+      ) : (
+        <div className="h-7" />
       );
     },
   },
@@ -153,11 +194,11 @@ export const columns: ColumnDef<Transaction>[] = [
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount =
-        row.original.income !== null
+        row.original.income !== null && row.original.income !== undefined
           ? parseFloat(row.original.income)
-          : row.original.expense !== null
+          : row.original.expense !== null && row.original.expense !== undefined
           ? parseFloat(row.original.expense)
-          : 0;
+          : parseFloat(row.original.amount || "0");
       const formatted = new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: "GBP",
@@ -167,10 +208,14 @@ export const columns: ColumnDef<Transaction>[] = [
         <div
           className={clsx(
             "text-right font-medium",
-            row.original.income !== null ? "text-green-600" : "text-red-600",
+            row.original.income
+              ? "text-green-600"
+              : row.original.expense
+              ? "text-red-600"
+              : "",
           )}
         >
-          {row.original.income !== null ? "+" : "-"}
+          {row.original.income ? "+" : row.original.expense ? "-" : ""}
           {formatted}
         </div>
       );
@@ -179,7 +224,7 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      return (
+      return row.original.name ? (
         <div className="flex justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -202,7 +247,7 @@ export const columns: ColumnDef<Transaction>[] = [
                   )}&expense=${encodeURIComponent(
                     row.original.expense || "",
                   )}&category=${encodeURIComponent(
-                    row.original.category.id,
+                    row.original.category?.id || "",
                   )}&subCategory=${encodeURIComponent(
                     row.original.subCategory?.id || "",
                   )}`}
@@ -219,6 +264,8 @@ export const columns: ColumnDef<Transaction>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+      ) : (
+        ""
       );
     },
   },

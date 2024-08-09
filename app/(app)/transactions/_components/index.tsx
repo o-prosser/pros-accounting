@@ -1,6 +1,7 @@
 import { DataTable } from "@/components/data-table";
 import { selectTransactions } from "@/models/transaction";
 import { columns } from "../cash-book/[account]/columns";
+import { selectTransfers } from "@/models/transfer";
 
 const TransactionsIndex = async ({
   account,
@@ -8,8 +9,11 @@ const TransactionsIndex = async ({
   account: "club" | "charity" | null;
 }) => {
   const transactions = await selectTransactions({ account });
+  const transfers = await selectTransfers();
 
-  return <DataTable columns={columns} data={transactions} />;
+  const payments = [...transactions, ...transfers].sort((a,b) => a.date < b.date ? -1 : 1);
+
+  return <DataTable columns={columns} data={payments} />;
 };
 
 export default TransactionsIndex;
