@@ -14,6 +14,7 @@ const schema = z.object({
   receiptBookNumber: z.string(),
   income: z.string().nullable(),
   expense: z.string().nullable(),
+  account: z.enum(["charity", "club"]),
   category: z.string().max(100),
   subCategory: z.string().optional().nullable(),
   notes: z.string().nullable(),
@@ -54,5 +55,5 @@ export const updateTransactionAction = async (formData: FormData) => {
     }
   }
 
-  redirect(`/transactions/cash-book/all`)
+  redirect(`/transactions/cash-book/${fields.data.account || "all"}`)
 }

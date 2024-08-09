@@ -10,6 +10,8 @@ const SelectCategory = ({defaultValues, categories}: {defaultValues: {[key: stri
 
   return (
     <>
+        <input type="hidden" name="account" defaultValue={categories.find(c => c.id === selected)?.account} />
+
         <Label htmlFor="category">Category</Label>
         <Select name="category" onValueChange={setSelected} defaultValue={selected}>
           <SelectTrigger className="mt-1 w-full max-w-lg mb-6">

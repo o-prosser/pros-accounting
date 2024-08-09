@@ -10,32 +10,44 @@ const SelectCategory = ({categoryId, subCategoryId, categories}: {categoryId: st
 
   return (
     <>
-        <Label htmlFor="category">Category</Label>
-        <Select name="category" onValueChange={setSelected} defaultValue={selected}>
-          <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
-            <SelectValue placeholder="Select a category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {categories.map((category,idx) => (
-                <SelectItem value={category.id} key={idx}>
-                  <Badge
-                    className="mr-2 py-0 leading-none px-1 mb-px text-[0.625rem]"
-                    variant={`outline-accent${
-                      category.account === "charity" ? "1" : "2"
-                    }`}
-                  >
-                    {category.account}
-                  </Badge>
-                  {category.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+      <input
+        type="hidden"
+        name="account"
+        defaultValue={categories.find((c) => c.id === selected)?.account}
+      />
 
-        {(selected && ((categories.find((c) => c.id === selected)?.subCategories?.length || 0) > 0)) ? (
-          <>
+      <Label htmlFor="category">Category</Label>
+      <Select
+        name="category"
+        onValueChange={setSelected}
+        defaultValue={selected}
+      >
+        <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
+          <SelectValue placeholder="Select a category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {categories.map((category, idx) => (
+              <SelectItem value={category.id} key={idx}>
+                <Badge
+                  className="mr-2 py-0 leading-none px-1 mb-px text-[0.625rem]"
+                  variant={`outline-accent${
+                    category.account === "charity" ? "1" : "2"
+                  }`}
+                >
+                  {category.account}
+                </Badge>
+                {category.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
+      {selected &&
+      (categories.find((c) => c.id === selected)?.subCategories?.length || 0) >
+        0 ? (
+        <>
           <Label htmlFor="subCategory">Sub category</Label>
           <Select name="subCategory" defaultValue={subCategoryId || ""}>
             <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
@@ -43,16 +55,22 @@ const SelectCategory = ({categoryId, subCategoryId, categories}: {categoryId: st
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {categories.find(c => c.id === selected)?.subCategories.map((subCategory,idx) => (
-                  <SelectItem value={subCategory.id} key={idx}>{subCategory.name}</SelectItem>
-                ))}
+                {categories
+                  .find((c) => c.id === selected)
+                  ?.subCategories.map((subCategory, idx) => (
+                    <SelectItem value={subCategory.id} key={idx}>
+                      {subCategory.name}
+                    </SelectItem>
+                  ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          </>
-        ) : ""}
+        </>
+      ) : (
+        ""
+      )}
     </>
-  )
+  );
 }
 
 export default SelectCategory
