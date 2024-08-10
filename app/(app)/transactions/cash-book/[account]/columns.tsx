@@ -51,6 +51,7 @@ export type Transaction = {
     id: string;
     name: string;
   } | null;
+  activeAccount?: string;
 };
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -205,23 +206,30 @@ export const columns: ColumnDef<Transaction>[] = [
         currency: "GBP",
       }).format(amount);
 
-      const pathname = usePathname();
-      const activeAccount = pathname.endsWith("charity") ? "charity" : pathname.endsWith("club") ? "club" : undefined;
-
       return (
         <div
           className={clsx(
             "text-right font-medium",
             row.original.income && "text-green-600",
             row.original.expense && "text-red-600",
-            activeAccount === row.original.to && "text-green-600",
-            activeAccount === row.original.from && "text-red-600",
+            row.original.activeAccount &&
+              row.original.activeAccount === row.original.to &&
+              "text-green-600",
+            row.original.activeAccount &&
+              row.original.activeAccount === row.original.from &&
+              "text-red-600",
           )}
         >
           {row.original.income ? "+" : ""}
           {row.original.expense ? "-" : ""}
-          {activeAccount === row.original.to ? "+" : ""}
-          {activeAccount === row.original.from ? "-" : ""}
+          {row.original.activeAccount &&
+          row.original.activeAccount === row.original.to
+            ? "+"
+            : ""}
+          {row.original.activeAccount &&
+          row.original.activeAccount === row.original.from
+            ? "-"
+            : ""}
           {formatted}
         </div>
       );

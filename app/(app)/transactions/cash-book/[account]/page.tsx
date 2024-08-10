@@ -21,7 +21,10 @@ const TransactionsPage = async ({
       : null;
       
     const transactions = await selectTransactions({ account });
-    const transfers = await selectTransfers();
+    const transfers = (await selectTransfers()).map((t) => ({
+      activeAccount: account || undefined,
+      ...t,
+    }));
   
     const payments = [...transactions, ...transfers].sort((a,b) => a.date < b.date ? 1 : -1);
       
