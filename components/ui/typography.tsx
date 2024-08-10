@@ -14,7 +14,7 @@ export const Muted = ({className, ...props}: React.ComponentProps<"p">) => {
 
 export const ErrorMessage = ({className, ...props}: React.ComponentProps<"p">) => {
   return (
-    <p className={cn("text-destructive text-sm leading-none", className)} {...props} />
+    <p className={cn("text-destructive font-medium text-sm leading-none", className)} {...props} />
   )
 }
 
