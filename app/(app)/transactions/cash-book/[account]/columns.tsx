@@ -28,6 +28,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
@@ -63,9 +64,9 @@ export const columns: ColumnDef<Transaction>[] = [
             {row.original.name}
           </Link>
         </Button>
-      ) : (
+      ) : row.original.notes ? (
         <span className="font-medium">{row.original.notes}</span>
-      ),
+      ) : <span className="italic">Untitled transfer</span>,
   },
   {
     accessorKey: "date",
@@ -96,7 +97,7 @@ export const columns: ColumnDef<Transaction>[] = [
             {row.original.receiptBookNumber}
           </>
         ) : row.original.amount ? (
-          "Transfer"
+          ""
         ) : (
           ""
         )}
@@ -204,18 +205,23 @@ export const columns: ColumnDef<Transaction>[] = [
         currency: "GBP",
       }).format(amount);
 
+      const pathname = usePathname();
+      const activeAccount = pathname.endsWith("charity") ? "charity" : pathname.endsWith("club") ? "club" : undefined;
+
       return (
         <div
           className={clsx(
             "text-right font-medium",
-            row.original.income
-              ? "text-green-600"
-              : row.original.expense
-              ? "text-red-600"
-              : "",
+            row.original.income && "text-green-600",
+            row.original.expense && "text-red-600",
+            activeAccount === row.original.to && "text-green-600",
+            activeAccount === row.original.from && "text-red-600",
           )}
         >
-          {row.original.income ? "+" : row.original.expense ? "-" : ""}
+          {row.original.income ? "+" : ""}
+          {row.original.expense ? "-" : ""}
+          {activeAccount === row.original.to ? "+" : ""}
+          {activeAccount === row.original.from ? "-" : ""}
           {formatted}
         </div>
       );
