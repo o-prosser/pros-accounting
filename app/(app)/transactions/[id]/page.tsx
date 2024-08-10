@@ -24,6 +24,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteTransaction } from "./actions";
 import { FormButton } from "@/components/form-button";
+import clsx from "clsx";
+import { getColour } from "@/utils/colours";
 
 export const runtime = "edge";
 
@@ -102,34 +104,60 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
                 </dd>
               </div>
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6">Category</dt>
-                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-                  <div>
-                    <Badge
-                      className="mr-2"
-                      variant={`outline-accent${
-                        transaction.category.account === "charity" ? "1" : "2"
-                      }`}
-                    >
+                <dt className="text-sm font-medium leading-6">Account</dt>
+                <dd className="mt-1 text-sm items-center text-muted-foreground sm:col-span-2 sm:mt-0 flex">
+                  <div className="flex items-center gap-1">
+                    <div
+                      className={clsx(
+                        "h-2 w-2 rounded-full flex-shrink-0",
+                        transaction.category.account === "club"
+                          ? "bg-cyan-600"
+                          : "bg-orange-600",
+                      )}
+                    />
+                    <span className="capitalize">
                       {transaction.category.account}
-                    </Badge>
-                    <Button size={null} variant="link" asChild>
-                      <Link href={`/categories/${transaction.category.id}`}>
+                    </span>
+                  </div>
+                </dd>
+              </div>
+              <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6">Category</dt>
+                <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
+                  <div className="flex gap-2">
+                    <div
+                      className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto"
+                      style={{
+                        backgroundColor: getColour(transaction.category.colour)
+                          .background,
+                        borderColor: getColour(transaction.category.colour)
+                          .foreground,
+                      }}
+                    >
+                      <div
+                        className="h-2 w-2 rounded-full flex-shrink-0"
+                        style={{
+                          backgroundColor: getColour(
+                            transaction.category.colour,
+                          ).foreground,
+                        }}
+                      />
+                      <span
+                        className="font-medium flex-shrink-0"
+                        style={{
+                          color: getColour(transaction.category.colour)
+                            .foreground,
+                        }}
+                      >
                         {transaction.category.name}
-                      </Link>
-                    </Button>
-                    {transaction.subCategory &&
-                    transaction.subCategory !== null ? (
-                      <>
-                        <span className="text-muted-foreground px-1">/</span>
-                        <Button size={null} variant="link" asChild>
-                          <Link
-                            href={`/categories/${transaction.category.id}/${transaction.subCategory.id}`}
-                          >
-                            {transaction.subCategory.name}
-                          </Link>
-                        </Button>
-                      </>
+                      </span>
+                    </div>
+                    {transaction.subCategory !== null ? (
+                      <div className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto bg-muted/50 border-muted-forergound">
+                        <span className="font-medium flex-shrink-0 text-muted-foreground">
+                          {transaction.subCategory.name}
+                        </span>
+                      </div>
                     ) : (
                       ""
                     )}
