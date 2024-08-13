@@ -17,7 +17,6 @@ const SelectFields = ({
   categories: {
     id: string;
     name: string;
-    account: "charity" | "club";
     subCategories: { id: string; name: string }[];
   }[];
 }) => {
@@ -53,7 +52,6 @@ const SelectFields = ({
             <SelectContent>
               <SelectGroup>
                 {categories
-                  .filter(c => c.account === account)
                   .map((category, idx) => (
                     <SelectItem value={category.id} key={idx}>
                       {category.name}
