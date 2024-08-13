@@ -34,6 +34,7 @@ export type Transaction = {
   id: string;
   name?: string;
   date: string | Date;
+  account?: "club" |"charity"|null;
   receiptBookNumber?: number | null;
   income?: string | null;
   expense?: string | null;
@@ -44,7 +45,6 @@ export type Transaction = {
   category?: {
     id: string;
     name: string;
-    account: "club" | "charity";
     colour: string | null;
   };
   subCategory?: {
@@ -109,7 +109,7 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "Account",
     cell: ({ row }) => {
       const from = row.original.category
-        ? row.original.category.account
+        ? row.original.account
         : row.original?.from;
 
       return (

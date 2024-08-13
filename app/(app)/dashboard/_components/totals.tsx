@@ -21,7 +21,7 @@ const Totals = async () => {
         const transactionType =
           transaction.income !== null ? "income" : "expense";
         if (
-          transaction.category.account === account &&
+          transaction.account === account &&
           type === transactionType
         )
           return true;

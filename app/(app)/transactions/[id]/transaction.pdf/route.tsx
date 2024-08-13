@@ -62,7 +62,7 @@ export const GET = async (
 
       <Row label="Date" value={format(transaction.date, "dd-MM-yyyy")} />
       <Row label="Receipt book number" value={transaction.receiptBookNumber} />
-      <Row label="Account type" value={transaction.category.account.charAt(0).toUpperCase() + transaction.category.account.slice(1)} />
+      <Row label="Account type" value={transaction.account ? (transaction.account.charAt(0).toUpperCase() + transaction.account.slice(1)): ""} />
       <Row label="Category" value={transaction.category.name} />
       <Row label="Sub category" value={transaction.subCategory?.name || null} />
       <Row label="Notes" value={transaction.notes} />

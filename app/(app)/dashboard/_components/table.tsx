@@ -24,6 +24,7 @@ export type Transaction = {
   name: string;
   date: string|Date;
   receiptBookNumber: number | null;
+  account: "club" | "charity" | null;
   income: string | null;
   expense: string | null;
   notes: string | null;
@@ -90,12 +91,12 @@ export const columns: ColumnDef<Transaction>[] = [
         <div
           className={clsx(
             "h-2 w-2 rounded-full flex-shrink-0",
-            row.original.category.account === "club"
+            row.original.account === "club"
               ? "bg-cyan-600"
               : "bg-orange-600",
           )}
         />
-        <span className="capitalize">{row.original.category.account}</span>
+        <span className="capitalize">{row.original.account}</span>
       </div>
     ),
   },

@@ -24,7 +24,7 @@ const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string
     }
   });
 
-  const transactions = searchParams.account ? transactionsData.filter(t => t.category.account === searchParams.account) : transactionsData;
+  const transactions = searchParams.account ? transactionsData.filter(t => t.account === searchParams.account) : transactionsData;
 
   return (
     <div className="text-[12pt]">
@@ -91,13 +91,13 @@ const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string
                   <div
                     className={clsx(
                       "h-2 w-2 rounded-full flex-shrink-0",
-                      transaction.category.account === "club"
+                      transaction.account === "club"
                         ? "bg-cyan-600"
                         : "bg-orange-600",
                     )}
                   />
                   <span className="capitalize">
-                    {transaction.category.account}
+                    {transaction.account}
                   </span>
                 </div>
                 <div className="flex items-center gap-1 w-[4cm]">

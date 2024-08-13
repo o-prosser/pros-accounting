@@ -14,15 +14,16 @@ const schema = z.object({
   date: z.string().max(100, { message: "The date provided was invalid." }),
   receiptBookNumber: z
     .string()
-    .regex(/([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])/, {
-      message: "The receipt book number must be a number.",
-    }),
+    // .regex(/([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])/, {
+    //   message: "The receipt book number must be a number. Leave blank to not add a receipt number.",
+    // })
+    .nullable(),
   income: z.string().nullable(),
   expense: z.string().nullable(),
   category: z
     .string()
     .length(36, { message: "You must add a category to the transaction." }),
-  account: z.enum(["charity", "club"]),
+  account: z.enum(["charity", "club"], {message: "The account typw is required."}),
   subCategory: z.string().optional().nullable(),
   notes: z.string().nullable(),
   fileId: z.string().nullable(),
@@ -65,6 +66,7 @@ export const createTransactionAction = async (
         // @ts-ignore
         name: fields.data.name,
         date: new Date(fields.data.date),
+        account: fields.data.account,
         receiptBookNumber: fields.data.receiptBookNumber
           ? parseInt(fields.data.receiptBookNumber)
           : null,

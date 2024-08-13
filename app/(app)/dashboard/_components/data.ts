@@ -52,7 +52,7 @@ export const getTotals = async () => {
     const filtered = transactions
       .filter(
         (t) =>
-          t.category.account === account &&
+          t.account === account &&
           getMonth(t.date) === month &&
           t[type] !== null,
       )

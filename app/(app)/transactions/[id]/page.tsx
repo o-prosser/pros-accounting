@@ -110,13 +110,13 @@ const TransactionPage = async ({ params }: { params: { id: string } }) => {
                     <div
                       className={clsx(
                         "h-2 w-2 rounded-full flex-shrink-0",
-                        transaction.category.account === "club"
+                        transaction.account === "club"
                           ? "bg-cyan-600"
                           : "bg-orange-600",
                       )}
                     />
                     <span className="capitalize">
-                      {transaction.category.account}
+                      {transaction.account}
                     </span>
                   </div>
                 </dd>

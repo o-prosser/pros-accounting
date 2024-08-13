@@ -56,7 +56,7 @@ const CategoriesIndex = async () => {
                   }}
                 />
                 <span className="flex-1">{category.name}</span>
-                <div className="flex items-center gap-1">
+                {/* <div className="flex items-center gap-1">
                   <div
                     className={clsx(
                       "h-2 w-2 rounded-full flex-shrink-0",
@@ -68,7 +68,7 @@ const CategoriesIndex = async () => {
                   <span className="capitalize text-sm font-medium">
                     {category.account}
                   </span>
-                </div>
+                </div> */}
               </CardTitle>
               <CardDescription>
                 Last updated{" "}

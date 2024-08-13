@@ -4,6 +4,7 @@ import { categoriesTable } from "./categories";
 import { subCategoriesTable } from "./subCategories";
 import { organisationsTable } from "./organisations";
 import { filesTable } from "./files";
+import { accountEnum } from "./enums";
 
 export const transactionsTable = pgTable("transactions", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),
@@ -12,6 +13,7 @@ export const transactionsTable = pgTable("transactions", {
   receiptBookNumber: integer("receiptBookNumber"),
   income: numeric("income"),
   expense: numeric("expense"),
+  account: accountEnum("account"),
   categoryId: uuid("categoryId").notNull().references(() => categoriesTable.id, {onDelete: 'cascade'}),
   subCategoryId: uuid("subCategoryId").references(() => subCategoriesTable.id, {onDelete: 'set null'}),
   organisationId: uuid("organisationId").notNull().references(() => organisationsTable.id, {onDelete: 'cascade'}),

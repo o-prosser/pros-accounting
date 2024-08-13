@@ -1,7 +1,6 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { createTransactionAction } from "../actions";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { PoundSterlingIcon } from "lucide-react";
@@ -11,35 +10,56 @@ import UploadFiles from "./upload";
 import { FormButton } from "@/components/form-button";
 import { ErrorMessage } from "@/components/ui/typography";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { format } from "date-fns";
+import { updateTransactionAction } from "../actions";
 
-const CreateForm = ({
-  searchParams,
+const EditForm = ({
+  transaction,
   categories,
 }: {
-  searchParams: { [key: string]: string };
+  transaction: {
+    name: string;
+    date: Date;
+    receiptBookNumber: number | null;
+    account: "club" | "charity" | null;
+    income: string | null;
+    expense: string | null;
+    categoryId: string;
+    subCategoryId: string | null;
+    notes: string|null;
+    file: {
+      id: string;
+      name: string;
+      key: string;
+      size: string | null;
+      type: string | null;
+    } | null;
+  };
   categories: {
     id: string;
     name: string;
     subCategories: { id: string; name: string }[];
   }[];
 }) => {
-  const [state, formAction] = useFormState(createTransactionAction, {
+  const [state, formAction] = useFormState(updateTransactionAction, {
     errors: {
-    name: [],
-    date: [],
-    account: [],
-    receiptBookNumber: [],
-    income: [],
-    expense: [],
-    category: [],
-    subCategory: [],
-    notes: [],
-    fileId: [],
-    }
+      name: [],
+      date: [],
+      account: [],
+      receiptBookNumber: [],
+      income: [],
+      expense: [],
+      category: [],
+      subCategory: [],
+      notes: [],
+      fileId: [],
+    },
   });
 
   return (
     <form action={formAction} className="max-w-2xl">
+      <input type="hidden" name="id" defaultValue={transaction.id} />
+      
       <Label htmlFor="name">Name</Label>
       <Input
         id="name"
@@ -48,7 +68,7 @@ const CreateForm = ({
         autoComplete="off"
         required
         autoFocus
-        defaultValue={searchParams.name || ""}
+        defaultValue={transaction.name}
         className="mt-1 w-full max-w-lg mb-6"
       />
       {state.errors.name?.length || 0 > 0 ? (
@@ -65,6 +85,7 @@ const CreateForm = ({
         name="date"
         type="date"
         autoComplete="off"
+        defaultValue={format(transaction.date, "yyyy-MM-dd")}
         required
         className="mt-1 w-full min-w-[20rem] mb-6"
       />
@@ -77,19 +98,25 @@ const CreateForm = ({
       )}
 
       <Label htmlFor="account">Account</Label>
-      <Select name="account" defaultValue={searchParams.account}>
+      <Select name="account" defaultValue={transaction.account || undefined}>
         <SelectTrigger className="mt-1 w-full mb-6">
           <SelectValue placeholder="Select account" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="charity">
+            <SelectItem
+              defaultChecked={transaction.account === "charity"}
+              value="charity"
+            >
               <div className="flex items-center gap-1">
                 <div className="h-2 w-2 rounded-full flex-shrink-0 bg-orange-600" />
                 <span className="capitalize">Charity</span>
               </div>
             </SelectItem>
-            <SelectItem value="club">
+            <SelectItem
+              defaultChecked={transaction.account === "club"}
+              value="club"
+            >
               <div className="flex items-center gap-1">
                 <div className="h-2 w-2 rounded-full flex-shrink-0 bg-cyan-600" />
                 <span className="capitalize">Club</span>
@@ -107,6 +134,7 @@ const CreateForm = ({
         autoComplete="off"
         step={1}
         className="mt-1 w-full mb-6"
+        defaultValue={transaction.receiptBookNumber?.toString()}
       />
       {state.errors.receiptBookNumber?.length || 0 > 0 ? (
         <ErrorMessage className="-mt-4 mb-6">
@@ -129,7 +157,7 @@ const CreateForm = ({
               type="income"
               autoComplete="off"
               className="mt-1 w-full pl-7"
-              defaultValue={searchParams.income || ""}
+              defaultValue={transaction.income || ""}
               step="0.01"
             />
           </div>
@@ -152,7 +180,7 @@ const CreateForm = ({
               name="expense"
               type="income"
               autoComplete="off"
-              defaultValue={searchParams.expense || ""}
+              defaultValue={transaction.expense || ""}
               className="mt-1 w-full pl-7"
               step="0.01"
             />
@@ -167,7 +195,11 @@ const CreateForm = ({
         </div>
       </div>
 
-      <SelectCategory defaultValues={searchParams} categories={categories} />
+      <SelectCategory
+        categoryId={transaction.categoryId}
+        subCategoryId={transaction.subCategoryId}
+        categories={categories}
+      />
       {state.errors.category?.length || 0 > 0 ? (
         <ErrorMessage className="-mt-4 mb-4">
           {state.errors.category?.join(", ")}
@@ -184,7 +216,12 @@ const CreateForm = ({
       )}
 
       <Label htmlFor="notes">Notes</Label>
-      <Textarea id="notes" name="notes" className="mt-1 w-full mb-6" />
+      <Textarea
+        id="notes"
+        name="notes"
+        defaultValue={transaction.notes || ""}
+        className="mt-1 w-full mb-6"
+      />
       {state.errors.notes?.length || 0 > 0 ? (
         <ErrorMessage className="-mt-4 mb-4">
           {state.errors.notes?.join(", ")}
@@ -194,7 +231,7 @@ const CreateForm = ({
       )}
 
       <Label htmlFor="fileId">File</Label>
-      <UploadFiles />
+      <UploadFiles defaultValue={transaction.file || undefined} />
       {state.errors.fileId?.length || 0 > 0 ? (
         <ErrorMessage className="-mt-4 mb-4">
           {state.errors.fileId?.join(", ")}
@@ -203,9 +240,9 @@ const CreateForm = ({
         ""
       )}
 
-      <FormButton type="submit">Add transaction</FormButton>
+      <FormButton type="submit">Update transaction</FormButton>
     </form>
   );
 };
 
-export default CreateForm;
+export default EditForm;

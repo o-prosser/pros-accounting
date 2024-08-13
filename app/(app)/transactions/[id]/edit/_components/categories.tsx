@@ -5,17 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 
-const SelectCategory = ({categoryId, subCategoryId, categories}: {categoryId: string; subCategoryId: string |null, categories: {id: string; name: string; account: "charity"|"club", subCategories: {id: string; name: string}[]}[]}) => {
+const SelectCategory = ({categoryId, subCategoryId, categories}: {categoryId: string; subCategoryId: string |null, categories: {id: string; name: string, subCategories: {id: string; name: string}[]}[]}) => {
   const [selected, setSelected]= useState<string|undefined>(categoryId);
 
   return (
     <>
-      <input
-        type="hidden"
-        name="account"
-        defaultValue={categories.find((c) => c.id === selected)?.account}
-      />
-
       <Label htmlFor="category">Category</Label>
       <Select
         name="category"
@@ -29,14 +23,6 @@ const SelectCategory = ({categoryId, subCategoryId, categories}: {categoryId: st
           <SelectGroup>
             {categories.map((category, idx) => (
               <SelectItem value={category.id} key={idx}>
-                <Badge
-                  className="mr-2 py-0 leading-none px-1 mb-px text-[0.625rem]"
-                  variant={`outline-accent${
-                    category.account === "charity" ? "1" : "2"
-                  }`}
-                >
-                  {category.account}
-                </Badge>
                 {category.name}
               </SelectItem>
             ))}

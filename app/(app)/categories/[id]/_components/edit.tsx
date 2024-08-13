@@ -9,7 +9,7 @@ import { updateCategoryAction } from "../actions";
 import { FormButton } from "@/components/form-button";
 import { colours } from "@/utils/colours";
 
-const EditCategory = ({category}: {category: {id: string; name: string; account: "club"|"charity"}}) => {
+const EditCategory = ({category}: {category: {id: string; name: string}}) => {
   return (
     <ResponsiveDialog
       trigger={
@@ -36,7 +36,7 @@ const EditCategory = ({category}: {category: {id: string; name: string; account:
           className="mt-1 w-full mb-6"
         />
 
-        <Label htmlFor="account">Account</Label>
+        {/* <Label htmlFor="account">Account</Label>
         <Select name="account" defaultValue={category.account}>
           <SelectTrigger className="mt-1 w-full mb-6">
             <SelectValue placeholder="Select account" />
@@ -47,7 +47,7 @@ const EditCategory = ({category}: {category: {id: string; name: string; account:
               <SelectItem value="club">Club</SelectItem>
             </SelectGroup>
           </SelectContent>
-        </Select>
+        </Select> */}
 
         <Label htmlFor="colour">Colour</Label>
         <Select name="colour">

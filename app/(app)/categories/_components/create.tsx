@@ -29,7 +29,6 @@ const initialState = {
   newId: "",
   errors: {
     name: [],
-    account: [],
   },
 };
 
@@ -64,7 +63,7 @@ const CreateCategory = () => {
         className="mt-1 w-full mb-6"
       />
 
-      <Label htmlFor="account">Account</Label>
+      {/* <Label htmlFor="account">Account</Label>
       <Select name="account">
         <SelectTrigger className="mt-1 w-full mb-6">
           <SelectValue placeholder="Select account" />
@@ -75,7 +74,7 @@ const CreateCategory = () => {
             <SelectItem value="club">Club</SelectItem>
           </SelectGroup>
         </SelectContent>
-      </Select>
+      </Select> */}
 
       <Label htmlFor="colour">Colour</Label>
       <Select name="colour">

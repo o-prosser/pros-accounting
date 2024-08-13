@@ -38,7 +38,7 @@ export const GET = async (request: NextRequest) => {
   });
 
   const csvHeaders = `Name,Date,Category,Sub category,Account,Income,Expense,Notes`;
-  const rows = transactions.map(transaction => `${transaction.name.replace(",","")},${format(transaction.date, "dd-MM-yyyy")},${transaction.category.name.replace(",","")},${transaction.subCategory?.name.replace(",","")},${transaction.category.account},${transaction.income ? parseFloat(transaction.income).toFixed(2) : ""},${transaction.expense ? parseFloat(transaction.expense).toFixed(2) : ""},${transaction.notes ? transaction.notes.replace(",","") : ""}`);
+  const rows = transactions.map(transaction => `${transaction.name.replace(",","")},${format(transaction.date, "dd-MM-yyyy")},${transaction.category.name.replace(",","")},${transaction.subCategory?.name.replace(",","")},${transaction.account},${transaction.income ? parseFloat(transaction.income).toFixed(2) : ""},${transaction.expense ? parseFloat(transaction.expense).toFixed(2) : ""},${transaction.notes ? transaction.notes.replace(",","") : ""}`);
 
   return new Response(`${csvHeaders}\n${rows.join(`\n`)}`);
 }

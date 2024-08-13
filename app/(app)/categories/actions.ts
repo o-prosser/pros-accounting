@@ -10,7 +10,7 @@ import { z } from "zod";
 
 const schema = z.object({
   name: z.string().min(3).max(50),
-  account: z.string().max(100),
+  // account: z.string().max(100),
   colour: z.string().nullable(),
 })
 
@@ -36,7 +36,7 @@ export const createCategoryAction = async (prevState: any, formData: FormData) =
 
     const category = await db.insert(categoriesTable).values({
       name: fields.data.name,
-      account: fields.data.account === 'club' ? 'club' : 'charity',
+      // account: fields.data.account === 'club' ? 'club' : 'charity',
       colour: fields.data.colour || colours[randomIntFromInterval(0,16)].name,
       organisationId: organisation.id
     }).returning({id: categoriesTable.id});

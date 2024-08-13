@@ -88,7 +88,7 @@ const TransactionsIndexLayout = ({
             </DropdownMenuContent>
           </DropdownMenu>
           <Button asChild>
-            <Link href="/transactions/create">
+            <Link href={`/transactions/create${params.account ? `?account=${params.account}` : ""}`}>
               <PlusIcon />
               <span className="hidden sm:inline">Add transaction</span>
             </Link>

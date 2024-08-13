@@ -189,7 +189,7 @@ const CategoryPage = async ({ params }: { params: { id: string } }) => {
 
       <div className="flex items-start justify-between">
         <div>
-          <div className="flex items-center gap-1">
+          {/* <div className="flex items-center gap-1">
             <div
               className={clsx(
                 "h-3 w-3 rounded-full flex-shrink-0",
@@ -206,7 +206,7 @@ const CategoryPage = async ({ params }: { params: { id: string } }) => {
             >
               <span className="capitalize">{category.account}</span> account
             </span>
-          </div>
+          </div> */}
           <Title>{category.name}</Title>
         </div>
         <EditCategory category={category} />

@@ -8,7 +8,7 @@ import { accountEnum } from "./enums";
 export const categoriesTable = pgTable("categories", {
   id: uuid("id").notNull().unique().primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name", {length: 50}).notNull(),
-  account: accountEnum("account").notNull(),
+  account: accountEnum("account"),
   colour: varchar("colour", {length: 50}),
   organisationId: uuid("organisationId").notNull().references(() => organisationsTable.id, {onDelete: 'cascade'}),
   createdAt: timestamp("createdAt").defaultNow(),

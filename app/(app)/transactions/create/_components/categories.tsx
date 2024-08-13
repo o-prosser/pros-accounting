@@ -21,7 +21,6 @@ const SelectCategory = ({
   categories: {
     id: string;
     name: string;
-    account: "charity" | "club";
     subCategories: { id: string; name: string }[];
   }[];
 }) => {
@@ -31,12 +30,6 @@ const SelectCategory = ({
 
   return (
     <>
-      <input
-        type="hidden"
-        name="account"
-        defaultValue={categories.find((c) => c.id === selected)?.account}
-      />
-
       <Label htmlFor="category">Category</Label>
       <Select
         name="category"
@@ -48,19 +41,7 @@ const SelectCategory = ({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Charity account</SelectLabel>
             {categories
-              .filter((c) => c.account === "charity")
-              .map((category, idx) => (
-                <SelectItem value={category.id} key={idx}>
-                  {category.name}
-                </SelectItem>
-              ))}
-          </SelectGroup>
-          <SelectGroup>
-            <SelectLabel>Club account</SelectLabel>
-            {categories
-              .filter((c) => c.account === "club")
               .map((category, idx) => (
                 <SelectItem value={category.id} key={idx}>
                   {category.name}
