@@ -31,7 +31,6 @@ export type Transaction = {
   category: {
     id: string;
     name: string;
-    account: "club" | "charity";
     colour: string | null;
   };
   subCategory: {

@@ -18,6 +18,7 @@ const EditForm = ({
   categories,
 }: {
   transaction: {
+    id: string;
     name: string;
     date: Date;
     receiptBookNumber: number | null;
