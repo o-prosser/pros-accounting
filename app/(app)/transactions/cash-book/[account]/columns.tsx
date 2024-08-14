@@ -38,6 +38,7 @@ export type Transaction = {
   receiptBookNumber?: number | null;
   income?: string | null;
   expense?: string | null;
+  balance: number;
   amount?: string;
   from?: "club" |"charity";
   to?: "club" |"charity";
@@ -234,6 +235,22 @@ export const columns: ColumnDef<Transaction>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "balance",
+    header: () => <div className="text-right">Balance</div>,
+    cell: ({row}) => {
+      const formatted = new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }).format(row.original.balance);
+
+      return (
+        <div className="text-right text-muted-foreground">
+          {formatted}
+        </div>
+      )
+    }
   },
   {
     id: "actions",
