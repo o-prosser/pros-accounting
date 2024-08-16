@@ -9,7 +9,11 @@ const TransactionsIndex = async ({
   account: "club" | "charity" | null;
 }) => {
   const transactions = await selectTransactions({ account });
-  const transfers = await selectTransfers();
+  const transfers = (await selectTransfers()).map((t) => ({
+      activeAccount: account || undefined,
+      balance: 0,
+      ...t,
+  }));
 
   const payments = [...transactions, ...transfers].sort((a,b) => a.date < b.date ? -1 : 1);
 
