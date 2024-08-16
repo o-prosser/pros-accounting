@@ -53,16 +53,6 @@ export const selectTransactions = cache(
         .map(t => t.from === transaction.account ? `-${t.amount}` : t.amount)
         .reduce((total, current) => total + parseFloat(current || ""), 0);
 
-        console.log(
-          total +
-            transfersTotal +
-            (parseFloat(
-              transaction.account === "club"
-                ? organisation.initialClubBalance || ""
-                : organisation.initialCharityBalance || "",
-            ) || 0),
-        );
-
       return {
         balance:
           total +
