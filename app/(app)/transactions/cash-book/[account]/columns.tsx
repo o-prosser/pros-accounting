@@ -240,10 +240,10 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "balance",
     header: () => <div className="text-right">Balance</div>,
     cell: ({row}) => {
-      const formatted = new Intl.NumberFormat("en-GB", {
+      const formatted = row.original.balance !== 0 ? new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: "GBP",
-      }).format(row.original.balance || 0);
+      }).format(row.original.balance) : "";
 
       return (
         <div className="text-right text-muted-foreground">
