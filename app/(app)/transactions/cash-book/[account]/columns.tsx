@@ -38,7 +38,7 @@ export type Transaction = {
   receiptBookNumber?: number | null;
   income?: string | null;
   expense?: string | null;
-  balance: number;
+  balance?: number;
   amount?: string;
   from?: "club" |"charity";
   to?: "club" |"charity";
@@ -243,7 +243,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const formatted = new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: "GBP",
-      }).format(row.original.balance);
+      }).format(row.original.balance || 0);
 
       return (
         <div className="text-right text-muted-foreground">
