@@ -6,7 +6,7 @@ import { selectTransfers } from "@/models/transfer";
 const TransactionsIndex = async ({
   account,
 }: {
-  account: "club" | "charity" | null;
+  account: "club" | "charity" | "dutch" | null;
 }) => {
   const transactions = await selectTransactions({ account });
   const transfers = (await selectTransfers()).map((t) => ({

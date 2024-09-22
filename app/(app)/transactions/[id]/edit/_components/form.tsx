@@ -22,7 +22,7 @@ const EditForm = ({
     name: string;
     date: Date;
     receiptBookNumber: number | null;
-    account: "club" | "charity" | null;
+    account: "club" | "charity" | "dutch" | null;
     income: string | null;
     expense: string | null;
     categoryId: string;
