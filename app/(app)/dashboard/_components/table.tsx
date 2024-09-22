@@ -24,7 +24,7 @@ export type Transaction = {
   name: string;
   date: string|Date;
   receiptBookNumber: number | null;
-  account: "club" | "charity" | null;
+  account: "club" | "charity" | "dutch" | null;
   income: string | null;
   expense: string | null;
   notes: string | null;
