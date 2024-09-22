@@ -30,6 +30,7 @@ const updateOrganisationSchema = z.object({
   endOfFinancialYear: z.string().min(3).max(255),
   initialClubBalance: z.string().nullable(),
   initialCharityBalance: z.string().nullable(),
+  initialDutchBalance: z.string().nullable(),
   themeColour: z.string().nullable(),
 })
 
@@ -49,6 +50,7 @@ export const updateOrganisation = async (formData: FormData) => {
     endOfFinancialYear: new Date(fields.data.endOfFinancialYear),
     initialCharityBalance: fields.data.initialCharityBalance || null,
     initialClubBalance: fields.data.initialClubBalance || null,
+    initialDutchBalance: fields.data.initialDutchBalance || null,
     themeColour: fields.data.themeColour?.replace("#",""),
   }).where(eq(organisationsTable.id, organisationId));
 

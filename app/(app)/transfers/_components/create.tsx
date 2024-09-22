@@ -108,6 +108,7 @@ const CreateTransfer = () => {
           <SelectGroup>
             <SelectItem value="charity">Charity</SelectItem>
             <SelectItem value="club">Club</SelectItem>
+            <SelectItem value="dutch">Dutch visit</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -121,6 +122,7 @@ const CreateTransfer = () => {
           <SelectGroup>
             <SelectItem value="charity">Charity</SelectItem>
             <SelectItem value="club">Club</SelectItem>
+            <SelectItem value="dutch">Dutch visit</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

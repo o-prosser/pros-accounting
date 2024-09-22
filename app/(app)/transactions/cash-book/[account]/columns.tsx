@@ -34,14 +34,14 @@ export type Transaction = {
   id: string;
   name?: string;
   date: string | Date;
-  account?: "club" |"charity"|null;
+  account?: "club" |"charity"|"dutch"|null;
   receiptBookNumber?: number | null;
   income?: string | null;
   expense?: string | null;
   balance?: number;
   amount?: string;
-  from?: "club" |"charity";
-  to?: "club" |"charity";
+  from?: "club" |"charity"|"dutch";
+  to?: "club" |"charity"|"dutch";
   notes: string | null;
   category?: {
     id: string;
@@ -120,7 +120,7 @@ export const columns: ColumnDef<Transaction>[] = [
               <div
                 className={clsx(
                   "h-2 w-2 rounded-full flex-shrink-0",
-                  from === "club" ? "bg-cyan-600" : "bg-orange-600",
+                  from === "club" ? "bg-cyan-600" : from === 'charity' ? "bg-orange-600" : "bg-green-600",
                 )}
               />
               <span className="capitalize">{from}</span>
@@ -136,7 +136,9 @@ export const columns: ColumnDef<Transaction>[] = [
                       "h-2 w-2 rounded-full flex-shrink-0",
                       row.original.to === "club"
                         ? "bg-cyan-600"
-                        : "bg-orange-600",
+                        : row.original.to === 'charity'
+                        ? "bg-orange-600"
+                        : "bg-green-600",
                     )}
                   />
                   <span className="capitalize">{row.original.to}</span>

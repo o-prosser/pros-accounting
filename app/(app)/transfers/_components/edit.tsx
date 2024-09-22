@@ -60,8 +60,8 @@ const EditTransfer = ({
   transfer: {
     id: string;
     date: string | Date;
-    from: "charity" | "club";
-    to: "charity" | "club";
+    from: "charity" | "club"|"dutch";
+    to: "charity" | "club"|"dutch";
     amount: string;
     notes: string | null;
   };
@@ -124,6 +124,7 @@ const EditTransfer = ({
           <SelectGroup>
             <SelectItem value="charity">Charity</SelectItem>
             <SelectItem value="club">Club</SelectItem>
+            <SelectItem value="dutch">Dutch visit</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -137,6 +138,7 @@ const EditTransfer = ({
           <SelectGroup>
             <SelectItem value="charity">Charity</SelectItem>
             <SelectItem value="club">Club</SelectItem>
+            <SelectItem value="dutch">Dutch visit</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

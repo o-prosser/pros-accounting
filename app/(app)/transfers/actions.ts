@@ -34,8 +34,8 @@ export const createTransferAction = async (prevState: any, formData: FormData) =
 
     const transfer = await db.insert(transfersTable).values({
       date: new Date(fields.data.date),
-      from: fields.data.from === 'club' ? 'club' : 'charity',
-      to: fields.data.to === 'club' ? 'club' : 'charity',
+      from: fields.data.from === 'club' ? 'club' : fields.data.from === 'charity' ? 'charity' : "dutch",
+      to: fields.data.to === 'club' ? 'club' : fields.data.from === 'charity' ? 'charity' : "dutch",
       amount: parseFloat(fields.data.amount).toString(),
       notes: fields.data.notes,
       organisationId: organisation.id
@@ -84,8 +84,18 @@ export const updateTransferAction = async (
       .update(transfersTable)
       .set({
         date: new Date(fields.data.date),
-        from: fields.data.from === "club" ? "club" : "charity",
-        to: fields.data.to === "club" ? "club" : "charity",
+        from:
+          fields.data.from === "club"
+            ? "club"
+            : fields.data.from === "charity"
+            ? "charity"
+            : "dutch",
+        to:
+          fields.data.to === "club"
+            ? "club"
+            : fields.data.from === "charity"
+            ? "charity"
+            : "dutch",
         amount: parseFloat(fields.data.amount).toString(),
         notes: fields.data.notes,
       })

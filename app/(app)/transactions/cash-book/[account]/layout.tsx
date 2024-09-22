@@ -28,6 +28,8 @@ const TransactionsIndexLayout = ({
       ? "club"
       : params.account === "charity"
       ? "charity"
+      : params.account === 'dutch'
+      ? "dutch"
       : null;
 
   return (

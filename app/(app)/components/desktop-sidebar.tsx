@@ -85,6 +85,11 @@ const DesktopSidebar = ({
             <Link href="/transactions/cash-book/club">Club</Link>
           </Button>
         </ActivePage>
+        <ActivePage pathname="/transactions/cash-book/dutch">
+          <Button variant={null} asChild>
+            <Link href="/transactions/cash-book/dutch">Dutch visit</Link>
+          </Button>
+        </ActivePage>
       </div>
       <ActivePage pathname="/categories">
         <DesktopLink href="/categories">

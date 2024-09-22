@@ -33,8 +33,8 @@ import DeleteTransfer from "./delete";
 export type Transfer = {
   id: string;
   date: string | Date;
-  from: "charity"|"club";
-  to: "charity"|"club"
+  from: "charity" | "club" | "dutch";
+  to: "charity" | "club" | "dutch";
   amount: string;
   notes: string | null;
 };
@@ -67,7 +67,9 @@ export const columns: ColumnDef<Transfer>[] = [
             "h-2 w-2 rounded-full flex-shrink-0",
             row.original.from === "club"
               ? "bg-cyan-600"
-              : "bg-orange-600",
+              : row.original.from === "charity"
+              ? "bg-orange-600"
+              : "bg-green-600",
           )}
         />
         <span className="capitalize">{row.original.from}</span>
@@ -83,7 +85,9 @@ export const columns: ColumnDef<Transfer>[] = [
             "h-2 w-2 rounded-full flex-shrink-0",
             row.original.to === "club"
               ? "bg-cyan-600"
-              : "bg-orange-600",
+              : row.original.to === "charity"
+              ? "bg-orange-600"
+              : "bg-green-600",
           )}
         />
         <span className="capitalize">{row.original.to}</span>
@@ -93,9 +97,11 @@ export const columns: ColumnDef<Transfer>[] = [
   {
     accessorKey: "notes",
     header: "Notes",
-    cell: ({row}) => (
-      <p className="max-w-xs text-xs leading-4 whitespace-normal">{row.original.notes}</p>
-    )
+    cell: ({ row }) => (
+      <p className="max-w-xs text-xs leading-4 whitespace-normal">
+        {row.original.notes}
+      </p>
+    ),
   },
   {
     accessorKey: "amount",
@@ -106,13 +112,7 @@ export const columns: ColumnDef<Transfer>[] = [
         currency: "GBP",
       }).format(parseFloat(row.original.amount));
 
-      return (
-        <div
-          className="text-right font-medium"
-        >
-          {formatted}
-        </div>
-      );
+      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
   {

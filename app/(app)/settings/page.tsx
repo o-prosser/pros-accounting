@@ -90,6 +90,21 @@ const SettingsPage = async () => {
             />
           </div>
 
+          <Label htmlFor="initialDutchBalance">Initial Dutch visit balance</Label>
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
+              <PoundSterlingIcon className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <Input
+              id="initialDutchBalance"
+              name="initialDutchBalance"
+              type="number"
+              step={0.01}
+              defaultValue={organisation.initialDutchBalance?.toString()}
+              className="mt-1 w-full mb-4 pl-7"
+            />
+          </div>
+
           <Label htmlFor="themeColour">Theme colour</Label>
           <Input
             id="themeColour"

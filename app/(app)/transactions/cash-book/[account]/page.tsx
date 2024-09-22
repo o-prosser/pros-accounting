@@ -5,6 +5,7 @@ import { columns } from "./columns";
 import { selectTransfers } from "@/models/transfer";
 import { isAfter, isBefore, isSameDay } from "date-fns";
 import { selectCurrentOrganisation } from "@/models/organisation";
+import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 
 export const metadata: Metadata = { title: "Transactions" };
 
@@ -20,73 +21,72 @@ const TransactionsPage = async ({
       ? "club"
       : params.account === "charity"
       ? "charity"
+      : params.account === "dutch"
+      ? "dutch"
       : null;
 
   const organisation = await selectCurrentOrganisation();
 
-  const transactions = await selectTransactions({ account });
-  const transfers = (await selectTransfers()).map((t) => {
-    // const total = transactions.filter(transaction => transaction.date < t.date).map((transaction) => transaction.income ? transaction.income : `-${transaction.expense}`).reduce((total, current) => total + parseFloat(current || ""), 0);
-    // const transfersTotal = transfers
-    //   .filter((transfer) =>
-    //     isSameDay(transfer.date, t.date)
-    //       ? (transfer.notes || "") < (t.notes || "")
-    //       : isBefore(transfer.date, t.date),
-    //   )
-    //   .map((transfer) =>
-    //     transfer.from === t.from ? `-${transfer.amount}` : transfer.amount,
-    //   )
-    //   .reduce((total, current) => total + parseFloat(current || ""), 0);
-
-    return {
-      activeAccount: account || undefined,
-      // balance: account ? total +
-      //     transfersTotal +
-      //     parseFloat(
-      //       transaction.account === "club"
-      //         ? organisation.initialClubBalance || ""
-      //         : organisation.initialCharityBalance || "",
-      //     ) : undefined,
-      balance: undefined,
-      ...t,
-    };
+  const transactions: SelectTransaction[] = await selectTransactions({
+    account,
   });
+  const transfers: SelectTransfer[] = (await selectTransfers({ account })).map(
+    (t) => ({
+      activeAccount: account || undefined,
+      ...t,
+    }),
+  );
 
   const payments = [...transactions, ...transfers].sort((a, b) =>
-    isBefore(a.date, b.date) ? 1 : -1,
+    isAfter(a.date, b.date) ? 1 : -1,
   );
 
   const balancedTransfersPayments = payments.map((payment, idx) => {
-    if (payment.balance !== undefined) return payment;
+    if (account === null && payment.hasOwnProperty("amount")) return payment;
+    const previousPayments = payments.slice(0, idx + 1);
+    const previousPaymentValues: number[] = previousPayments.map(
+      (previousPayment) => {
+        if (!previousPayment.hasOwnProperty("amount")) {
+          // @ts-expect-error
+          return previousPayment.account === (payment.account || account)
+            ? // @ts-expect-error
+              parseFloat(`${previousPayment.income}`) ||
+                // @ts-expect-error
+                parseFloat(`-${previousPayment.expense}`)
+            : 0;
+        } else {
+          // @ts-expect-error
+          return previousPayment.from === (payment.account || account)
+            ? // @ts-expect-error
+              parseFloat(`-${previousPayment.amount}`)
+            : // @ts-expect-error
+              parseFloat(previousPayment.amount);
+        }
+      },
+    );
 
-    const { balance: _balance, ...paymentWithoutBalance } = payment;
-
-    if (account === null) return { balance: 0, ...paymentWithoutBalance };
-
-    const initialBalance =
-      idx + 1 === payments.length
-        ? parseFloat(
-            (account === "club"
-              ? organisation.initialClubBalance
-              : organisation.initialCharityBalance) || "",
-          )
-        : payments[idx + 1].balance;
-    const addition =
-      account === "charity"
-        ? payment.from === "charity"
-          ? parseFloat("-" + payment.amount)
-          : parseFloat(payment.amount)
-        : payment.from === "club"
-        ? parseFloat("-" + payment.amount)
-        : parseFloat(payment.amount);
+    const previousPaymentsTotal = previousPaymentValues.reduce(
+      (total, current) => total + current,
+      parseFloat(
+        // @ts-ignore
+        ((payment.account||account) === "club"
+          ? organisation.initialClubBalance
+          : // @ts-ignore
+          (payment.account||account) === "charity"
+          ? organisation.initialCharityBalance
+          : organisation.initialDutchBalance) || "",
+      ),
+    );
 
     return {
-      balance: (initialBalance || 0) + addition,
-      ...paymentWithoutBalance,
+      balance: previousPaymentsTotal,
+      ...payment,
     };
   });
 
-  return <DataTable columns={columns} data={balancedTransfersPayments} />;
+  return (
+    <DataTable columns={columns} data={balancedTransfersPayments.reverse()} />
+  );
 };
 
 export default TransactionsPage;

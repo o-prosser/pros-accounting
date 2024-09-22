@@ -7,7 +7,7 @@ import { selectTransfers } from "./transfer";
 import { isBefore, isSameDay } from "date-fns";
 
 export const selectTransactions = cache(
-  async (params: { account: "club" | "charity" | null } | undefined) => {
+  async (params: { account: "club" | "charity" | "dutch" | null } | undefined) => {
     const organisation = await selectCurrentOrganisation();
 
     const transactions = await db.query.transactionsTable.findMany({
@@ -43,6 +43,8 @@ export const selectTransactions = cache(
 
     // Add balance to each transaction
     const transactionsWithBalance = transactions.map((transaction, idx) => {
+      const previousTransactions = idx > 0 ? transactions.slice(0, idx) : [];
+
       const total = transactions.filter((t) => t.account === transaction.account).map((t) => t.income ? t.income : `-${t.expense}`).slice(idx).reduce((total, current) => total + parseFloat(current || ""), 0);
       const transfersTotal = transfers
         .filter((t) =>
@@ -70,6 +72,6 @@ export const selectTransactions = cache(
     //   ? transactions.filter((t) => t.category.account === params.account)
     //   : transactions;
 
-    return transactionsWithBalance;
+    return transactions
   },
 );

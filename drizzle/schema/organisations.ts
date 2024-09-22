@@ -12,6 +12,7 @@ export const organisationsTable = pgTable("organisations", {
   endOfFinancialYear: date("end_of_financial_year", {mode: "date"}).defaultNow().notNull(),
   initialClubBalance: numeric("initial_club_balance"),
   initialCharityBalance: numeric("initial_charity_balance"),
+  initialDutchBalance: numeric("initial_dutch_balance"),
   themeColour: varchar("theme_colour", {length: 6}),
   logo: text("logo"),
   slug: varchar("slug").unique().notNull(),

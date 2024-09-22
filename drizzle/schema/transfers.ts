@@ -28,6 +28,9 @@ export const transfersTable = pgTable("transfers", {
   createdAt: timestamp("createdAt").defaultNow(),
 });
 
+export type InsertTransfer = typeof transfersTable.$inferInsert;
+export type SelectTransfer = typeof transfersTable.$inferSelect;
+
 export const transfersRelations = relations(
   transfersTable,
   ({ one }) => ({
