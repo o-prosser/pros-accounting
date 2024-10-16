@@ -63,12 +63,18 @@ export const columns: ColumnDef<Transaction>[] = [
       row.original.name ? (
         <Button asChild variant="link" size={null}>
           <Link href={`/transactions/${row.original.id}`}>
-            {row.original.name}
+            {row.original.name.substring(0, 30)}
+            {row.original.name.length > 30 ? "..." : ""}
           </Link>
         </Button>
       ) : row.original.notes ? (
-        <span className="font-medium">{row.original.notes}</span>
-      ) : <span className="italic">Untitled transfer</span>,
+        <span className="font-medium">
+          {row.original.notes.substring(0, 30)}
+          {row.original.notes.length > 30 ? "..." : ""}
+        </span>
+      ) : (
+        <span className="italic">Untitled transfer</span>
+      ),
   },
   {
     accessorKey: "date",
@@ -120,7 +126,11 @@ export const columns: ColumnDef<Transaction>[] = [
               <div
                 className={clsx(
                   "h-2 w-2 rounded-full flex-shrink-0",
-                  from === "club" ? "bg-cyan-600" : from === 'charity' ? "bg-orange-600" : "bg-green-600",
+                  from === "club"
+                    ? "bg-cyan-600"
+                    : from === "charity"
+                    ? "bg-orange-600"
+                    : "bg-green-600",
                 )}
               />
               <span className="capitalize">{from}</span>
@@ -136,7 +146,7 @@ export const columns: ColumnDef<Transaction>[] = [
                       "h-2 w-2 rounded-full flex-shrink-0",
                       row.original.to === "club"
                         ? "bg-cyan-600"
-                        : row.original.to === 'charity'
+                        : row.original.to === "charity"
                         ? "bg-orange-600"
                         : "bg-green-600",
                     )}
@@ -241,18 +251,19 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "balance",
     header: () => <div className="text-right">Balance</div>,
-    cell: ({row}) => {
-      const formatted = row.original.balance !== undefined ? new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      }).format(row.original.balance) : "";
+    cell: ({ row }) => {
+      const formatted =
+        row.original.balance !== undefined
+          ? new Intl.NumberFormat("en-GB", {
+              style: "currency",
+              currency: "GBP",
+            }).format(row.original.balance)
+          : "";
 
       return (
-        <div className="text-right text-muted-foreground">
-          {formatted}
-        </div>
-      )
-    }
+        <div className="text-right text-muted-foreground">{formatted}</div>
+      );
+    },
   },
   {
     id: "actions",
