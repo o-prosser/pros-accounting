@@ -93,7 +93,7 @@ export const updateTransferAction = async (
         to:
           fields.data.to === "club"
             ? "club"
-            : fields.data.from === "charity"
+            : fields.data.to === "charity"
             ? "charity"
             : "dutch",
         amount: parseFloat(fields.data.amount).toString(),
