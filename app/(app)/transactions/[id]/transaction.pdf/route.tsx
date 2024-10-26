@@ -28,8 +28,10 @@ const Row = ({ label, value }: { label: string; value: string|number|null }) => 
 
 export const GET = async (
   request: NextRequest,
-  { params }: { params: { id: string } },
+  routeData: { params: Promise<{ id: string }> }
 ) => {
+  const params = await routeData.params
+
   const organisation = await selectCurrentOrganisation();
 
   const transaction = await db.query.transactionsTable.findFirst({
