@@ -47,7 +47,7 @@ export type Transaction = {
     id: string;
     name: string;
     colour: string | null;
-  };
+  } | null;
   subCategory?: {
     id: string;
     name: string;

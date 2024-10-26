@@ -11,7 +11,7 @@ import CreateForm from "./_components/form";
 export const runtime = "edge";
 
 const TransfersCreatePage = async () => {
-  // const categories = await selectCategoriesMin();
+  const categories = await selectCategoriesMin();
 
   return (
     <>
@@ -27,7 +27,7 @@ const TransfersCreatePage = async () => {
 
       <Title>Add a transfer</Title>
 
-      <CreateForm />
+      <CreateForm categories={categories} />
     </>
   );
 };
