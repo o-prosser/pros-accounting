@@ -3,10 +3,13 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import MobileNavbar from "./components/mobile-navbar";
+import DesktopSidebar from "./components/desktop-sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
-const Toaster = dynamic(() => import('@/components/ui/toaster').then(mod => mod.Toaster))
-const MobileNavbar = dynamic(() => import('./components/mobile-navbar'));
-const DesktopSidebar = dynamic(() => import('./components/desktop-sidebar'));
+// const Toaster = dynamic(() => import('@/components/ui/toaster').then(mod => mod.Toaster))
+// const MobileNavbar = dynamic(() => import('./components/mobile-navbar'));
+// const DesktopSidebar = dynamic(() => import('./components/desktop-sidebar'));
 
 export const metadata: Metadata = {
   title: {

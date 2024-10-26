@@ -50,7 +50,7 @@ export const createSession = async (sessionId: string) => {
 };
 
 export const clearSession = async () => {
-  await fetch(`${env.APP_URL}/api/sessions`, {
+  return await fetch(`${env.APP_URL}/api/sessions`, {
     method: "DELETE",
   });
 };
@@ -92,7 +92,9 @@ export const getMiddlewareSession = async (request: NextRequest) => {
 };
 
 export const getSession = async () => {
-  const cookieSessionValue = (await cookies()).get("session_id")?.value;
+  const cookieStore = await cookies()
+
+  const cookieSessionValue = cookieStore.get("session_id")?.value;
   if (!cookieSessionValue) return;
 
   const extractedSessionId = await decodeUserSession(cookieSessionValue);

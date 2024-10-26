@@ -19,14 +19,15 @@ export const middleware = async (request: NextRequest) => {
     pathname.startsWith("/register") ||
     pathname.startsWith("/forgot-password") ||
     pathname.startsWith("/reset-password") ||
-    pathname === '/';
+    pathname === "/";
 
   let response = NextResponse.next();
   const url = request.nextUrl.clone();
-  if (protectedRoute && !session) url.pathname = 'login';
-  if (guestRoute && session) url.pathname = "dashboard"
+  if (protectedRoute && !session) url.pathname = "/login";
+  if (guestRoute && session) url.pathname = "/dashboard";
 
-    if (guestRoute && session || (protectedRoute && !session)) NextResponse.rewrite(url);
+  if ((guestRoute && session) || (protectedRoute && !session))
+    NextResponse.rewrite(url);
 
   if (shouldDelete) response.cookies.delete("session_id");
   return response;
