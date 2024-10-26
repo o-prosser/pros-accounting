@@ -16,6 +16,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { getColour } from "@/utils/colours";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
@@ -34,14 +39,14 @@ export type Transaction = {
   id: string;
   name?: string;
   date: string | Date;
-  account?: "club" |"charity"|"dutch"|null;
+  account?: "club" | "charity" | "dutch" | null;
   receiptBookNumber?: number | null;
   income?: string | null;
   expense?: string | null;
   balance?: number;
   amount?: string;
-  from?: "club" |"charity"|"dutch";
-  to?: "club" |"charity"|"dutch";
+  from?: "club" | "charity" | "dutch";
+  to?: "club" | "charity" | "dutch";
   notes: string | null;
   category?: {
     id: string;
@@ -61,52 +66,68 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
     header: "Transaction",
     cell: ({ row }) =>
       row.original.name ? (
-        <Button asChild variant="link" size={null}>
-          <Link href={`/transactions/${row.original.id}`}>
-            {row.original.name.substring(0, 30)}
-            {row.original.name.length > 30 ? "..." : ""}
-          </Link>
-        </Button>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button asChild variant="link" size={null}>
+              <Link href={`/transactions/${row.original.id}`}>
+                {row.original.name.substring(0, 30)}
+                {row.original.name.length > 30 ? "..." : ""}
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent align="start">{row.original.name}</TooltipContent>
+        </Tooltip>
       ) : (
-        <div className="h-7 flex font-medium">
-          <div className={clsx(row.original.to && "relative flex")}>
-            <div className="flex items-center gap-1">
-              <div
-                className={clsx(
-                  "h-2 w-2 rounded-full flex-shrink-0",
-                  row.original.from === "club"
-                    ? "bg-cyan-600"
-                    : row.original.from === "charity"
-                    ? "bg-orange-600"
-                    : "bg-green-600",
-                )}
-              />
-              <span className="capitalize">{row.original.from}</span>
-            </div>
-
-            {row.original.to ? (
-              <div className="flex absolute left-full inset-y-0 items-center ml-1 gap-1">
-                <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
-
+        <Tooltip>
+          <TooltipTrigger>
+            <div className="h-7 flex font-medium">
+              <div className={clsx(row.original.to && "relative flex")}>
                 <div className="flex items-center gap-1">
                   <div
                     className={clsx(
                       "h-2 w-2 rounded-full flex-shrink-0",
-                      row.original.to === "club"
+                      row.original.from === "club"
                         ? "bg-cyan-600"
-                        : row.original.to === "charity"
+                        : row.original.from === "charity"
                         ? "bg-orange-600"
                         : "bg-green-600",
                     )}
                   />
-                  <span className="capitalize">{row.original.to}</span>
+                  <span className="capitalize">{row.original.from}</span>
                 </div>
+
+                {row.original.to ? (
+                  <div className="flex absolute left-full inset-y-0 items-center ml-1 gap-1">
+                    <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
+
+                    <div className="flex items-center gap-1">
+                      <div
+                        className={clsx(
+                          "h-2 w-2 rounded-full flex-shrink-0",
+                          row.original.to === "club"
+                            ? "bg-cyan-600"
+                            : row.original.to === "charity"
+                            ? "bg-orange-600"
+                            : "bg-green-600",
+                        )}
+                      />
+                      <span className="capitalize">{row.original.to}</span>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent align="start">
+            <p>
+              {row.original.notes || (
+                <span className="italic">Untitled transfer</span>
+              )}
+            </p>
+          </TooltipContent>
+        </Tooltip>
       ),
   },
   {

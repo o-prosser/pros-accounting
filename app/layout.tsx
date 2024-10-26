@@ -8,6 +8,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import {ViewTransitions} from 'next-view-transitions'
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const generalSans = localFont({
   src: [
@@ -66,23 +67,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ViewTransitions>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={generalSans.className + " antialiased"}
-          style={{ viewTransitionName: "app" }}
-        >
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+    <TooltipProvider delayDuration={300}>
+      <ViewTransitions>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            className={generalSans.className + " antialiased"}
+            style={{ viewTransitionName: "app" }}
           >
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </body>
+        </html>
+      </ViewTransitions>
+    </TooltipProvider>
   );
 }
