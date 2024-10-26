@@ -6,5 +6,6 @@ export const env = createEnv({
     DATABASE_URL: z.string().min(1),
     JOSE_SESSION_KEY: z.string().min(1),
     SALT_KEY: z.string().min(1),
+    APP_URL: z.string().min(1),
   }
 })

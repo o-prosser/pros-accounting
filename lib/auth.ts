@@ -50,7 +50,7 @@ export const createSession = async (sessionId: string) => {
 };
 
 export const clearSession = async () => {
-  await fetch("/api/sessions", {
+  await fetch(`${env.APP_URL}/api/sessions`, {
     method: "DELETE",
   });
 };
