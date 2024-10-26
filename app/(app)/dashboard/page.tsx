@@ -10,7 +10,7 @@ import { getSession } from "@/lib/auth";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 const DashboardPage = async () => {
   const session = await getSession();
