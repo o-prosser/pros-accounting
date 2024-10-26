@@ -1,7 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { PencilIcon, PlusIcon, PoundSterlingIcon, TrashIcon } from "lucide-react";
+import {
+  PencilIcon,
+  PlusIcon,
+  PoundSterlingIcon,
+  TrashIcon,
+} from "lucide-react";
 import { FormButton } from "@/components/form-button";
 import { useFormState } from "react-dom";
 import { useEffect, useRef, useState } from "react";
@@ -25,8 +30,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { deleteTransferAction } from "../actions";
-
+import { deleteTransferAction } from "../../../transfers/actions";
 
 const DeleteTransfer = ({
   transfer,
@@ -35,7 +39,10 @@ const DeleteTransfer = ({
     id: string;
   };
 }) => {
-  const [state, formAction] = useFormState(deleteTransferAction, {success: false, deletedId: ""});
+  const [state, formAction] = useFormState(deleteTransferAction, {
+    success: false,
+    deletedId: "",
+  });
   const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -71,7 +78,8 @@ const DeleteTransfer = ({
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Delete transfer</DialogTitle>
-            <DialogDescription>Are you sure you want to delete this transfer?
+            <DialogDescription>
+              Are you sure you want to delete this transfer?
             </DialogDescription>
           </DialogHeader>
           <Form />

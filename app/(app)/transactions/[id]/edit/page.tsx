@@ -13,7 +13,9 @@ import EditForm from "./_components/form";
 
 export const runtime = "edge";
 
-const TransactionsEditPage = async ({ params }: { params: { id: string } }) => {
+const TransactionsEditPage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
   const categories = await selectCategoriesMin();
   const organisation = await selectCurrentOrganisation();
 

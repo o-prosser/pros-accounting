@@ -1,6 +1,5 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { createTransactionAction } from "../actions";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -11,6 +10,7 @@ import UploadFiles from "./upload";
 import { FormButton } from "@/components/form-button";
 import { ErrorMessage } from "@/components/ui/typography";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useActionState } from "react";
 
 const CreateForm = ({
   searchParams,
@@ -23,7 +23,7 @@ const CreateForm = ({
     subCategories: { id: string; name: string }[];
   }[];
 }) => {
-  const [state, formAction] = useFormState(createTransactionAction, {
+  const [state, formAction] = useActionState(createTransactionAction, {
     errors: {
     name: [],
     date: [],

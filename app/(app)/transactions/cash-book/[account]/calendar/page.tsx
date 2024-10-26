@@ -40,13 +40,13 @@ const monthNames = [
   "December",
 ];
 
-const TransactionsCalendarPage = async ({
-  searchParams,
-  params
-}: {
-  searchParams: { [key: string]: string };
-  params: {account: string};
+const TransactionsCalendarPage = async(props: {
+  searchParams: Promise<{ [key: string]: string }>;
+  params: Promise<{account: string}>;
 }) => {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
   const account =
     params.account === "club"
       ? "club"

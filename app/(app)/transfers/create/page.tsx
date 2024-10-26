@@ -8,12 +8,10 @@ import {
 } from "@/components/ui/breadcrumb";
 import CreateForm from "./_components/form";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
-const TransactionsCreatePage = async (props: {searchParams: Promise<{[key: string]: string}>}) => {
-  const searchParams = await props.searchParams;
-
-  const categories = await selectCategoriesMin();
+const TransfersCreatePage = async () => {
+  // const categories = await selectCategoriesMin();
 
   return (
     <>
@@ -21,17 +19,17 @@ const TransactionsCreatePage = async (props: {searchParams: Promise<{[key: strin
         <BreadcrumbList>
           <BreadcrumbItem>Dashboard</BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>Transactions</BreadcrumbItem>
+          <BreadcrumbItem>Transfers</BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>Add transaction</BreadcrumbItem>
+          <BreadcrumbItem>Add transfer</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Title>Add a transaction</Title>
+      <Title>Add a transfer</Title>
 
-      <CreateForm searchParams={searchParams} categories={categories} />
+      <CreateForm />
     </>
   );
 };
 
-export default TransactionsCreatePage;
+export default TransfersCreatePage;

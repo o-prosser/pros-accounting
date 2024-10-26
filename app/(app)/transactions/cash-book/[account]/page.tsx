@@ -6,16 +6,17 @@ import { selectTransfers } from "@/models/transfer";
 import { isAfter, isBefore, isSameDay } from "date-fns";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
+import { columnsWithoutAccount } from "./columnsWithoutAccount";
 
 export const metadata: Metadata = { title: "Transactions" };
 
 export const runtime = "edge";
 
-const TransactionsPage = async ({
-  params,
-}: {
-  params: { account: string };
+const TransactionsPage = async (props: {
+  params: Promise<{ account: string }>;
 }) => {
+  const params = await props.params;
+
   const account =
     params.account === "club"
       ? "club"
@@ -85,7 +86,7 @@ const TransactionsPage = async ({
   });
 
   return (
-    <DataTable columns={columns} data={balancedTransfersPayments.reverse()} />
+    <DataTable columns={account ? columnsWithoutAccount : columns} data={balancedTransfersPayments.reverse()} />
   );
 };
 

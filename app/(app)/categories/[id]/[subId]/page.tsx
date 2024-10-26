@@ -15,11 +15,11 @@ import { columns } from "./_components/table";
 
 import { Metadata } from "next";
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: { id: string; subId: string };
+export const generateMetadata = async (props: {
+  params: Promise<{ id: string; subId: string }>;
 }): Promise<Metadata> => {
+  const params = await props.params;
+
   const category = await selectCategory(params.id);
   const subCategory = category?.subCategories.find(
     (subCategory) => subCategory.id === params.subId,
@@ -30,11 +30,11 @@ export const generateMetadata = async ({
 
 export const runtime = "edge";
 
-const CategoryPage = async ({
-  params,
-}: {
+const CategoryPage = async (props: {
   params: { id: string; subId: string };
 }) => {
+  const params = await props.params;
+
   const category = await selectCategory(params.id);
   if (!category) notFound();
 

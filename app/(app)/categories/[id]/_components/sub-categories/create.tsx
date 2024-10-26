@@ -6,8 +6,7 @@ import { Label } from "@/components/ui/label";
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { PlusIcon } from "lucide-react";
 import { FormButton } from "@/components/form-button";
-import { useFormState } from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import {
@@ -43,7 +42,7 @@ const CreateSubCategory = ({
 }: {
   category: { id: string; name: string };
 }) => {
-    const [state, formAction] = useFormState(
+    const [state, formAction] = useActionState(
       createSubCategoryAction,
       initialState,
     );

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { loginAction } from "./actions";
 import { ErrorMessage, Title } from "@/components/ui/typography";
 import { FormButton } from "@/components/form-button";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 
 const initialState = {
   errors: {
@@ -16,7 +16,7 @@ const initialState = {
 }
 
 const LoginForm = () => {
-  const [state, formAction] = useFormState(loginAction, initialState);
+  const [state, formAction] = useActionState(loginAction, initialState);
 
   return (
     <>

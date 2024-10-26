@@ -41,7 +41,7 @@ export default function IncomeExpenseChart({
 }) {
   return (
     <ChartContainer config={chartConfig(account)}>
-      <BarChart accessibilityLayer data={data}>
+      <BarChart height={300} accessibilityLayer data={data}>
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="month"

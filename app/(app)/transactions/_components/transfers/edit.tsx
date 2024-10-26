@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PlusIcon, PoundSterlingIcon } from "lucide-react";
+import { PencilIcon, PlusIcon, PoundSterlingIcon } from "lucide-react";
 import Link from "next/link";
 import { FormButton } from "@/components/form-button";
 import { useFormState } from "react-dom";
@@ -37,24 +37,39 @@ import {
 } from "@/components/ui/dialog";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Textarea } from "@/components/ui/textarea";
-import { createTransferAction } from "../actions";
+import {
+  createTransferAction,
+  updateTransferAction,
+} from "../../../transfers/actions";
+import { format } from "date-fns";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 const initialState = {
   success: false,
-  newId: "",
+  updatedId: "",
   errors: {
-    id: [],
     date: [],
     from: [],
     to: [],
     amount: [],
     notes: [],
-    organisationId: []
+    organisationId: [],
   },
 };
 
-const CreateTransfer = () => {
-  const [state, formAction] = useFormState(createTransferAction, initialState);
+const EditTransfer = ({
+  transfer,
+}: {
+  transfer: {
+    id: string;
+    date: string | Date;
+    from: "charity" | "club" | "dutch";
+    to: "charity" | "club" | "dutch";
+    amount: string;
+    notes: string | null;
+  };
+}) => {
+  const [state, formAction] = useFormState(updateTransferAction, initialState);
   const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -63,16 +78,18 @@ const CreateTransfer = () => {
       setOpen(false);
       formRef.current?.reset();
       toast({
-        title: "Transfer added successfully",
-        description: "The account transfer has beeen added.",
+        title: "Transfer updated successfully",
+        description: "The account transfer has beeen updated.",
         variant: "success",
       });
     }
-  }, [state?.success, state?.newId]);
+  }, [state?.success, state?.updatedId]);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const Form = () => (
     <form action={formAction} ref={formRef}>
+      <input type="hidden" name="id" defaultValue={transfer.id} />
+
       <Label htmlFor="amount">Amount</Label>
       <div className="relative">
         <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
@@ -86,6 +103,7 @@ const CreateTransfer = () => {
           autoFocus
           className="mt-1 w-full pl-7 mb-6"
           step="0.01"
+          defaultValue={transfer.amount}
         />
       </div>
 
@@ -96,11 +114,12 @@ const CreateTransfer = () => {
         type="date"
         autoComplete="off"
         required
+        defaultValue={format(transfer.date, "yyyy-MM-dd")}
         className="mt-1 w-full min-w-[calc(100%-1rem)] mb-6"
       />
 
       <Label htmlFor="from">Moving from</Label>
-      <Select name="from">
+      <Select name="from" defaultValue={transfer.from}>
         <SelectTrigger className="mt-1 w-full mb-6">
           <SelectValue placeholder="Select account" />
         </SelectTrigger>
@@ -114,7 +133,7 @@ const CreateTransfer = () => {
       </Select>
 
       <Label htmlFor="to">Moving to</Label>
-      <Select name="to">
+      <Select name="to" defaultValue={transfer.to}>
         <SelectTrigger className="mt-1 w-full mb-6">
           <SelectValue placeholder="Select account" />
         </SelectTrigger>
@@ -128,9 +147,14 @@ const CreateTransfer = () => {
       </Select>
 
       <Label htmlFor="notes">Notes</Label>
-      <Textarea id="notes" name="notes" className="mt-1 w-full mb-6" />
+      <Textarea
+        id="notes"
+        name="notes"
+        defaultValue={transfer.notes || ""}
+        className="mt-1 w-full mb-6"
+      />
 
-      <FormButton type="submit">Add transfer</FormButton>
+      <FormButton type="submit">Update transfer</FormButton>
     </form>
   );
 
@@ -138,16 +162,15 @@ const CreateTransfer = () => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>
-            <PlusIcon />
-            <span className="hidden sm:inline">Add transfer</span>
+          <Button size="icon" variant="ghost">
+            <PencilIcon />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add transfer</DialogTitle>
+            <DialogTitle>Edit transfer</DialogTitle>
             <DialogDescription>
-              Add the details of the new account transfer.
+              Update the details of the account transfer.
             </DialogDescription>
           </DialogHeader>
           <Form />
@@ -159,16 +182,15 @@ const CreateTransfer = () => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button>
-          <PlusIcon />
-          <span className="hidden sm:inline">Add transfer</span>
+        <Button size="icon" variant="ghost">
+          <PencilIcon />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Add transfer</DrawerTitle>
+          <DrawerTitle>Edit transfer</DrawerTitle>
           <DrawerDescription>
-            Add the details of the new account transfer.
+            Update the details of the account transfer.
           </DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
@@ -184,4 +206,4 @@ const CreateTransfer = () => {
   );
 };
 
-export default CreateTransfer;
+export default EditTransfer;

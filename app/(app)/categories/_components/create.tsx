@@ -16,8 +16,7 @@ import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { createCategoryAction } from "../actions";
 import { FormButton } from "@/components/form-button";
-import { useFormState } from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -33,7 +32,7 @@ const initialState = {
 };
 
 const CreateCategory = () => {
-  const [state, formAction] = useFormState(createCategoryAction, initialState);
+  const [state, formAction] = useActionState(createCategoryAction, initialState);
   const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 

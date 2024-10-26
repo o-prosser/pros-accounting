@@ -45,7 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={generalSans.className + " antialiased"}
           style={{ viewTransitionName: "app" }}

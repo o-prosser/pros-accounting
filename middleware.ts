@@ -22,10 +22,11 @@ export const middleware = async (request: NextRequest) => {
     pathname === '/';
 
   let response = NextResponse.next();
-  if (protectedRoute && !session)
-    response = NextResponse.redirect(new URL("/login", request.url));
-  if (guestRoute && session)
-    response = NextResponse.redirect(new URL("/dashboard", request.url));
+  const url = request.nextUrl.clone();
+  if (protectedRoute && !session) url.pathname = 'login';
+  if (guestRoute && session) url.pathname = "dashboard"
+
+    if (guestRoute && session || (protectedRoute && !session)) NextResponse.rewrite(url);
 
   if (shouldDelete) response.cookies.delete("session_id");
   return response;

@@ -55,7 +55,7 @@ export type Transaction = {
   activeAccount?: string;
 };
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
     header: "Transaction",
@@ -144,33 +144,6 @@ export const columns: ColumnDef<Transaction>[] = [
         )}
       </div>
     ),
-  },
-  {
-    header: "Account",
-    
-    cell: ({ row }) => {
-      return row.original.account ? (
-        <div className="flex">
-          <div className={clsx(row.original.to && "relative flex")}>
-            <div className="flex items-center gap-1">
-              <div
-                className={clsx(
-                  "h-2 w-2 rounded-full flex-shrink-0",
-                  row.original.account === "club"
-                    ? "bg-cyan-600"
-                    : row.original.account === "charity"
-                    ? "bg-orange-600"
-                    : "bg-green-600",
-                )}
-              />
-              <span className="capitalize">{row.original.account}</span>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      );
-    },
   },
   {
     accessorKey: "category",

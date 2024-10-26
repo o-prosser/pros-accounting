@@ -10,6 +10,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { organisationsTable } from "./organisations";
 import { accountEnum } from "./enums";
+import { categoriesTable } from "./categories";
 
 export const transfersTable = pgTable("transfers", {
   id: uuid("id")
@@ -21,6 +22,8 @@ export const transfersTable = pgTable("transfers", {
   from: accountEnum("from").notNull(),
   to: accountEnum("to").notNull(),
   amount: numeric("amount").notNull(),
+  categoryId: uuid("categoryId")
+    .references(() => categoriesTable.id, { onDelete: "cascade" }),
   notes: text("notes"),
   organisationId: uuid("organisationId")
     .notNull()
@@ -37,6 +40,10 @@ export const transfersRelations = relations(
     organisation: one(organisationsTable, {
       fields: [transfersTable.organisationId],
       references: [organisationsTable.id],
+    }),
+    category: one(categoriesTable, {
+      fields: [transfersTable.categoryId],
+      references: [categoriesTable.id],
     }),
   }),
 );

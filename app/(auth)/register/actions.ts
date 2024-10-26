@@ -39,11 +39,11 @@ export const registerAction = async (formData: FormData) => {
     await createSession(session.id);
 
     await resend.emails.send({
-      from: "prosaccounting@prossermedia.co.uk",
+      from: "ProsAccounting <prosaccounting@prossermedia.co.uk>",
       to: fields.data.email,
       subject: "Welcome to ProsAccounting",
-      react: WelcomeEmail({name: fields.data.name.split(" ")[0]})
-    })
+      react: WelcomeEmail({ name: fields.data.name.split(" ")[0] }),
+    });
   } catch (error) {
     if (error instanceof DrizzleError && error.message === "AUTH_DUPLICATE_KEY_ID") {
       return {

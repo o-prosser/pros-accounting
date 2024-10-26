@@ -30,6 +30,7 @@ import db from "@/lib/db";
 import { sessionsTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
+import { logout } from "../actions";
 
 const DesktopSidebar = ({
   organisation,
@@ -38,26 +39,6 @@ const DesktopSidebar = ({
   organisation: { name: string };
   user: { firstName: string; lastName: string | null };
 }) => {
-  const logout = async () => {
-    "use server";
-
-    const session = await getSession();
-    if (!session) redirect("/login");
-
-    // Remove cookie
-    clearSession();
-
-    // Set db entry to expire now so can't be used in future
-    await db
-      .update(sessionsTable)
-      .set({
-        expiresAt: new Date(),
-      })
-      .where(eq(sessionsTable.id, session.id));
-
-    redirect("/login");
-  };
-
   return (
     <div className="hidden md:flex fixed z-10 left-4 inset-y-4 bg-muted w-80 py-6 px-3 gap-y-2 flex-col items-start rounded-2xl">
       <Logo className="h-6 pl-3 w-auto mb-4 fill-foreground" />
@@ -97,12 +78,12 @@ const DesktopSidebar = ({
           Categories
         </DesktopLink>
       </ActivePage>
-      <ActivePage pathname="/transfers">
+      {/* <ActivePage pathname="/transfers">
         <DesktopLink href="/transfers">
           <ArrowRightLeftIcon />
           Transfers
         </DesktopLink>
-      </ActivePage>
+      </ActivePage> */}
       <ActivePage pathname="/reports">
         <DesktopLink href="/reports">
           <FileTextIcon />

@@ -1,6 +1,5 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { PoundSterlingIcon } from "lucide-react";
@@ -12,6 +11,7 @@ import { ErrorMessage } from "@/components/ui/typography";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { updateTransactionAction } from "../actions";
+import { useActionState } from "react";
 
 const EditForm = ({
   transaction,
@@ -42,7 +42,7 @@ const EditForm = ({
     subCategories: { id: string; name: string }[];
   }[];
 }) => {
-  const [state, formAction] = useFormState(updateTransactionAction, {
+  const [state, formAction] = useActionState(updateTransactionAction, {
     errors: {
       name: [],
       date: [],

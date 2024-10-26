@@ -1,8 +1,7 @@
 "use client";
 
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { useRef } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useRef } from "react";
 import { resetPasswordAction } from "./actions";
 import { FormButton } from "@/components/form-button";
 import { Label } from "@/components/ui/label";
@@ -10,7 +9,7 @@ import { Input } from "@/components/ui/input";
 
 const ResetPasswordForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useFormState(resetPasswordAction, {valid: false, email: "", token: ""});
+  const [state, formAction] = useActionState(resetPasswordAction, {valid: false, email: "", token: ""});
 
   return (
     <form action={formAction} ref={formRef} className={state?.valid ? "w-full" :"flex justify-center"}>

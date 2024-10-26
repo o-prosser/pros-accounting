@@ -40,7 +40,7 @@ export const decodeUserSession = async (jwt: string) => {
 export const createSession = async (sessionId: string) => {
   const newSessionValue = await encodeUserSession(sessionId);
 
-  cookies().set("session_id", newSessionValue, {
+  (await cookies()).set("session_id", newSessionValue, {
     sameSite: "lax",
     path: "/",
     httpOnly: true,
@@ -92,7 +92,7 @@ export const getMiddlewareSession = async (request: NextRequest) => {
 };
 
 export const getSession = async () => {
-  const cookieSessionValue = cookies().get("session_id")?.value;
+  const cookieSessionValue = (await cookies()).get("session_id")?.value;
   if (!cookieSessionValue) return;
 
   const extractedSessionId = await decodeUserSession(cookieSessionValue);

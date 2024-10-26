@@ -1,7 +1,15 @@
 import { Caption, Title } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CalendarIcon, ChevronDownIcon, PlusIcon, SlashIcon, TableIcon } from "lucide-react";
+import {
+  ArrowLeftRightIcon,
+  BanknoteIcon,
+  CalendarIcon,
+  ChevronDownIcon,
+  PlusIcon,
+  SlashIcon,
+  TableIcon,
+} from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,8 +17,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Metadata } from "next";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
+import { use } from "react";
 
 export const metadata: Metadata = { title: "Transactions" };
 
@@ -18,17 +32,19 @@ export const runtime = "edge";
 
 const TransactionsIndexLayout = ({
   params,
-  children
+  children,
 }: {
-  params: { account: string };
-  children: React.ReactNode
+  params: Promise<{ account: string }>;
+  children: React.ReactNode;
 }) => {
+  const {account: accountParam} = use(params);
+
   const account =
-    params.account === "club"
+    accountParam === "club"
       ? "club"
-      : params.account === "charity"
+      : accountParam === "charity"
       ? "charity"
-      : params.account === 'dutch'
+      : accountParam === "dutch"
       ? "dutch"
       : null;
 
@@ -56,7 +72,8 @@ const TransactionsIndexLayout = ({
             Cash book{" "}
             {account ? (
               <>
-                <SlashIcon className="text-muted-foreground h-6 w-6 mx-2" /> <span className="capitalize">{account}</span>
+                <SlashIcon className="text-muted-foreground h-6 w-6 mx-2" />{" "}
+                <span className="capitalize">{account}</span>
               </>
             ) : (
               ""
@@ -76,25 +93,53 @@ const TransactionsIndexLayout = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem asChild>
-                <Link href={`/transactions/cash-book/${params.account}`}>
+                <Link href={`/transactions/cash-book/${accountParam}`}>
                   <TableIcon className="h-4 w-4 text-muted-foreground mr-2" />
                   Table
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/transactions/cash-book/${params.account}/calendar?date=${format(new Date, "yyyy-MM-dd")}`}>
+                <Link
+                  href={`/transactions/cash-book/${
+                    accountParam
+                  }/calendar?date=${format(new Date(), "yyyy-MM-dd")}`}
+                >
                   <CalendarIcon className="h-4 w-4 text-muted-foreground mr-2" />
                   Calendar
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button asChild>
-            <Link href={`/transactions/create${params.account ? `?account=${params.account}` : ""}`}>
-              <PlusIcon />
-              <span className="hidden sm:inline">Add transaction</span>
-            </Link>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button>
+                <PlusIcon />
+                Add
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`/transactions/create${
+                    accountParam ? `?account=${accountParam}` : ""
+                  }`}
+                >
+                  <BanknoteIcon className="h-4 w-4 text-muted-foreground mr-2" />
+                  Add transaction
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`/transfers/create${
+                    accountParam ? `?account=${accountParam}` : ""
+                  }`}
+                >
+                  <ArrowLeftRightIcon className="h-4 w-4 text-muted-foreground mr-2" />
+                  Add transfer
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 

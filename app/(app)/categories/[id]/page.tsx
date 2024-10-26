@@ -44,11 +44,11 @@ import dynamic from "next/dynamic";
 
 const EditCategory = dynamic(() => import("./_components/edit"));
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: { id: string };
+export const generateMetadata = async(props: {
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> => {
+  const params = await props.params
+
   const category = await selectCategory(params.id);
 
   return { title: category?.name };
@@ -71,7 +71,9 @@ const monthNames = [
   "December",
 ];
 
-const CategoryPage = async ({ params }: { params: { id: string } }) => {
+const CategoryPage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
   const category = await selectCategory(params.id);
   if (!category) notFound();
 

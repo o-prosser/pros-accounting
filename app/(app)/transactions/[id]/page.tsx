@@ -29,7 +29,9 @@ import { getColour } from "@/utils/colours";
 
 export const runtime = "edge";
 
-const TransactionPage = async ({ params }: { params: { id: string } }) => {
+const TransactionPage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
   const organisation = await selectCurrentOrganisation();
 
   const transaction = await db.query.transactionsTable.findFirst({
