@@ -125,26 +125,26 @@ export const columns: ColumnDef<Transaction>[] = [
         </div>
       );
     },
-    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM yyyy"),
+    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM"),
   },
-  {
-    header: "Receipt no.",
-    accessorKey: "receiptBookNumber",
-    cell: ({ row }) => (
-      <div className="flex items-center">
-        {row.original.receiptBookNumber ? (
-          <>
-            <HashIcon className="h-3 w-3 text-muted-foreground" />
-            {row.original.receiptBookNumber}
-          </>
-        ) : row.original.amount ? (
-          ""
-        ) : (
-          ""
-        )}
-      </div>
-    ),
-  },
+  // {
+  //   header: "Receipt no.",
+  //   accessorKey: "receiptBookNumber",
+  //   cell: ({ row }) => (
+  //     <div className="flex items-center">
+  //       {row.original.receiptBookNumber ? (
+  //         <>
+  //           <HashIcon className="h-3 w-3 text-muted-foreground" />
+  //           {row.original.receiptBookNumber}
+  //         </>
+  //       ) : row.original.amount ? (
+  //         ""
+  //       ) : (
+  //         ""
+  //       )}
+  //     </div>
+  //   ),
+  // },
   {
     header: "Account",
     
@@ -216,7 +216,7 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="text-rght">Amount</div>,
     cell: ({ row }) => {
       const amount =
         row.original.income !== null && row.original.income !== undefined
@@ -230,9 +230,10 @@ export const columns: ColumnDef<Transaction>[] = [
       }).format(amount);
 
       return (
-        <div
+        <div className="flex justify-between">
+        <span
           className={clsx(
-            "text-right font-medium",
+            "text-rght font-medium",
             row.original.income && "text-green-600",
             row.original.expense && "text-red-600",
             row.original.activeAccount &&
@@ -254,32 +255,43 @@ export const columns: ColumnDef<Transaction>[] = [
             ? "-"
             : ""}
           {formatted}
+          </span>
+
+          <span className="text-muted-foreground">
+            {row.original.balance !== undefined
+              ? "(" + new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(row.original.balance) + ")"
+              : ""}
+          </span>
         </div>
       );
     },
   },
-  {
-    accessorKey: "balance",
-    header: () => <div className="text-right">Balance</div>,
-    cell: ({ row }) => {
-      const formatted =
-        row.original.balance !== undefined
-          ? new Intl.NumberFormat("en-GB", {
-              style: "currency",
-              currency: "GBP",
-            }).format(row.original.balance)
-          : "";
+  // {
+  //   accessorKey: "balance",
+  //   header: () => <div className="text-rght">Balance</div>,
+  //   cell: ({ row }) => {
+  //     const formatted =
+  //       row.original.balance !== undefined
+  //         ? new Intl.NumberFormat("en-GB", {
+  //             style: "currency",
+  //             currency: "GBP",
+  //           }).format(row.original.balance)
+  //         : "";
 
-      return (
-        <div className="text-right text-muted-foreground">{formatted}</div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="text-riht text-muted-foreground">{formatted}</div>
+  //     );
+  //   },
+  // },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       return (
-        <div className="flex justify-end">
+        <div className="flex -ml-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

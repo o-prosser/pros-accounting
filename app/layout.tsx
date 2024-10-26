@@ -12,12 +12,34 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 const generalSans = localFont({
   src: [
     {
-      path: "./generalsans-variable.woff2",
+      path: "./fonts/GeneralSans-Bold.woff2",
+      weight: "700",
       style: "normal",
     },
     {
-      path: "./generalsans-variableitalic.woff2",
+      path: "./fonts/GeneralSans-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/GeneralSans-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/GeneralSans-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/GeneralSans-Italic.woff2",
+      weight: "400",
       style: "italic",
+    },
+    {
+      path: "./fonts/GeneralSans-Light.woff2",
+      weight: "300",
+      style: "normal",
     },
   ],
   display: "swap",

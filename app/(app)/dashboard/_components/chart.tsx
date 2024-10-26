@@ -50,20 +50,16 @@ export default function IncomeExpenseChart({
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              indicator="line"
+            />
+          }
+        />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar
-          dataKey="income"
-          stackId="a"
-          fill="var(--color-income)"
-          radius={[0, 0, 4, 4]}
-        />
-        <Bar
-          dataKey="expense"
-          stackId="a"
-          fill="var(--color-expense)"
-          radius={[4, 4, 0, 0]}
-        />
+        <Bar dataKey="income" fill="var(--color-income)" radius={4} />
+        <Bar dataKey="expense" fill="var(--color-expense)" radius={4} />
       </BarChart>
     </ChartContainer>
   );

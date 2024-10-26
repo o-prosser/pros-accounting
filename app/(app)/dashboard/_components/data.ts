@@ -1,5 +1,6 @@
 import { selectCurrentOrganisation } from "@/models/organisation"
 import { selectTransactions } from "@/models/transaction";
+import { selectTransfers } from "@/models/transfer";
 import { addDays, differenceInMonths, getMonth, startOfMonth, subMonths } from "date-fns";
 
 const getMonths = async () => {
@@ -42,6 +43,7 @@ const monthNames = [
 export const getTotals = async () => {
   const months = await getMonths();
   const transactions = await selectTransactions({ account: null });
+  const transfers  = await selectTransfers();
 
   const getTotal = async (
     account: "charity" | "club",
@@ -63,7 +65,18 @@ export const getTotals = async () => {
       0,
     );
 
-    return total;
+        const transferTotal = transfers
+          .filter((transfer) => {
+            return (
+              (type === "income"
+                ? transfer.to === account
+                : transfer.from === account) && getMonth(transfer.date) === month
+            );
+          })
+          .map((transfer) => transfer.amount)
+          .reduce((total, current) => total + parseFloat(current || ""), 0);
+
+    return total + transferTotal;
   };
 
 

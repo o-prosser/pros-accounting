@@ -127,24 +127,24 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
     },
     cell: ({ row }) => format(row.getValue("date"), "E, dd MMM yyyy"),
   },
-  {
-    header: "Receipt no.",
-    accessorKey: "receiptBookNumber",
-    cell: ({ row }) => (
-      <div className="flex items-center">
-        {row.original.receiptBookNumber ? (
-          <>
-            <HashIcon className="h-3 w-3 text-muted-foreground" />
-            {row.original.receiptBookNumber}
-          </>
-        ) : row.original.amount ? (
-          ""
-        ) : (
-          ""
-        )}
-      </div>
-    ),
-  },
+  // {
+  //   header: "Receipt no.",
+  //   accessorKey: "receiptBookNumber",
+  //   cell: ({ row }) => (
+  //     <div className="flex items-center">
+  //       {row.original.receiptBookNumber ? (
+  //         <>
+  //           <HashIcon className="h-3 w-3 text-muted-foreground" />
+  //           {row.original.receiptBookNumber}
+  //         </>
+  //       ) : row.original.amount ? (
+  //         ""
+  //       ) : (
+  //         ""
+  //       )}
+  //     </div>
+  //   ),
+  // },
   {
     accessorKey: "category",
     header: "Category",
@@ -172,7 +172,7 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
               {category.name}
             </span>
           </div>
-          {(subCategory !== null && subCategory !== undefined) ? (
+          {subCategory !== null && subCategory !== undefined ? (
             <div className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto bg-muted/50 border-muted-forergound">
               <span className="font-medium flex-shrink-0 text-muted-foreground">
                 {subCategory?.name}
@@ -189,7 +189,7 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="text-rght">Amount</div>,
     cell: ({ row }) => {
       const amount =
         row.original.income !== null && row.original.income !== undefined
@@ -203,56 +203,70 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
       }).format(amount);
 
       return (
-        <div
-          className={clsx(
-            "text-right font-medium",
-            row.original.income && "text-green-600",
-            row.original.expense && "text-red-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.to &&
-              "text-green-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.from &&
-              "text-red-600",
-          )}
-        >
-          {row.original.income ? "+" : ""}
-          {row.original.expense ? "-" : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.to
-            ? "+"
-            : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.from
-            ? "-"
-            : ""}
-          {formatted}
+        <div className="flex justify-between">
+          <span
+            className={clsx(
+              "text-rght font-medium",
+              row.original.income && "text-green-600",
+              row.original.expense && "text-red-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.to &&
+                "text-green-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.from &&
+                "text-red-600",
+            )}
+          >
+            {row.original.income ? "+" : ""}
+            {row.original.expense ? "-" : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.to
+              ? "+"
+              : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.from
+              ? "-"
+              : ""}
+            {formatted}
+          </span>
+
+          <span className="text-muted-foreground">
+            {row.original.balance !== undefined
+              ? "(" +
+                new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(row.original.balance) +
+                ")"
+              : ""}
+          </span>
         </div>
       );
     },
   },
-  {
-    accessorKey: "balance",
-    header: () => <div className="text-right">Balance</div>,
-    cell: ({ row }) => {
-      const formatted =
-        row.original.balance !== undefined
-          ? new Intl.NumberFormat("en-GB", {
-              style: "currency",
-              currency: "GBP",
-            }).format(row.original.balance)
-          : "";
+  // {
+  //   accessorKey: "balance",
+  //   header: () => <div className="text-rght">Balance</div>,
+  //   cell: ({ row }) => {
+  //     const formatted =
+  //       row.original.balance !== undefined
+  //         ? new Intl.NumberFormat("en-GB", {
+  //             style: "currency",
+  //             currency: "GBP",
+  //           }).format(row.original.balance)
+  //         : "";
 
-      return (
-        <div className="text-right text-muted-foreground">{formatted}</div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="text-riht text-muted-foreground">{formatted}</div>
+  //     );
+  //   },
+  // },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       return (
-        <div className="flex justify-end">
+        <div className="flex -ml-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

@@ -25,9 +25,9 @@ const DashboardPage = async () => {
       </Suspense>
 
       <Heading className="mt-6 mb-2">Latest transactions</Heading>
-      <Suspense fallback={<TransactionsLoading />}>
-        <Transactions />
-      </Suspense>
+        <Suspense fallback={<TransactionsLoading />}>
+          <Transactions />
+        </Suspense>
     </>
   );
 };
