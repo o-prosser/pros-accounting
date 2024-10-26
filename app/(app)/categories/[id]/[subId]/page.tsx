@@ -31,7 +31,7 @@ export const generateMetadata = async (props: {
 export const runtime = "edge";
 
 const CategoryPage = async (props: {
-  params: { id: string; subId: string };
+  params: Promise<{ id: string; subId: string }>;
 }) => {
   const params = await props.params;
 
