@@ -6,7 +6,9 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import { HashIcon } from "lucide-react";
 
-const TransactionLogReport = async ({searchParams}: {searchParams: {[key: string]: string|null}}) => {
+const TransactionLogReport = async (routeData: {searchParams: Promise<{[key: string]: string|null}>}) => {
+  const searchParams = await routeData.searchParams;
+
   const organisation = await selectCurrentOrganisation();
 
   const transactionsData = await db.query.transactionsTable.findMany({
