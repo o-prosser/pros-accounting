@@ -24,20 +24,20 @@ const chartConfig = (account: "charity" | "club") =>
   ({
     income: {
       label: "Income",
-      color: account === 'charity' ? "#ea580c" : "#0891b2",
+      color: account === "charity" ? "#ea580c" : "#0891b2",
     },
     expense: {
       label: "Expense",
-      color: account === 'charity' ? "#fdba74" : "#67e8f9",
+      color: account === "charity" ? "#fdba74" : "#67e8f9",
     },
   } satisfies ChartConfig);
 
 export default function IncomeExpenseChart({
   data,
-  account
+  account,
 }: {
   data: { month: string; income: number; expense: number }[];
-  account: "charity"|"club"
+  account: "charity" | "club";
 }) {
   return (
     <ChartContainer config={chartConfig(account)}>
@@ -50,13 +50,7 @@ export default function IncomeExpenseChart({
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <ChartTooltip
-          content={
-            <ChartTooltipContent
-              indicator="line"
-            />
-          }
-        />
+        <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar dataKey="income" fill="var(--color-income)" radius={4} />
         <Bar dataKey="expense" fill="var(--color-expense)" radius={4} />
