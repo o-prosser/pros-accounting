@@ -7,12 +7,12 @@ import {
   ChevronDownIcon,
   FileTextIcon,
   HelpCircleIcon,
-  HomeIcon,
   LogOutIcon,
   PlusIcon,
   SettingsIcon,
   TagIcon,
   User,
+  HomeIcon
 } from "lucide-react";
 import {
   DropdownMenu,

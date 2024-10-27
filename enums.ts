@@ -1,0 +1,1 @@
+export type Account = "charity" | "club" | "dutch";
