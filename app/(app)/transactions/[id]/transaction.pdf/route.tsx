@@ -19,7 +19,7 @@ export const GET = async (
   request: NextRequest,
   routeData: { params: Promise<{ id: string }> }
 ) => {
-  const params = await routeData.params
+  const params = await routeData.params;
 
   const organisation = await selectCurrentOrganisation();
 
@@ -34,15 +34,18 @@ export const GET = async (
 
   if (!transaction) notFound();
 
-  const stream = await renderToStream(Template({organisation, transaction}));
-
+  const stream = await renderToStream(Template({ organisation, transaction }));
+  
+  // @ts-ignore
   const blob = await new Response(stream).blob();
 
   const headers: Record<string, string> = {
     "Content-Type": "application/pdf",
     "Cache-Control": "no-store, max-age=0",
-    "Content-Disposition": `attachment; filename="${transaction.name.toLowerCase().replace(" ", "-")}".pdf`
-  }
+    "Content-Disposition": `attachment; filename="${transaction.name
+      .toLowerCase()
+      .replace(" ", "-")}".pdf`,
+  };
 
-  return new Response(blob, {headers});
+  return new Response(blob, { headers });
 };
