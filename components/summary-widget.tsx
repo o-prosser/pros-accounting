@@ -147,7 +147,7 @@ const SummaryWidget = async ({
             account === "dutch" && "bg-green-600",
           )}
         />
-        <span>Charity account</span>
+        <span className="capitalize">{account} account</span>
       </CardTitle>
       <div className="mt-2">
         <Caption>Current balance</Caption>
