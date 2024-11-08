@@ -114,6 +114,8 @@ const TransactionPage = async (props: { params: Promise<{ id: string }> }) => {
                         "h-2 w-2 rounded-full flex-shrink-0",
                         transaction.account === "club"
                           ? "bg-cyan-600"
+                          : transaction.account === 'dutch'
+                          ? "bg-green-600"
                           : "bg-orange-600",
                       )}
                     />
