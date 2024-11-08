@@ -23,7 +23,7 @@ const schema = z.object({
   category: z
     .string()
     .length(36, { message: "You must add a category to the transaction." }),
-  account: z.enum(["charity", "club"], {message: "The account typw is required."}),
+  account: z.enum(["charity", "club", "dutch"], {message: "The account type is required."}),
   subCategory: z.string().optional().nullable(),
   notes: z.string().nullable(),
   fileId: z.string().nullable(),

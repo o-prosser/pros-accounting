@@ -95,6 +95,12 @@ const CreateForm = ({
                 <span className="capitalize">Club</span>
               </div>
             </SelectItem>
+            <SelectItem value="dutch">
+              <div className="flex items-center gap-1">
+                <div className="h-2 w-2 rounded-full flex-shrink-0 bg-green-600" />
+                <span className="capitalize">Dutch</span>
+              </div>
+            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
