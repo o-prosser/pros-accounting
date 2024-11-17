@@ -243,7 +243,7 @@ const ChartTooltipContent = React.forwardRef<
                           {new Intl.NumberFormat("en-GB", {
                             style: "currency",
                             currency: "GBP",
-                          }).format(parseFloat(item.value?.toLocaleString() || ""))}
+                          }).format(parseFloat(item.value?.toString() || ""))}
                         </span>
                       {/* )} */}
                     </div>
