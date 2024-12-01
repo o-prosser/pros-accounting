@@ -173,7 +173,7 @@ const SummaryWidget = async ({
         </div>
       </div>
       {viewButton ? (
-        <Button asChild variant={null} size="sm" className="group -ml-3 my-2">
+        <Button asChild variant={null} size="sm" className={cn("group -ml-3", account !== 'dutch' ? "my-2" : "mt-2 -mb-2")}>
           <Link href={`/transactions/cash-book/${account}`}>
             View transactions
             <ArrowRightIcon

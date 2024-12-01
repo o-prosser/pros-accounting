@@ -114,6 +114,40 @@ const TotalsLoading =  () => {
             <Skeleton className="h-2 w-[54px]" />
           </div>
         </Card>
+        <Card className="p-4 md:col-span-2 border-green-600 bg-green-100/50 dark:bg-green-950">
+          <CardTitle className="flex items-center gap-2">
+            <div className="h-4 w-4 rounded-full flex-shrink-0 bg-green-600" />
+            <span>Dutch account</span>
+          </CardTitle>
+          <div className="mt-2">
+            <Caption>
+              Balance <span className="italic text-sm">(to date)</span>
+            </Caption>
+            <p className="text-3xl font-mono font-semibold tracking-tight">
+              ---
+            </p>
+          </div>
+          <div className="flex gap-6 mt-2">
+            <div>
+              <Caption className="text-sm">Income</Caption>
+              <p className="text-xl font-mono font-semibold tracking-tight">
+                ---
+              </p>
+            </div>
+            <div>
+              <Caption className="text-sm">Expense</Caption>
+              <p className="text-xl font-mono font-semibold tracking-tight">
+                ---
+              </p>
+            </div>
+          </div>
+          <Button asChild variant={null} size="sm" className="group -ml-3 mt-2 -mb-2">
+            <Link href="/transactions?account=club">
+              View transactions
+              <ArrowRightIcon className="h-4 w-4 ml-2 group-hover:translate-x-1 transition duration-100 text-green-600" />
+            </Link>
+          </Button>
+        </Card>
       </div>
     </>
   );

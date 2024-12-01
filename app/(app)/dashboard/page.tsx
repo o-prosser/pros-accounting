@@ -26,7 +26,7 @@ const DashboardPage = async () => {
           <SummaryWidget account="club" />
           <SummaryWidget
             account="dutch"
-            viewButton={false}
+            // viewButton={false}
             chart={false}
             className="md:col-span-2"
           />
