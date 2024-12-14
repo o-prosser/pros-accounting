@@ -130,7 +130,7 @@ const TransactionLogReport = async (routeData: {
           <div
             key={idx}
             style={
-              idx === 19 || (idx - 19) % 22 === 0
+              idx === 18 || (idx - 18) % 25 === 0
                 ? { pageBreakAfter: "always" }
                 : undefined
             }
@@ -138,9 +138,9 @@ const TransactionLogReport = async (routeData: {
             <div className="flex items-center text-[10pt] border-b divide-x border-x">
               <div
                 style={{ width: "5.5cm", padding: "8px 6px" }}
-                className="font-medium line-clamp-1 py-2 px-1.5"
+                className="font-medium py-2 px-1.5"
               >
-                {payment.name || (
+                {payment.name ? (<p className="line-clamp-1">{payment.name}</p>) : (
                   <div className="flex">
                     <div className="flex items-center gap-1">
                       <div
@@ -263,11 +263,11 @@ const TransactionLogReport = async (routeData: {
               </p>
             </div>
 
-            {idx === 19 || (idx - 19) % 22 === 0 ? (
+            {idx === 18 || (idx - 18) % 25 === 0 ? (
               <div className="flex justify-between items-end mt-2">
                 <Logo className="h-[0.5cm] w-[4cm]" />
                 <p className="text-[10pt]">
-                  Page {idx === 19 ? "1" : (idx - 19) / 22 + 1}
+                  Page {idx === 18 ? "1" : (idx - 18) / 25 + 1}
                 </p>
               </div>
             ) : (
