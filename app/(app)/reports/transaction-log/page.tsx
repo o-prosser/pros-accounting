@@ -4,18 +4,15 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
-import {  Title } from "@/components/ui/typography";
+import { Caption, Title } from "@/components/ui/typography";
 import { selectCategoriesMin } from "@/models/category";
 import { FormButton } from "@/components/form-button";
 import SelectFields from "./_components/select";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import TransactionLogForm from "./form";
 
 export const runtime = "edge";
 
@@ -34,25 +31,13 @@ const CategorySummariesPage = async () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Title>Transaction log</Title>
+      <Title className="mb-0">Generate a transaction log</Title>
 
-      <Card className="max-w-lg">
-        <CardHeader>
-          <CardTitle>Generate report</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form method="GET" action="/reports/transaction-log/report">
-            <SelectFields categories={categories} />
+      <Caption>
+        Fitler the payments to include, and customise the look of the report.
+      </Caption>
 
-            <Label htmlFor="date">Date range</Label>
-            <DateRangePicker />
-
-            <FormButton type="submit" className="mt-4">
-              Generate report
-            </FormButton>
-          </form>
-        </CardContent>
-      </Card>
+     <TransactionLogForm />
     </>
   );
 };
