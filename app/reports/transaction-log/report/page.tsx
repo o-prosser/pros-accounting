@@ -39,15 +39,13 @@ const TransactionLogReport = async (routeData: {
       )
     : transfersData;
 
-  const transactions = searchParams.account
-    ? transactionsData.filter((t) => t.account === searchParams.account)
-    : transactionsData;
-
   const includedAccounts = [
     searchParams.charity === "on" ? "charity" : undefined,
     searchParams.club === "on" ? "club" : undefined,
     searchParams.dutch === "on" ? "dutch" : undefined,
   ].filter((a) => a !== undefined);
+
+  const transactions = transactionsData.filter((t) => t.account ? includedAccounts.includes(t.account) : true)
 
   const payments: {
     id: string;
