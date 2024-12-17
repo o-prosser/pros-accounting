@@ -1,3 +1,4 @@
+import { ChartColumnIcon } from "@/components/icons/chart-column"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Heading, Muted, Title } from "@/components/ui/typography"
@@ -46,15 +47,15 @@ const ReportLink = ({title, description, href}: {title: string; description: str
 const ReportsPage = () => {
   return (
     <>
-      <Breadcrumb>
+      {/* <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>Dashboard</BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>Reports</BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb>
+      </Breadcrumb> */}
 
-      <Title>Report builder</Title>
+      <Title icon={ChartColumnIcon}>Report builder</Title>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ReportLink title="Category summaries" description="Income and expense totals for each sub category, in a specified time period." href={`/reports/category-summaries`} />

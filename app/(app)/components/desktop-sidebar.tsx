@@ -34,6 +34,7 @@ import { sessionsTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { logout } from "../actions";
+import { ChartColumnIcon } from "@/components/icons/chart-column";
 
 const DesktopSidebar = ({
   organisation,
@@ -69,7 +70,7 @@ const DesktopSidebar = ({
       </ActivePage>
       <ActivePage pathname="/reports">
         <DesktopLink href="/reports">
-          <FileBarChartIcon />
+          <ChartColumnIcon />
           Reporting
         </DesktopLink>
       </ActivePage>
