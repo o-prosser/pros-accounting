@@ -55,7 +55,7 @@ const ReportsPage = () => {
         </BreadcrumbList>
       </Breadcrumb> */}
 
-      <Title icon={ChartColumnIcon}>Report builder</Title>
+      <Title icon={ChartColumnIcon}>Reports</Title>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ReportLink title="Category summaries" description="Income and expense totals for each sub category, in a specified time period." href={`/reports/category-summaries`} />

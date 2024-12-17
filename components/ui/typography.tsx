@@ -24,7 +24,7 @@ export const Title = ({className, icon, ...props}: React.ComponentProps<"h1"> & 
   return (
     <div className="mb-6 flex items-center gap-3">
       {icon && Icon ? (
-        <div className="h-8 w-8 rounded-lg from-foreground to-zinc-800 bg-gradient-to-t shadow-md flex justify-center items-center">
+        <div className="h-8 w-8 rounded-lg from-foreground to-zinc-700 bg-gradient-to-t shadow-md flex justify-center items-center">
           <Icon className="h-5 w-5 text-background" style={{color: "hsl(var(--background))"}} />
         </div>
       ) : ""}
