@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@import "@uploadthing/react/styles.css";
+
+@variant dark (&:where(.dark, .dark *));
+@variant hover (&:hover);
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+@theme {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(240 10% 3.9%);
+  --color-card: var(--color-background);
+  --color-card-foreground: var(--color-foreground);
+  --color-popover: var(--color-background);
+  --color-popover-foreground: var(--color-foreground);
+  --color-primary: hsl(240 5.9% 10%);
+  --color-primary-foreground: hsl(0 0% 98%);
+  --color-secondary: hsl(240 4.8% 95.9%);
+  --color-secondary-foreground: hsl(240 5.9% 10%);
+  --color-muted: hsl(240 4.8% 95.9%);
+  --color-muted-foreground: hsl(240 3.8% 46.1%);
+  --color-accent: var(--color-muted);
+  --color-accent-foreground: var(--color-muted-foreground);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-icon: oklch(87.11% 0.0055 286.29);
+  --color-icon-dark: oklch(37.03% 0.0119 285.81);
+  --color-border: hsl(240 5.9% 90%);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-border);
+  --color-chart-1: hsl(12 76% 61%);
+  --color-chart-2: hsl(173 58% 39%);
+  --color-chart-3: hsl(197 37% 24%);
+  --color-chart-4: hsl(43 74% 66%);
+  --color-chart-5: hsl(27 87% 67%);
+  
+  --color-red: hsl(0 93.3% 94.1% / 0.5);
+  --color-orange: hsl(34.3 100% 91.8% / 0.5);
+  --color-amber: hsl(48 96.5% 88.8% / 0.5);
+  --color-yellow: hsl(54.9 96.7% 88% / 0.5);
+  --color-lime: hsl(79.6 89.1% 89.2% / 0.5);
+  --color-green: hsl(140.6 84.2% 92.5% / 0.5);
+  --color-emerald: hsl(149.3 80.4% 90% / 0.5);
+  --color-teal: hsl(167.2 85.5% 89.2% / 0.5);
+  --color-cyan: hsl(185.1 95.9% 90.4% / 0.5);
+  --color-sky: hsl(204 93.8% 93.7% / 0.5);
+  --color-blue: hsl(214.3 94.6% 92.7% / 0.5);
+  --color-indigo: hsl(226.5 100% 93.9% / 0.5);
+  --color-violet: hsl(251.4 91.3% 95.5% / 0.5);
+  --color-purple: hsl(268.7 100% 95.5% / 0.5);
+  --color-fuchsia: hsl(287 100% 95.5% / 0.5);
+  --color-pink: hsl(325.7 77.8% 94.7% / 0.5);
+  --color-rose: hsl(355.6 100% 94.7 / 0.5%);
+
+  /* animations */
+  --animate-slideDown: accordion-down 0.2s ease-out;
+  --animate-slideUp: accordion-up 0.2s ease-out;
+  --animate-caretBlink: caret-blink 1.25s ease-out infinite;
+  
+  @keyframes accordion-down {
+    from {
+      height: 0px;
+    }
+
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+
+    to {
+      height: 0px;
+    }
+  }
+
+  @keyframes caret-blink {
+    0% { opacity: 1 };
+    20% { opacity: 0 };
+    50% { opacity: 0 };
+    70% { opacity: 1 };
+    100% { opacity: 1 };
+  }
+}
+  
+  .dark {
+    --color-background: hsl(240 10% 3.9%);
+    --color-foreground: hsl(0 0% 98%);
+    --color-primary: var(--color-foreground);
+    --color-primary-foreground: hsl(240 5.9% 10%);
+    --color-secondary: var(--color-muted);
+    --color-secondary-foreground: var(--color-foreground);
+    --color-muted: hsl(240 3.7% 15.9%);
+    --color-muted-foreground: hsl(240 5% 64.9%);
+    --color-accent: var(--color-muted);
+    --color-accent-foreground: var(--color-foreground);
+    --color-destructive: hsl(0 62.8% 30.6%);
+    --color-destructive-foreground: var(--color-foreground);
+    --color-icon: oklch(37.03% 0.0119 285.81);
+    --color-icon-dark: oklch(87.11% 0.0055 286.29);
+    --color-border: var(--color-muted);
+    --color-chart-1: hsl(220 70% 50%);
+    --color-chart-2: hsl(160 60% 45%);
+    --color-chart-3: hsl(30 80% 55%);
+    --color-chart-4: hsl(280 65% 60%);
+    --color-chart-5: hsl(340 75% 55%);
+  
+    --color-red: hsl(0 74.7% 15.5% / 0.5);
+    --color-orange: hsl(13 81.1% 14.5% / 0.5);
+    --color-amber: hsl(20.9 91.7% 14.1% / 0.5);
+    --color-yellow: hsl(26 83.3% 14.1% / 0.5);
+    --color-lime: hsl(89.3 80.4% 10% / 0.5);
+    --color-green: hsl(144.9 80.4% 10% / 0.5);
+    --color-emerald: hsl(165.7 91.3% 9% / 0.5);
+    --color-teal: hsl(178.6 84.3% 10% / 0.5);
+    --color-cyan: hsl(197 78.9% 14.9% / 0.5);
+    --color-sky: hsl(204 80.2% 15.9% / 0.5);
+    --color-blue: hsl(226.2 57% 21% / 0.5);
+    --color-indigo: hsl(243.8 47.1% 20% / 0.5);
+    --color-violet: hsl(261.2 72.6% 22.9% / 0.5);
+    --color-purple: hsl(273.5 86.9% 21% / 0.5);
+    --color-fuchsia: hsl(296.8 90.2% 16.1% / 0.5);
+    --color-pink: hsl(336.2 83.9% 17.1% / 0.5);
+    --color-rose: hsl(343.1 87.7% 15.9% / 0.5%)
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+    font-synthesis: none !important;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}

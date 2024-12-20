@@ -30,7 +30,7 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
       <DesktopSidebar user={session.user} organisation={organisation} />
 
       {/* Content */}
-      <main className="px-6 pt-6 pb-30 md:pb-6 min-h-screen md:pl-[22rem]">
+      <main className="px-6 pt-6 pb-30 md:!pb-6 min-h-screen md:!pl-[22rem]">
         {children}
       </main>
 

@@ -50,7 +50,7 @@ const TransactionsIndexLayout = ({
 
   return (
     <>
-      <Breadcrumb>
+      {/* <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>Dashboard</BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -64,27 +64,14 @@ const TransactionsIndexLayout = ({
             ""
           )}
         </BreadcrumbList>
-      </Breadcrumb>
+      </Breadcrumb> */}
 
       <div className="flex items-start justify-between">
-        <div>
-          <Title className="mb-0 flex items-center">
-            Cash book{" "}
-            {account ? (
-              <>
-                <SlashIcon className="text-muted-foreground h-6 w-6 mx-2" />{" "}
-                <span className="capitalize">{account}</span>
-              </>
-            ) : (
-              ""
-            )}
-          </Title>
-          <Caption className="mb-6">
-            Search and sort the log of your transactions.
-          </Caption>
-        </div>
+        <Title icon={BanknoteIcon}>
+          Cash book{" "}
+        </Title>
         <div className="flex gap-2">
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary">
                 Select view
@@ -109,12 +96,13 @@ const TransactionsIndexLayout = ({
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button>
                 <PlusIcon />
-                Add
+                Add new
+                <ChevronDownIcon className="!h-3 !w-3 !text-muted-foreground !-ml-1" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

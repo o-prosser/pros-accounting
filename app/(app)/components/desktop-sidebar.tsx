@@ -2,19 +2,12 @@ import ActivePage from "@/components/active-page";
 import Logo from "@/components/ui/logo";
 import DesktopLink from "./desktop-link";
 import {
-  ArrowRightLeftIcon,
-  BanknoteIcon,
-  ChevronDownIcon,
-  FileTextIcon,
   HelpCircleIcon,
   LogOutIcon,
   PlusIcon,
-  SettingsIcon,
   TagIcon,
   User,
-  HomeIcon,
   SearchIcon,
-  FileBarChartIcon,
   ChevronsUpDownIcon
 } from "lucide-react";
 import {
@@ -27,14 +20,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "../_components/theme-toggle";
-import { clearSession, getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import db from "@/lib/db";
-import { sessionsTable } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { logout } from "../actions";
 import { ChartColumnIcon } from "@/components/icons/chart-column";
+import { SettingsIcon } from "@/components/icons/settings";
+import { HomeIcon } from "@/components/icons/home";
 
 const DesktopSidebar = ({
   organisation,
@@ -44,7 +34,7 @@ const DesktopSidebar = ({
   user: { firstName: string; lastName: string | null, email: string };
 }) => {
   return (
-    <div className="hidden md:flex fixed z-10 left-4 inset-y-4 bg-muted w-80 py-6 px-3 gap-y-2 flex-col items-start rounded-2xl">
+    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 bg-muted w-80 py-6 px-3 gap-y-2 flex-col items-start rounded-2xl">
       <Logo className="h-6 pl-3 w-auto mb-4 fill-foreground" />
 
       <div className="flex w-full gap-2 mb-2">
@@ -64,7 +54,7 @@ const DesktopSidebar = ({
 
       <ActivePage pathname="/dashboard" match="eq">
         <DesktopLink href="/dashboard">
-          <HomeIcon />
+          <HomeIcon className="fill-icon [&>#unfilled]:fill-muted" />
           Home
         </DesktopLink>
       </ActivePage>
@@ -100,14 +90,14 @@ const DesktopSidebar = ({
         <ActivePage pathname="/transactions/cash-book/dutch">
           <DesktopLink href="/transactions/cash-book/dutch">
             <div className="h-5 w-5 rounded-full border border-green-600 to-green-600/10 from-green-600/50 bg-gradient-to-b"></div>
-            Dutch visit
+            Dutch Visit
           </DesktopLink>
         </ActivePage>
       </div>
 
       <ActivePage pathname="/categories">
         <DesktopLink href="/categories">
-          <TagIcon />
+          <TagIcon className="fill-icon" />
           Categories
         </DesktopLink>
       </ActivePage>
@@ -119,13 +109,13 @@ const DesktopSidebar = ({
       </ActivePage> */}
       <ActivePage pathname="/settings" match="eq">
         <DesktopLink href="/settings">
-          <SettingsIcon />
+          <SettingsIcon className="fill-icon [&>circle]:fill-muted" />
           Settings
         </DesktopLink>
       </ActivePage>
       <ActivePage pathname="/help" match="eq">
         <DesktopLink href="/help">
-          <HelpCircleIcon />
+          <HelpCircleIcon className="fill-icon" />
           Help
         </DesktopLink>
       </ActivePage>
@@ -140,9 +130,7 @@ const DesktopSidebar = ({
           <span className="font-semibold">
             {user.firstName} {user.lastName}
           </span>
-          <span className="text-xs text-muted-foreground">
-            {user.email}
-          </span>
+          <span className="text-xs text-muted-foreground">{user.email}</span>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

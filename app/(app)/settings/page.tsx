@@ -13,6 +13,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { SettingsIcon } from "@/components/icons/settings";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -21,15 +22,15 @@ const SettingsPage = async () => {
 
   return (
     <>
-      <Breadcrumb>
+      {/* <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>Dashboard</BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>Settings</BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb>
+      </Breadcrumb> */}
 
-      <Title>Settings</Title>
+      <Title icon={SettingsIcon}>Settings</Title>
 
       <div className="max-w-2xl">
         <Heading>Organisation</Heading>
