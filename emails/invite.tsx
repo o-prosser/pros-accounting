@@ -37,6 +37,10 @@ export const InviteEmail = ({
       <Preview>You&apos;ve been invited to join the organisation &apos;{organisationName}&apos;</Preview>
       <Tailwind
         config={{
+          separator: "-",
+          safelist: "",
+          experimental: "",
+          corePlugins: "",
           theme: {
             extend: {
               colors: {

@@ -69,6 +69,10 @@ export const WelcomeEmail = ({
       <Preview>Welcome to ProsAccounting. Here's how to get started.</Preview>
       <Tailwind
         config={{
+          separator: "-",
+          safelist: "",
+          experimental: "",
+          corePlugins: "",
           theme: {
             extend: {
               colors: {

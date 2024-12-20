@@ -76,6 +76,10 @@ export const GettingStartedEmail = ({
       <Preview>Start accounting today at ProsAccounting. Here's how to get started.</Preview>
       <Tailwind
         config={{
+          separator: "-",
+          safelist: "",
+          experimental: "",
+          corePlugins: "",
           theme: {
             extend: {
               colors: {

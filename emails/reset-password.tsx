@@ -33,6 +33,10 @@ export const ResetPasswordEmail = ({
       <Preview>Your reset code is {code}</Preview>
       <Tailwind
         config={{
+          safelist: "",
+          separator: "-",
+          corePlugins: "",
+          experimental: "",
           theme: {
             extend: {
               colors: {

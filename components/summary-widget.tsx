@@ -147,7 +147,9 @@ const SummaryWidget = async ({
             account === "dutch" && "bg-green-600",
           )}
         />
-        <span className="capitalize">{account} {account==='dutch' ? "Visit" : ""} account</span>
+        <span className="capitalize">
+          {account} {account === "dutch" ? "Visit" : ""} account
+        </span>
       </CardTitle>
       <div className="mt-2">
         <Caption>Current balance</Caption>
@@ -173,7 +175,15 @@ const SummaryWidget = async ({
         </div>
       </div>
       {viewButton ? (
-        <Button asChild variant={null} size="sm" className={cn("group -ml-3", account !== 'dutch' ? "my-2" : "mt-2 -mb-2")}>
+        <Button
+          asChild
+          variant={null}
+          size="sm"
+          className={cn(
+            "group -ml-3",
+            account !== "dutch" ? "my-2" : "mt-2 -mb-2",
+          )}
+        >
           <Link href={`/transactions/cash-book/${account}`}>
             View transactions
             <ArrowRightIcon
@@ -190,7 +200,7 @@ const SummaryWidget = async ({
         ""
       )}
 
-      {chart && account !== 'dutch' ? (
+      {chart && account !== "dutch" ? (
         <IncomeExpenseChart data={monthlyTotals[account]} account={account} />
       ) : (
         ""
