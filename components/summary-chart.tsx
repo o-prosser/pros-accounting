@@ -19,39 +19,42 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
 
-const chartConfig = (account: "charity" | "club") =>
+const chartConfig = (account: "charity" | "club" | "dutch") =>
   ({
     income: {
       label: "Income",
-      color: account === "charity" ? "#ea580c" : "#0891b2",
+      color: account === "charity" ? "#ea580c" : account === 'club' ? "#0891b2" : "#84cc16",
     },
     expense: {
       label: "Expense",
-      color: account === "charity" ? "#fdba74" : "#67e8f9",
+      color: account === "charity" ? "#fdba74" : account === 'club' ? "#67e8f9" : "#16a34a",
     },
   } satisfies ChartConfig);
 
 export default function IncomeExpenseChart({
   data,
   account,
+  min
 }: {
   data: { month: string; income: number; expense: number }[];
-  account: "charity" | "club";
+  account: "charity" | "club" | "dutch";
+  min?: boolean;
 }) {
   return (
-    <ChartContainer config={chartConfig(account)}>
-      <BarChart height={300} accessibilityLayer data={data}>
+    <ChartContainer className={cn(min && "w-full")} config={chartConfig(account)}>
+      <BarChart height={300} style={min && {height: "192px"}} accessibilityLayer data={data}>
         <CartesianGrid vertical={false} />
-        <XAxis
+        {min ? "" : <XAxis
           dataKey="month"
           tickLine={false}
           tickMargin={10}
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
-        />
+        />}
         <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
-        <ChartLegend content={<ChartLegendContent />} />
+        {min ? "" : <ChartLegend content={<ChartLegendContent />} />}
         <Bar dataKey="income" fill="var(--color-income)" radius={4} />
         <Bar dataKey="expense" fill="var(--color-expense)" radius={4} />
       </BarChart>

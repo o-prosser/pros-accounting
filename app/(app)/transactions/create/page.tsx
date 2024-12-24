@@ -7,27 +7,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import CreateForm from "./_components/form";
+import { BanknoteIcon } from "lucide-react";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
-const TransactionsCreatePage = async (props: {searchParams: Promise<{[key: string]: string}>}) => {
+const TransactionsCreatePage = async (props: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) => {
   const searchParams = await props.searchParams;
 
   const categories = await selectCategoriesMin();
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>Dashboard</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Transactions</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Add transaction</BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <Title>Add a transaction</Title>
+      <Title icon={BanknoteIcon}>Add a transaction</Title>
 
       <CreateForm searchParams={searchParams} categories={categories} />
     </>

@@ -97,6 +97,23 @@ export const getTotals = async () => {
         type: "expense",
       }),
     })),
+    dutch: months.map((month) => ({
+      month: monthNames[month],
+      income: getTotal({
+        transactions,
+        transfers,
+        account: "dutch",
+        month,
+        type: "income",
+      }),
+      expense: getTotal({
+        transactions,
+        transfers,
+        account: "dutch",
+        month,
+        type: "expense",
+      }),
+    })),
   };
 };
 
@@ -104,12 +121,14 @@ const SummaryWidget = async ({
   account,
   chart = true,
   viewButton = true,
+  min = false,
   className,
   ...props
 }: {
   account: Account;
   chart?: boolean;
   viewButton?: boolean;
+  min?: boolean;
 } & React.ComponentProps<"div">) => {
   const transactions = await selectTransactions({ account: null });
   const transfers = await selectTransfers();
@@ -134,74 +153,83 @@ const SummaryWidget = async ({
         account === "club" && "border-cyan-600 bg-cyan-100/50 dark:bg-cyan-950",
         account === "dutch" &&
           "border-green-600 bg-green-100/50 dark:bg-green-950",
+        min && "flex jusitfy-between",
         className,
       )}
       {...props}
     >
-      <CardTitle className="flex items-center gap-2">
-        <div
-          className={cn(
-            "h-4 w-4 rounded-full flex-shrink-0",
-            account === "charity" && "bg-orange-600",
-            account === "club" && "bg-cyan-600",
-            account === "dutch" && "bg-green-600",
-          )}
-        />
-        <span className="capitalize">
-          {account} {account === "dutch" ? "Visit" : ""} account
-        </span>
-      </CardTitle>
-      <div className="mt-2">
-        <Caption>Current balance</Caption>
-        <p className="text-3xl font-mono font-semibold tracking-tight">
-          {/* {charityIncome + charityInitial - charityExpense > 0 ? "+" : ""} */}
-          {income + initial - expense == 0
-            ? "---"
-            : currency(income + initial - expense)}
-        </p>
-      </div>
-      <div className="flex gap-6 mt-2">
-        <div>
-          <Caption className="text-sm">Income</Caption>
-          <p className="text-xl font-mono font-semibold tracking-tight">
-            {income == 0 ? "---" : currency(income)}
+      <div className="flex-1">
+        <CardTitle className="flex items-center gap-2">
+          <div
+            className={cn(
+              "h-4 w-4 rounded-full flex-shrink-0",
+              account === "charity" && "bg-orange-600",
+              account === "club" && "bg-cyan-600",
+              account === "dutch" && "bg-green-600",
+            )}
+          />
+          <span className="capitalize">
+            {account} {account === "dutch" ? "Visit" : ""} account
+          </span>
+        </CardTitle>
+        <div className="mt-2">
+          <Caption>Current balance</Caption>
+          <p className="text-3xl font-mono font-semibold tracking-tight">
+            {/* {charityIncome + charityInitial - charityExpense > 0 ? "+" : ""} */}
+            {income + initial - expense == 0
+              ? "---"
+              : currency(income + initial - expense)}
           </p>
         </div>
-        <div>
-          <Caption className="text-sm">Expense</Caption>
-          <p className="text-xl font-mono font-semibold tracking-tight">
-            {expense == 0 ? "---" : currency(expense)}
-          </p>
+        <div className="flex gap-6 mt-2">
+          <div>
+            <Caption className="text-sm">Income</Caption>
+            <p className="text-xl font-mono font-semibold tracking-tight">
+              {income == 0 ? "---" : currency(income)}
+            </p>
+          </div>
+          <div>
+            <Caption className="text-sm">Expense</Caption>
+            <p className="text-xl font-mono font-semibold tracking-tight">
+              {expense == 0 ? "---" : currency(expense)}
+            </p>
+          </div>
         </div>
+        {viewButton ? (
+          <Button
+            asChild
+            variant={null}
+            size="sm"
+            className={cn(
+              "group -ml-3",
+              account !== "dutch" ? "my-2" : "mt-2 -mb-2",
+            )}
+          >
+            <Link href={`/transactions/cash-book/${account}`}>
+              View transactions
+              <ArrowRightIcon
+                className={cn(
+                  "h-4 w-4 ml-2 group-hover:translate-x-1 transition duration-100",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                  account === "dutch" && "text-green-600",
+                )}
+              />
+            </Link>
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
-      {viewButton ? (
-        <Button
-          asChild
-          variant={null}
-          size="sm"
-          className={cn(
-            "group -ml-3",
-            account !== "dutch" ? "my-2" : "mt-2 -mb-2",
-          )}
-        >
-          <Link href={`/transactions/cash-book/${account}`}>
-            View transactions
-            <ArrowRightIcon
-              className={cn(
-                "h-4 w-4 ml-2 group-hover:translate-x-1 transition duration-100",
-                account === "charity" && "text-orange-600",
-                account === "club" && "text-cyan-600",
-                account === "dutch" && "text-green-600",
-              )}
-            />
-          </Link>
-        </Button>
-      ) : (
-        ""
-      )}
 
-      {chart && account !== "dutch" ? (
-        <IncomeExpenseChart data={monthlyTotals[account]} account={account} />
+      {chart ? (
+        <div className={cn(min && "h-48 w-1/2 flex justify-end")}>
+          <IncomeExpenseChart
+            min={min}
+            data={monthlyTotals[account]}
+            account={account}
+          />
+        </div>
       ) : (
         ""
       )}

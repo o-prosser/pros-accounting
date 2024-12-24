@@ -24,12 +24,7 @@ const DashboardPage = async () => {
         <div className="grid md:grid-cols-2 gap-6">
           <SummaryWidget account="charity" />
           <SummaryWidget account="club" />
-          <SummaryWidget
-            account="dutch"
-            // viewButton={false}
-            chart={false}
-            className="md:col-span-2"
-          />
+          <SummaryWidget account="dutch" className="md:col-span-2" chart={false} />
         </div>
       </Suspense>
 

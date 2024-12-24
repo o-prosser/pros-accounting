@@ -36,7 +36,7 @@ const SelectCategory = ({
         onValueChange={setSelected}
         defaultValue={selected}
       >
-        <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
+        <SelectTrigger className="mt-1 w-full max-w-lg">
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent>
@@ -60,7 +60,7 @@ const SelectCategory = ({
             name="subCategory"
             defaultValue={defaultValues.subCategory || ""}
           >
-            <SelectTrigger className="mt-1 w-full max-w-lg mb-6">
+            <SelectTrigger className="mt-1 w-full max-w-lg">
               <SelectValue placeholder="Select a sub category" />
             </SelectTrigger>
             <SelectContent>
