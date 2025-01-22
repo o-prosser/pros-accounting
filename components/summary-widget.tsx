@@ -30,7 +30,7 @@ const getMonths = async () => {
     startOfMonth(new Date()),
   );
   const startMonth =
-    difference < 6 ? financialStartMonth : getMonth(subMonths(new Date(), 5));
+    difference < 6 ? financialStartMonth : getMonth(subMonths(new Date(), 6));
 
   return [
     startMonth,
