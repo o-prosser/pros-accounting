@@ -54,7 +54,7 @@
   --color-purple: hsl(268.7 100% 95.5% / 0.5);
   --color-fuchsia: hsl(287 100% 95.5% / 0.5);
   --color-pink: hsl(325.7 77.8% 94.7% / 0.5);
-  --color-rose: hsl(355.6 100% 94.7 / 0.5%);
+  --color-rose: hsl(355.6 100% 94.7% / 0.5%);
 
   /* animations */
   --animate-slideDown: accordion-down 0.2s ease-out;
