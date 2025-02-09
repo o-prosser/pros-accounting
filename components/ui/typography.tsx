@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 
 export const Caption = ({className, ...props}: React.ComponentProps<"p">) => {
   return (
-    <p className={cn("text-muted-foreground font-light", className)} {...props} />
+    <p className={cn("text-muted-foreground", className)} {...props} />
   )
 }
 

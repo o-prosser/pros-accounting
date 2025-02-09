@@ -23,7 +23,7 @@ export function DateRangePicker({
   })
 
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("grid grid-cols-2 gap-2", className)}>
       <input type="hidden" name="from" value={date?.from && format(date.from, "yyyy-MM-dd")}  />
       <input type="hidden" name="to" value={date?.to && format(date.to, "yyyy-MM-dd")}  />
 
