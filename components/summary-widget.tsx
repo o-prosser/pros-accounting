@@ -23,25 +23,28 @@ import { cn } from "@/lib/utils";
 
 const getMonths = async () => {
   const organisation = await selectCurrentOrganisation();
-  const financialStart = addDays(organisation.endOfFinancialYear,1);
+  const financialStart = addDays(organisation.endOfFinancialYear, 1);
 
-  const startFromFinancialStart = differenceInMonths(startOfMonth(new Date()), financialStart) <= 6;
+  const startFromFinancialStart =
+    differenceInMonths(startOfMonth(new Date()), financialStart) <= 6;
 
-  return startFromFinancialStart ? [
-    financialStart,
-    addMonths(financialStart, 1),
-    addMonths(financialStart, 2),
-    addMonths(financialStart, 3),
-    addMonths(financialStart, 4),
-    addMonths(financialStart, 5),
-  ] : [
-    startOfMonth(subMonths(new Date(), 5)),
-    startOfMonth(subMonths(new Date(), 4)),
-    startOfMonth(subMonths(new Date(), 3)),
-    startOfMonth(subMonths(new Date(), 2)),
-    startOfMonth(subMonths(new Date(), 1)),
-    startOfMonth(new Date()),
-  ];
+  return startFromFinancialStart
+    ? [
+        financialStart,
+        addMonths(financialStart, 1),
+        addMonths(financialStart, 2),
+        addMonths(financialStart, 3),
+        addMonths(financialStart, 4),
+        addMonths(financialStart, 5),
+      ]
+    : [
+        startOfMonth(subMonths(new Date(), 5)),
+        startOfMonth(subMonths(new Date(), 4)),
+        startOfMonth(subMonths(new Date(), 3)),
+        startOfMonth(subMonths(new Date(), 2)),
+        startOfMonth(subMonths(new Date(), 1)),
+        startOfMonth(new Date()),
+      ];
 };
 
 const monthNames = [
