@@ -11,8 +11,10 @@ import { ArrowRightIcon } from "lucide-react";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import {
   addDays,
+  addMonths,
   differenceInMonths,
   getMonth,
+  getYear,
   startOfMonth,
   subMonths,
 } from "date-fns";
@@ -21,24 +23,24 @@ import { cn } from "@/lib/utils";
 
 const getMonths = async () => {
   const organisation = await selectCurrentOrganisation();
-  const financialStartMonth = getMonth(
-    addDays(organisation.endOfFinancialYear, 1),
-  );
+  const financialStart = addDays(organisation.endOfFinancialYear,1);
 
-  const difference = differenceInMonths(
-    addDays(organisation.endOfFinancialYear, 1),
+  const startFromFinancialStart = differenceInMonths(startOfMonth(new Date()), financialStart) <= 6;
+
+  return startFromFinancialStart ? [
+    financialStart,
+    addMonths(financialStart, 1),
+    addMonths(financialStart, 2),
+    addMonths(financialStart, 3),
+    addMonths(financialStart, 4),
+    addMonths(financialStart, 5),
+  ] : [
+    startOfMonth(subMonths(new Date(), 5)),
+    startOfMonth(subMonths(new Date(), 4)),
+    startOfMonth(subMonths(new Date(), 3)),
+    startOfMonth(subMonths(new Date(), 2)),
+    startOfMonth(subMonths(new Date(), 1)),
     startOfMonth(new Date()),
-  );
-  const startMonth =
-    difference < 6 ? financialStartMonth : getMonth(subMonths(new Date(), 5));
-
-  return [
-    startMonth,
-    startMonth + 1,
-    startMonth + 2,
-    startMonth + 3,
-    startMonth + 4,
-    startMonth + 5,
   ];
 };
 
@@ -64,53 +66,53 @@ export const getTotals = async () => {
 
   return {
     charity: months.map((month) => ({
-      month: monthNames[month],
+      month: monthNames[month.getMonth()],
       income: getTotal({
         transactions,
         transfers,
         account: "charity",
-        month,
+        month: month.getMonth(),
         type: "income",
       }),
       expense: getTotal({
         transactions,
         transfers,
         account: "charity",
-        month,
+        month: month.getMonth(),
         type: "expense",
       }),
     })),
     club: months.map((month) => ({
-      month: monthNames[month],
+      month: monthNames[month.getMonth()],
       income: getTotal({
         transactions,
         transfers,
         account: "club",
-        month,
+        month: month.getMonth(),
         type: "income",
       }),
       expense: getTotal({
         transactions,
         transfers,
         account: "club",
-        month,
+        month: month.getMonth(),
         type: "expense",
       }),
     })),
     dutch: months.map((month) => ({
-      month: monthNames[month],
+      month: monthNames[month.getMonth()],
       income: getTotal({
         transactions,
         transfers,
         account: "dutch",
-        month,
+        month: month.getMonth(),
         type: "income",
       }),
       expense: getTotal({
         transactions,
         transfers,
         account: "dutch",
-        month,
+        month: month.getMonth(),
         type: "expense",
       }),
     })),
