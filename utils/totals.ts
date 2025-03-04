@@ -22,7 +22,7 @@ export const getTotal = ({
       (transaction) =>
         (account ? transaction.account === account : true) &&
         (type ? getTransactionType(transaction) === type : true) &&
-        (month ? getMonth(transaction.date) === month : true),
+        (month !== undefined || month === 0 ? getMonth(transaction.date) === month : true),
     )
     .map(
       (transaction) =>
@@ -43,7 +43,7 @@ export const getTotal = ({
             (type === "income"
               ? transfer.to === account
               : transfer.from === account) &&
-            (month ? getMonth(transfer.date) === month : true),
+            (month !== undefined || month === 0 ? getMonth(transfer.date) === month : true),
         )
         .map((transfer) => transfer.amount)
     : [];
