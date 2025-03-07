@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <Title className="mb-6 text-center">Login to your account</Title>
+      <Title className="mb-6 sm:mx-auto">Login to your account</Title>
 
       <form action={formAction} className="w-full">
         <Label htmlFor="email">Email address</Label>
@@ -59,7 +59,7 @@ const LoginForm = () => {
         </FormButton>
       </form>
 
-      <p className="text-sm text-muted-foreground pt-6 text-center">
+      <p className="text-sm text-muted-foreground pt-12 sm:pt-6 sm:text-center">
         No account?{" "}
         <Button asChild variant="link" size={null}>
           <Link href="/register">Register now</Link>

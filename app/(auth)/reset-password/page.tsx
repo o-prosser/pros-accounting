@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Forgot Password" };
 const ForgotPasswordPage = () => {
   return (
     <>
-      <Title className="mb-2 sm:text-center">Reset your password</Title>
+      <Title className="mb-2 sm:mx-auto">Reset your password</Title>
       <Caption className="sm:text-center mb-6">If an account with that email address exists, an email has been sent containing a one time code to reset your password.</Caption>
       <ResetPasswordForm />
     </>

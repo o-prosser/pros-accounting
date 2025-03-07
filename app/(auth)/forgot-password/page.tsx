@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Forgot Password" };
 const ForgotPasswordPage = () => {
   return (
     <>
-      <Title className="mb-6 text-center">Forgot your password?</Title>
+      <Title className="mb-6 sm:mx-auto">Forgot your password?</Title>
 
       <form action={forgotPasswordAction} className="w-full">
         <Label htmlFor="email">Email address</Label>
@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
         </FormButton>
       </form>
 
-      <p className="text-sm text-muted-foreground pt-6 text-center">
+      <p className="text-sm text-muted-foreground pt-12 sm:pt-6 sm:text-center">
         <Button asChild variant="link" size={null}>
           <Link href="/login">Return to login page</Link>
         </Button>
