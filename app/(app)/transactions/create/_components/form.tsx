@@ -220,11 +220,11 @@ const CreateForm = ({
             </div>
             <div className="flex items-center gap-2">
               <RadioGroupItem
-                value="Dutch"
-                id="Dutch"
+                value="dutch"
+                id="dutch"
                 className="text-green-600"
               />
-              <Label htmlFor="Dutch" className="font-normal">
+              <Label htmlFor="dutch" className="font-normal">
                 Dutch Visit
               </Label>
             </div>
