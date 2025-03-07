@@ -12,6 +12,7 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { formatSize, getFileUrl } from "@/utils/files";
 import { format } from "date-fns";
 import {
+  BanknoteIcon,
   CopyIcon,
   CopyPlusIcon,
   DownloadIcon,
@@ -54,17 +55,7 @@ const TransactionPage = async (props: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>Dashboard</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Transactions</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>{transaction.name}</BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <Title>{transaction.name}</Title>
+      <Title icon={BanknoteIcon}>{transaction.name}</Title>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
@@ -114,14 +105,12 @@ const TransactionPage = async (props: { params: Promise<{ id: string }> }) => {
                         "h-2 w-2 rounded-full flex-shrink-0",
                         transaction.account === "club"
                           ? "bg-cyan-600"
-                          : transaction.account === 'dutch'
+                          : transaction.account === "dutch"
                           ? "bg-green-600"
                           : "bg-orange-600",
                       )}
                     />
-                    <span className="capitalize">
-                      {transaction.account}
-                    </span>
+                    <span className="capitalize">{transaction.account}</span>
                   </div>
                 </dd>
               </div>
@@ -226,12 +215,12 @@ const TransactionPage = async (props: { params: Promise<{ id: string }> }) => {
         </div>
         <div>
           <div className="grid gap-4 [&>a]:justify-start">
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="justify-start">
               <Link href={`/transactions/${transaction.id}/edit`}>
                 <PencilIcon /> Edit transaction
               </Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="justify-start">
               <Link
                 href={`/transactions/create?name=${encodeURIComponent(
                   transaction.name,
@@ -248,7 +237,7 @@ const TransactionPage = async (props: { params: Promise<{ id: string }> }) => {
                 <CopyPlusIcon /> Duplicate transaction
               </Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="justify-start">
               <Link href={`/transactions/${transaction.id}/transaction.pdf`}>
                 <DownloadIcon /> Export PDF
               </Link>
