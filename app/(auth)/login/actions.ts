@@ -19,6 +19,9 @@ export const loginAction = async (prevState: any, formData: FormData) => {
   if (!fields.success) {
     return {
       errors: fields.error.flatten().fieldErrors,
+      returnedValues: {
+        email: formData.get("email") as string
+      }
     }
   }
 
@@ -38,6 +41,9 @@ export const loginAction = async (prevState: any, formData: FormData) => {
     return {
       errors: {
         email: ["Incorrect email or password."],
+      },
+      returnedValues: {
+        email: fields.data.email
       }
     }
   }

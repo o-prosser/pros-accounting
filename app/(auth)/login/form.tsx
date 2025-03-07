@@ -12,6 +12,9 @@ import { useActionState } from "react";
 const initialState = {
   errors: {
     email: []
+  },
+  returnedValues: {
+    email: ""
   }
 }
 
@@ -32,6 +35,7 @@ const LoginForm = () => {
           required
           autoFocus
           className="mt-1 w-full mb-6"
+          defaultValue={state.returnedValues.email}
         />
         {state.errors.email?.length || 0 > 0 ? <ErrorMessage className="-mt-4 mb-4">{state.errors.email?.join(", ")}</ErrorMessage> : ""}
 
