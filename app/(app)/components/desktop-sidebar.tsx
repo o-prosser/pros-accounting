@@ -8,7 +8,10 @@ import {
   TagIcon,
   User,
   SearchIcon,
-  ChevronsUpDownIcon
+  ChevronsUpDownIcon,
+  ChevronDownIcon,
+  BanknoteIcon,
+  ArrowLeftRightIcon
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -38,18 +41,35 @@ const DesktopSidebar = ({
       <Logo className="h-6 pl-3 w-auto mb-4 fill-foreground" />
 
       <div className="flex w-full gap-2 mb-2">
-        <Button
-          asChild
-          className="flex-1 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-muted [&>svg]:mr-2 border border-primary"
-          size="sm"
-        >
-          <Link href="/transactions/create">
-            <PlusIcon /> Add new
-          </Link>
-        </Button>
-        <Button size="icon" variant="outline" className="h-9 w-9">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              size="sm"
+              className="flex-1 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-muted border border-primary"
+            >
+              <PlusIcon />
+              <span className="flex-1 text-left pl-2">Add payment</span>
+              <ChevronDownIcon className="!h-3 !w-3 !text-muted-foreground" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link href="/transactions/create">
+                <BanknoteIcon className="h-4 w-4 text-muted-foreground mr-2" />
+                Add transaction
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/transfers/create">
+                <ArrowLeftRightIcon className="h-4 w-4 text-muted-foreground mr-2" />
+                Add transfer
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {/* <Button size="icon" variant="outline" className="h-9 w-9">
           <SearchIcon />
-        </Button>
+        </Button> */}
       </div>
 
       <ActivePage pathname="/dashboard" match="eq">
