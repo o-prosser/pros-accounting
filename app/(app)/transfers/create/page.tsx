@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import CreateForm from "./_components/form";
+import { ArrowRightLeft } from "lucide-react";
 
 export const runtime = "edge";
 
@@ -15,17 +16,7 @@ const TransfersCreatePage = async () => {
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>Dashboard</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Transfers</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Add transfer</BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <Title>Add a transfer</Title>
+      <Title icon={ArrowRightLeft}>Add a transfer</Title>
 
       <CreateForm categories={categories} />
     </>
