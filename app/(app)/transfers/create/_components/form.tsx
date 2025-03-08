@@ -159,7 +159,7 @@ const CreateForm = ({
               )}
             </div>
               <div className="mt-10 px-3">
-                <ArrowRight className="h-4 w-4 text-muted" />
+                <ArrowRight className="h-4 w-4 text-muted-foreground" />
               </div>
             <div>
               <Label htmlFor="to">Moving to</Label>
