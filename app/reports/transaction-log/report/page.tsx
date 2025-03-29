@@ -83,7 +83,7 @@ const TransactionLogReport = async (routeData: {
         {organisation.name}
       </h2>
 
-      <p className="font-[8pt] mt-2">
+      <p className="font-[8pt] mt-2 mb-8">
         Transactions and transfers of account
         {includedAccounts.length === 1 ? "" : "s"} {includedAccounts[0]}
         {includedAccounts.length === 2
@@ -130,7 +130,7 @@ const TransactionLogReport = async (routeData: {
             }
           >
             {idx === 0 || idx === 20 || (idx - 20) % 24 === 0 ? (
-              <div className="flex font-semibold text-[10pt] border-b border-t mt-8 divide-x border-x bg-muted">
+              <div className="flex font-semibold text-[10pt] border-b border-t divide-x border-x bg-muted">
                 {searchParams.name === "on" ? (
                   <p style={{ width: "32%", padding: "8px 6px" }}>
                     Transaction
