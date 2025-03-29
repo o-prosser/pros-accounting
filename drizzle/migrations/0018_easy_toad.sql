@@ -1,0 +1,1 @@
+ALTER TABLE "financialYears" ADD COLUMN "isCurrent" boolean DEFAULT true;

@@ -13,6 +13,9 @@ export const selectCurrentOrganisation = cache(async () => {
 
   const organisation = await db.query.organisationsTable.findFirst({
     where: (fields, {eq}) => eq(fields.id, id),
+    with: {
+      financialYears: true,
+    }
   });
 
   if (!organisation) redirect("/setup");

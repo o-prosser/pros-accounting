@@ -130,7 +130,7 @@ const DesktopSidebar = ({
       <ActivePage pathname="/settings" match="eq">
         <DesktopLink href="/settings">
           <SettingsIcon className="fill-icon [&>circle]:fill-muted" />
-          Settings
+          Configuration
         </DesktopLink>
       </ActivePage>
       <ActivePage pathname="/help" match="eq">

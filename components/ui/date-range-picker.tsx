@@ -16,10 +16,12 @@ import {
 
 export function DateRangePicker({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+  defaultFrom,
+  defaultTo
+}: React.HTMLAttributes<HTMLDivElement> & {defaultFrom?: Date, defaultTo?: Date}) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-    to: addDays(new Date(new Date().getFullYear(), new Date().getMonth(), 1), 28),
+    from: defaultFrom ||  new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    to: defaultTo || addDays(new Date(new Date().getFullYear(), new Date().getMonth(), 1), 28),
   })
 
   return (

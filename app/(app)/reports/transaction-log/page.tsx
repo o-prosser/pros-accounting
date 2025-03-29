@@ -13,11 +13,13 @@ import { FormButton } from "@/components/form-button";
 import SelectFields from "./_components/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import TransactionLogForm from "./form";
+import { selectCurrentOrganisation } from "@/models/organisation";
 
 export const runtime = "edge";
 
 const CategorySummariesPage = async () => {
   const categories = await selectCategoriesMin();
+  const organisation = await selectCurrentOrganisation();
 
   return (
     <>
@@ -37,7 +39,7 @@ const CategorySummariesPage = async () => {
         Fitler the payments to include, and customise the look of the report.
       </Caption>
 
-     <TransactionLogForm />
+     <TransactionLogForm organisation={organisation} />
     </>
   );
 };

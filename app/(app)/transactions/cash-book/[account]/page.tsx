@@ -8,6 +8,7 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 import { columnsWithoutAccount } from "./columnsWithoutAccount";
 import SummaryWidget from "@/components/summary-widget";
+import { PaymentFilterableDataTable } from "@/components/payment-filterable-data-table";
 
 export const metadata: Metadata = { title: "Transactions" };
 
@@ -93,7 +94,7 @@ const TransactionsPage = async (props: {
       ) : (
         ""
       )}
-      <DataTable
+      <PaymentFilterableDataTable
         columns={account ? columnsWithoutAccount : columns}
         data={balancedTransfersPayments.reverse()}
       />

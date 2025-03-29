@@ -55,6 +55,8 @@ export const createTransferAction = async (
         notes: fields.data.notes,
         categoryId: fields.data.category,
         organisationId: organisation.id,
+        financialYearId: organisation.financialYears.find((f) => f.isCurrent)
+          ?.id,
       })
       .returning({ id: transfersTable.id });
 

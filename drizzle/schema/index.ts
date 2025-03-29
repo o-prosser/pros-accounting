@@ -2,6 +2,7 @@ export * from './enums'
 
 export * from './categories'
 export * from './files'
+export * from './financial-years'
 export * from './organisations'
 export * from './reset-password-tokens'
 export * from './sessions'

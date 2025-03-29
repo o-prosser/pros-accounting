@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Muted, Heading, Title } from "@/components/ui/typography";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { Metadata } from "next";
-import { invite, updateOrganisation } from "./actions";
+import { addFinancialYear, invite, updateOrganisation } from "./actions";
 import { format } from "date-fns";
 import { PoundSterlingIcon } from "lucide-react";
 import {
@@ -14,6 +14,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SettingsIcon } from "@/components/icons/settings";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -91,7 +95,9 @@ const SettingsPage = async () => {
             />
           </div>
 
-          <Label htmlFor="initialDutchBalance">Initial Dutch visit balance</Label>
+          <Label htmlFor="initialDutchBalance">
+            Initial Dutch visit balance
+          </Label>
           <div className="relative">
             <div className="absolute left-0 top-0 bottom-0 pl-2 flex items-center">
               <PoundSterlingIcon className="h-4 w-4 text-muted-foreground" />
@@ -117,6 +123,58 @@ const SettingsPage = async () => {
 
           <FormButton type="submit">Save</FormButton>
         </form>
+
+        <hr className="my-6" />
+
+        <div className="max-w-2xl">
+          <Heading>Financial years</Heading>
+
+          <div className="rounded-md border">
+
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Period</TableHead>
+                  <TableHead></TableHead>
+                  <TableHead></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {organisation.financialYears.map((financialYear, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell>
+                      {format(financialYear.startDate, "E, dd MMM")} &ndash;{" "}
+                      {format(financialYear.endDate, "E, dd MMM")}
+                    </TableCell>
+                    <TableCell>
+                      {financialYear.isCurrent ? (
+                        
+                        <Badge>Current</Badge>
+                      ) : ""}
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Add financial year</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form action={addFinancialYear}>
+                <input type="hidden" name="organisationId" defaultValue={organisation.id} />
+
+                <Label>Period</Label>
+                <DateRangePicker className="mb-6" />
+
+                <FormButton type="submit">Add</FormButton>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
 
         <hr className="my-6" />
 

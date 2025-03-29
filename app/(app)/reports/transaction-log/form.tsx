@@ -5,7 +5,7 @@ import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
 import { ToggleButton } from "@/components/ui/toggle-button";
 
-const TransactionLogForm = () => {
+const TransactionLogForm = ({organisation}: {organisation: {financialYears: {isCurrent: boolean|null, startDate?: Date, endDate?: Date}[]}}) => {
   return (
     <form
       method="GET"
@@ -45,9 +45,17 @@ const TransactionLogForm = () => {
           defaultChecked
         />
       </div>
-      
+
       <Label htmlFor="date">Date</Label>
-      <DateRangePicker className="mb-6" />
+      <DateRangePicker
+        className="mb-6"
+        defaultFrom={
+          organisation.financialYears.find((f) => f.isCurrent)?.startDate
+        }
+        defaultTo={
+          organisation.financialYears.find((f) => f.isCurrent)?.endDate
+        }
+      />
 
       <Label>Columns</Label>
       <div className="justify-start flex items-center gap-1 mb-6">

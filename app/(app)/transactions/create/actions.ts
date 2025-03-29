@@ -83,6 +83,7 @@ export const createTransactionAction = async (
         notes: fields.data.notes,
         fileId: fields.data.fileId || null,
         organisationId: organisation.id,
+        financialYearId: organisation.financialYears.find((f) => f.isCurrent)?.id
       })
       .returning({ id: transactionsTable.id });
 

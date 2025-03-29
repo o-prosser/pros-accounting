@@ -1,10 +1,11 @@
 "use server";
 
-import { organisationsTable } from "@/drizzle/schema";
+import { financialYearsTable, organisationsTable } from "@/drizzle/schema";
 import InviteEmail from "@/emails/invite";
 import db from "@/lib/db";
 import { resend } from "@/lib/resend";
 import { selectCurrentOrganisation } from "@/models/organisation";
+import { isWithinInterval } from "date-fns";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -55,4 +56,34 @@ export const updateOrganisation = async (formData: FormData) => {
   }).where(eq(organisationsTable.id, organisationId));
 
   revalidatePath("/settings");
+}
+
+const addFinancialYearSchema = z.object({
+  from: z.string().min(3).max(255),
+  to: z.string().min(3).max(255),
+  organisationId: z.string().min(3).max(255),
+});
+
+export const addFinancialYear = async (formData: FormData) => {
+  const fields = addFinancialYearSchema.safeParse(
+    Object.fromEntries(formData),
+  );
+
+  if (!fields.success) {
+    return {
+      errors: fields.error.flatten().fieldErrors,
+    };
+  }
+
+  await db.insert(financialYearsTable).values({
+    startDate: new Date(fields.data.from),
+    endDate: new Date(fields.data.to),
+    organisationId: fields.data.organisationId,
+    isCurrent: isWithinInterval(new Date(), {
+      start: new Date(fields.data.from),
+      end: new Date(fields.data.to),
+    })
+  });
+
+  revalidatePath('/settings');
 }

@@ -11,6 +11,7 @@ import {
 import { organisationsTable } from "./organisations";
 import { accountEnum } from "./enums";
 import { categoriesTable } from "./categories";
+import { financialYearsTable } from "./financial-years";
 
 export const transfersTable = pgTable("transfers", {
   id: uuid("id")
@@ -22,28 +23,34 @@ export const transfersTable = pgTable("transfers", {
   from: accountEnum("from").notNull(),
   to: accountEnum("to").notNull(),
   amount: numeric("amount").notNull(),
-  categoryId: uuid("categoryId")
-    .references(() => categoriesTable.id, { onDelete: "cascade" }),
+  categoryId: uuid("categoryId").references(() => categoriesTable.id, {
+    onDelete: "cascade",
+  }),
   notes: text("notes"),
   organisationId: uuid("organisationId")
     .notNull()
     .references(() => organisationsTable.id, { onDelete: "cascade" }),
+  financialYearId: uuid("financialYearId").references(
+    () => financialYearsTable.id,
+    { onDelete: "cascade" },
+  ),
   createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export type InsertTransfer = typeof transfersTable.$inferInsert;
 export type SelectTransfer = typeof transfersTable.$inferSelect;
 
-export const transfersRelations = relations(
-  transfersTable,
-  ({ one }) => ({
-    organisation: one(organisationsTable, {
-      fields: [transfersTable.organisationId],
-      references: [organisationsTable.id],
-    }),
-    category: one(categoriesTable, {
-      fields: [transfersTable.categoryId],
-      references: [categoriesTable.id],
-    }),
+export const transfersRelations = relations(transfersTable, ({ one }) => ({
+  organisation: one(organisationsTable, {
+    fields: [transfersTable.organisationId],
+    references: [organisationsTable.id],
   }),
-);
+  category: one(categoriesTable, {
+    fields: [transfersTable.categoryId],
+    references: [categoriesTable.id],
+  }),
+  financialYear: one(financialYearsTable, {
+    fields: [transfersTable.financialYearId],
+    references: [financialYearsTable.id],
+  }),
+}));
