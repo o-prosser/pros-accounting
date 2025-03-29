@@ -32,20 +32,24 @@ const TransactionLogReport = async (routeData: {
     },
   });
 
-  const transfersData = await selectTransfers();
-  const transfers = searchParams.account
-    ? transfersData.filter(
-        (t) => t.from === searchParams.account || t.to === searchParams.account,
-      )
-    : transfersData;
-
   const includedAccounts = [
     searchParams.charity === "on" ? "charity" : undefined,
     searchParams.club === "on" ? "club" : undefined,
     searchParams.dutch === "on" ? "dutch" : undefined,
   ].filter((a) => a !== undefined);
 
-  const transactions = transactionsData.filter((t) => t.account ? includedAccounts.includes(t.account) : true)
+  const transfersData = await selectTransfers();
+  const transfers = searchParams.account
+    ? transfersData.filter(
+        (transfer) =>
+          includedAccounts.includes(transfer.from) ||
+          includedAccounts.includes(transfer.to),
+      )
+    : transfersData;
+
+  const transactions = transactionsData.filter((t) =>
+    t.account ? includedAccounts.includes(t.account) : true,
+  );
 
   const payments: {
     id: string;
