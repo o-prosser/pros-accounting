@@ -107,39 +107,6 @@ const TransactionLogReport = async (routeData: {
         )}
         .
       </p>
-      
-      <div className="flex font-semibold text-[10pt] border-b border-t mt-8 divide-x border-x bg-muted">
-        {searchParams.name === "on" ? (
-          <p style={{ width: "32%", padding: "8px 6px" }}>Transaction</p>
-        ) : (
-          ""
-        )}
-        {searchParams.date === "on" ? (
-          <p style={{ width: "16.5%", padding: "8px 6px" }}>Date</p>
-        ) : (
-          ""
-        )}
-        {searchParams.account === "on" ? (
-          <p style={{ width: "12%", padding: "8px 6px" }}>Account</p>
-        ) : (
-          ""
-        )}
-        {searchParams.category === "on" ? (
-          <p style={{ width: "26.5%", padding: "8px 6px" }}>Category</p>
-        ) : (
-          ""
-        )}
-        {searchParams.amount === "on" ? (
-          <p
-            style={{ width: "14%", padding: "8px 6px" }}
-            className="text-right"
-          >
-            Amount
-          </p>
-        ) : (
-          ""
-        )}
-      </div>
 
       {payments.map((payment, idx) => {
         const amount =
@@ -162,7 +129,7 @@ const TransactionLogReport = async (routeData: {
                 : undefined
             }
           >
-            {idx === 18 || (idx - 18) % 25 === 0 ? (
+            {idx === 0 || idx === 19 || (idx - 19) % 25 === 0 ? (
               <div className="flex font-semibold text-[10pt] border-b border-t mt-8 divide-x border-x bg-muted">
                 {searchParams.name === "on" ? (
                   <p style={{ width: "32%", padding: "8px 6px" }}>
