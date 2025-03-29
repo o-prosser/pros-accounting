@@ -76,8 +76,12 @@ const TransactionLogReport = async (routeData: {
 
   return (
     <div className="text-[12pt]">
-      <h1 className="font-semibold" style={{fontSize:"22pt"}}>Transaction Log</h1>
-      <h2 className="font-medium" style={{fontSize: "14pt"}}>{organisation.name}</h2>
+      <h1 className="font-semibold" style={{ fontSize: "22pt" }}>
+        Transaction Log
+      </h1>
+      <h2 className="font-medium" style={{ fontSize: "14pt" }}>
+        {organisation.name}
+      </h2>
 
       <p className="font-[8pt] mt-2">
         Transactions and transfers of account
@@ -100,9 +104,10 @@ const TransactionLogReport = async (routeData: {
         {format(
           searchParams.to ? new Date(searchParams.to) : new Date(),
           "dd/MM/yyyy",
-        )}.
+        )}
+        .
       </p>
-
+      
       <div className="flex font-semibold text-[10pt] border-b border-t mt-8 divide-x border-x bg-muted">
         {searchParams.name === "on" ? (
           <p style={{ width: "32%", padding: "8px 6px" }}>Transaction</p>
@@ -157,6 +162,45 @@ const TransactionLogReport = async (routeData: {
                 : undefined
             }
           >
+            {idx === 18 || (idx - 18) % 25 === 0 ? (
+              <div className="flex font-semibold text-[10pt] border-b border-t mt-8 divide-x border-x bg-muted">
+                {searchParams.name === "on" ? (
+                  <p style={{ width: "32%", padding: "8px 6px" }}>
+                    Transaction
+                  </p>
+                ) : (
+                  ""
+                )}
+                {searchParams.date === "on" ? (
+                  <p style={{ width: "16.5%", padding: "8px 6px" }}>Date</p>
+                ) : (
+                  ""
+                )}
+                {searchParams.account === "on" ? (
+                  <p style={{ width: "12%", padding: "8px 6px" }}>Account</p>
+                ) : (
+                  ""
+                )}
+                {searchParams.category === "on" ? (
+                  <p style={{ width: "26.5%", padding: "8px 6px" }}>Category</p>
+                ) : (
+                  ""
+                )}
+                {searchParams.amount === "on" ? (
+                  <p
+                    style={{ width: "14%", padding: "8px 6px" }}
+                    className="text-right"
+                  >
+                    Amount
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+
             <div className="flex items-center text-[10pt] border-b divide-x border-x">
               {searchParams.name === "on" ? (
                 <div
