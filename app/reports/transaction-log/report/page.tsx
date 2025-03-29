@@ -124,12 +124,12 @@ const TransactionLogReport = async (routeData: {
           <div
             key={idx}
             style={
-              idx === 18 || (idx - 18) % 25 === 0
+              idx === 19 || (idx - 19) % 24 === 0
                 ? { pageBreakAfter: "always" }
                 : undefined
             }
           >
-            {idx === 0 || idx === 19 || (idx - 19) % 25 === 0 ? (
+            {idx === 0 || idx === 20 || (idx - 20) % 24 === 0 ? (
               <div className="flex font-semibold text-[10pt] border-b border-t mt-8 divide-x border-x bg-muted">
                 {searchParams.name === "on" ? (
                   <p style={{ width: "32%", padding: "8px 6px" }}>
@@ -322,11 +322,11 @@ const TransactionLogReport = async (routeData: {
               )}
             </div>
 
-            {idx === 18 || (idx - 18) % 25 === 0 ? (
+            {idx === 19 || (idx - 19) % 24 === 0 ? (
               <div className="flex justify-between items-end mt-2">
                 <Logo className="h-[0.5cm] w-[4cm]" />
                 <p className="text-[10pt]">
-                  Page {idx === 18 ? "1" : (idx - 18) / 25 + 1}
+                  Page {idx === 19 ? "1" : (idx - 19) / 24 + 1}
                 </p>
               </div>
             ) : (
