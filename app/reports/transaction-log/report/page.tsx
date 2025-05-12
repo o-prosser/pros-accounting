@@ -4,7 +4,7 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { selectTransfers } from "@/models/transfer";
 import { getColour } from "@/utils/colours";
 import clsx from "clsx";
-import { format, isAfter } from "date-fns";
+import { format, isAfter, isWithinInterval } from "date-fns";
 import { ArrowRightIcon, HashIcon } from "lucide-react";
 
 const TransactionLogReport = async (routeData: {
@@ -39,13 +39,22 @@ const TransactionLogReport = async (routeData: {
   ].filter((a) => a !== undefined);
 
   const transfersData = await selectTransfers();
-  const transfers = searchParams.account
-    ? transfersData.filter(
-        (transfer) =>
-          includedAccounts.includes(transfer.from) ||
-          includedAccounts.includes(transfer.to),
-      )
-    : transfersData;
+  // const transfers = searchParams.account
+  //   ? transfersData.filter(
+  //       (transfer) =>
+  //         includedAccounts.includes(transfer.from) ||
+  //         includedAccounts.includes(transfer.to),
+  //     )
+  //   : transfersData;
+  const transfers = transfersData.filter((transfer) => {
+    if (searchParams.account) {
+      if (!includedAccounts.includes(transfer.from) && !includedAccounts.includes(transfer.to)) return false;
+    }
+
+    if (!isWithinInterval(transfer.date, {start: searchParams.from, end: searchParams.to})) return false;
+
+    return true;
+  })
 
   const transactions = transactionsData.filter((t) =>
     t.account ? includedAccounts.includes(t.account) : true,
