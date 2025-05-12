@@ -48,13 +48,25 @@ const TransactionLogReport = async (routeData: {
   //   : transfersData;
   const transfers = transfersData.filter((transfer) => {
     if (searchParams.account) {
-      if (!includedAccounts.includes(transfer.from) && !includedAccounts.includes(transfer.to)) return false;
+      if (
+        !includedAccounts.includes(transfer.from) &&
+        !includedAccounts.includes(transfer.to)
+      )
+        return false;
     }
 
-    if (!isWithinInterval(transfer.date, {start: searchParams.from, end: searchParams.to})) return false;
+    if (
+      searchParams.from &&
+      searchParams.to &&
+      !isWithinInterval(transfer.date, {
+        start: searchParams.from,
+        end: searchParams.to,
+      })
+    )
+      return false;
 
     return true;
-  })
+  });
 
   const transactions = transactionsData.filter((t) =>
     t.account ? includedAccounts.includes(t.account) : true,
