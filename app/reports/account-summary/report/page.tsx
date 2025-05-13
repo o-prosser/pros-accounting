@@ -30,29 +30,29 @@ const Account = async ({
     }),
   );
 
-  const payments = [...transactions, ...transfers].sort((a, b) =>
+  const payments: Payment[] = [...transactions, ...transfers].sort((a, b) =>
     isAfter(a.date, b.date) ? 1 : -1,
   );
 
-  const balancedTransfersPayments = payments.map((payment, idx) => {
+  const balancedTransfersPayments: Payment[] = payments.map((payment, idx) => {
     if (account === null && payment.hasOwnProperty("amount")) return payment;
     const previousPayments = payments.slice(0, idx + 1);
     const previousPaymentValues: number[] = previousPayments.map(
       (previousPayment) => {
         if (!previousPayment.hasOwnProperty("amount")) {
-          // @ts-expect-error
+          // @ts-ignore
           return previousPayment.account === (payment.account || account)
-            ? // @ts-expect-error
+            ? // @ts-ignore
               parseFloat(`${previousPayment.income}`) ||
-                // @ts-expect-error
+                // @ts-ignore
                 parseFloat(`-${previousPayment.expense}`)
             : 0;
         } else {
-          // @ts-expect-error
+          // @ts-ignore
           return previousPayment.from === (payment.account || account)
-            ? // @ts-expect-error
+            ? // @ts-ignore
               parseFloat(`-${previousPayment.amount}`)
-            : // @ts-expect-error
+            : // @ts-ignore
               parseFloat(previousPayment.amount);
         }
       },
@@ -77,7 +77,32 @@ const Account = async ({
     };
   });
 
-  const paymentsInDate = balancedTransfersPayments.filter((t) =>
+  type Payment = {
+    id: string;
+    name?: string;
+    date: string | Date;
+    account?: "club" | "charity" | "dutch" | null;
+    receiptBookNumber?: number | null;
+    income?: string | null;
+    expense?: string | null;
+    balance?: number;
+    amount?: string;
+    from?: "club" | "charity" | "dutch";
+    to?: "club" | "charity" | "dutch";
+    notes: string | null;
+    category?: {
+      id: string;
+      name: string;
+      colour: string | null;
+    } | null;
+    subCategory?: {
+      id: string;
+      name: string;
+    } | null;
+    activeAccount?: string;
+  };
+
+  const paymentsInDate: Payment[] = balancedTransfersPayments.filter((t) =>
                 isWithinInterval(t.date, {
                   start: new Date(from || ""),
                   end: new Date(to || ""),
@@ -121,12 +146,12 @@ const Account = async ({
             balancedTransfersPayments
               .filter((t) => isBefore(t.date, new Date(from || "")))
               .reverse()[0] !== undefined
-              ? balancedTransfersPayments
+              ? (balancedTransfersPayments
                   .filter((t) => isBefore(t.date, new Date(from || "")))
-                  .reverse()[0].balance
+                  .reverse()[0].balance || 0)
               : account === "club"
-              ? organisation.initialClubBalance
-              : organisation.initialCharityBalance,
+              ? parseFloat(organisation.initialClubBalance || "")
+              : parseFloat(organisation.initialCharityBalance || ""),
           )}
         </span>
       </div>
@@ -163,7 +188,7 @@ const Account = async ({
               <div
                 className="h-2 w-2 rounded-full flex-shrink-0"
                 style={{
-                  backgroundColor: getColour(transaction.category?.colour)
+                  backgroundColor: getColour(transaction.category?.colour || null)
                     .foreground,
                 }}
               />
@@ -184,12 +209,12 @@ const Account = async ({
                 ? new Intl.NumberFormat("en-GB", {
                     style: "currency",
                     currency: "GBP",
-                  }).format(transaction.income)
+                  }).format(parseFloat(transaction.income || ""))
                 : transaction.to === account
                 ? new Intl.NumberFormat("en-GB", {
                     style: "currency",
                     currency: "GBP",
-                  }).format(transaction.amount)
+                  }).format(parseFloat(transaction.amount || ""))
                 : "-"}
             </p>
             <p
@@ -200,12 +225,12 @@ const Account = async ({
                 ? new Intl.NumberFormat("en-GB", {
                     style: "currency",
                     currency: "GBP",
-                  }).format(transaction.expense)
+                  }).format(parseFloat(transaction.expense || ""))
                 : transaction.from === account
                 ? new Intl.NumberFormat("en-GB", {
                     style: "currency",
                     currency: "GBP",
-                  }).format(transaction.amount) : "-"}
+                  }).format(parseFloat(transaction.amount || "")) : "-"}
             </p>
             <p
               className="text-right font-medium py-2 px-1.5"
@@ -214,7 +239,7 @@ const Account = async ({
               {new Intl.NumberFormat("en-GB", {
                 style: "currency",
                 currency: "GBP",
-              }).format(transaction.balance)}
+              }).format(transaction.balance || 0)}
             </p>
           </div>
         ))}
@@ -236,7 +261,7 @@ const Account = async ({
                   end: new Date(to || ""),
                 }),
               )
-              .reverse()[0].balance,
+              .reverse()[0].balance || 0,
           )}
         </span>
       </div>
