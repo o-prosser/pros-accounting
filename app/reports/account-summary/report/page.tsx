@@ -230,8 +230,8 @@ const AccountSummaryReport = async (routeData: {
         .
       </p>
 
-      {searchParams.club === 'on' ? <Account account="club" transactions={transactions.filter((t) => t.account === 'club').map((t) => ({balance: payments.find((p) => p.id === t.id)?.balance, ...t}))} from={searchParams.from} to={searchParams.to} /> : ""}
-      {searchParams.charity === 'on' ? <Account account="charity" transactions={transactions.filter((t) => t.account === 'charity')} from={searchParams.from} to={searchParams.to} /> : ""}
+      {searchParams.club === 'on' ? <Account account="club" transactions={transactions.filter((t) => t.account === 'club').map((t) => ({balance: payments.find((p) => p.id === t.id)?.balance, ...t}))} from={searchParams.from} to={searchParams.to} transfers={transfers} /> : ""}
+      {searchParams.charity === 'on' ? <Account account="charity" transactions={transactions.filter((t) => t.account === 'charity')} from={searchParams.from} to={searchParams.to} transfers={transfers} /> : ""}
       {/* {searchParams.dutch === 'on' ? <Account account="dutch" transactions={transactions.filter((t) => t.account === 'dutch')} from={searchParams.from} to={searchParams.to} /> : ""} */}
     </div>
   );
