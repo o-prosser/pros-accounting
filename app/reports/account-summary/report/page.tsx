@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { format, isAfter, isWithinInterval, isBefore } from "date-fns";
 import { ArrowRightIcon, HashIcon } from "lucide-react";
 import {selectTransactions} from '@/models/transaction'
+import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 
 const Account = async ({
   account,
