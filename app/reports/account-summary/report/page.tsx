@@ -33,7 +33,7 @@ const Account = ({account, transfers, transactions, from, to}: {account: "club"|
       <div className="border-b border-x bg-muted/50 px-2 py-1.5 text-[10pt]">
         <span>
           <span className="font-semibold">Opening balance</span> at{" "}
-          {format(new Date(from), "dd MMM yyyy")}
+          {format(new Date(from || ""), "dd MMM yyyy")}
         </span>
       </div>
 
@@ -106,7 +106,7 @@ const Account = ({account, transfers, transactions, from, to}: {account: "club"|
       <div className="border-b border-x bg-muted/50 px-2 py-1.5 text-[10pt]">
         <span>
           <span className="font-semibold">Closing balance</span> at{" "}
-          {format(new Date(to), "dd MMM yyyy")}
+          {format(new Date(to || ""), "dd MMM yyyy")}
         </span>
       </div>
     </>
@@ -208,7 +208,7 @@ const AccountSummaryReport = async (routeData: {
   return (
     <div className="text-[12pt]">
       <h1 className="font-semibold" style={{ fontSize: "22pt" }}>
-        Account Summary &mdash; {format(new Date(searchParams.from), "MMMM yyyy")}
+        Account Summary &mdash; {format(new Date(searchParams.from || ""), "MMMM yyyy")}
       </h1>
       <h2 className="font-medium" style={{ fontSize: "14pt" }}>
         {organisation.name}
