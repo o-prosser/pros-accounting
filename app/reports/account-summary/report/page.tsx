@@ -138,7 +138,7 @@ const Account = async ({
           <span className="font-semibold">Opening balance</span> at{" "}
           {format(new Date(from || ""), "dd MMM yyyy")}
         </span>
-        <span className="font-semibold tabular-nums">
+        <span className="font-semibold tabular-nums" style={{fontVariantNumeric: "tabular-nums"}}>
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
@@ -203,7 +203,7 @@ const Account = async ({
             </div>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{ width: "14%", padding: "8px 6px" }}
+              style={{ width: "14%", padding: "8px 6px", fontVariantNumeric: "tabular-nums" }}
             >
               {transaction.income
                 ? new Intl.NumberFormat("en-GB", {
@@ -219,7 +219,7 @@ const Account = async ({
             </p>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{ width: "14%", padding: "8px 6px" }}
+              style={{ width: "14%", padding: "8px 6px", fontVariantNumeric: "tabular-nums" }}
             >
               {transaction.expense !== undefined && transaction.expense !== null
                 ? new Intl.NumberFormat("en-GB", {
@@ -234,7 +234,7 @@ const Account = async ({
             </p>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{ width: "14%", padding: "8px 6px" }}
+              style={{ width: "14%", padding: "8px 6px", fontVariantNumeric: "tabular-nums" }}
             >
               {new Intl.NumberFormat("en-GB", {
                 style: "currency",
@@ -249,7 +249,7 @@ const Account = async ({
           <span className="font-semibold">Closing balance</span> at{" "}
           {format(new Date(to || ""), "dd MMM yyyy")}
         </span>
-        <span className="font-semibold tabular-nums">
+        <span className="font-semibold tabular-nums" style={{fontVariantNumeric: "tabular-nums"}}>
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
