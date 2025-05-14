@@ -109,12 +109,12 @@ const Account = async ({
                 }));
 
   return (
-    <>
+    <div className="page-break-after">
       <h2
         className="font-medium capitalize"
         style={{ fontSize: "14pt", marginTop: "0.8cm", marginBottom: "0.1cm" }}
       >
-        {account}
+        {account} account
       </h2>
 
       <div className="flex font-semibold text-[10pt] border-b border-t divide-x border-x bg-muted">
@@ -265,7 +265,7 @@ const Account = async ({
           )}
         </span>
       </div>
-    </>
+    </div>
   );
 };
 
