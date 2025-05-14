@@ -138,7 +138,7 @@ const Account = async ({
           <span className="font-semibold">Opening balance</span> at{" "}
           {format(new Date(from || ""), "dd MMM yyyy")}
         </span>
-        <span className="font-semibold">
+        <span className="font-semibold tabular-nums">
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
@@ -202,7 +202,7 @@ const Account = async ({
               </span>
             </div>
             <p
-              className="text-right font-medium py-2 px-1.5"
+              className="text-right font-medium py-2 px-1.5 tabular-nums"
               style={{ width: "14%", padding: "8px 6px" }}
             >
               {transaction.income
@@ -218,7 +218,7 @@ const Account = async ({
                 : "-"}
             </p>
             <p
-              className="text-right font-medium py-2 px-1.5"
+              className="text-right font-medium py-2 px-1.5 tabular-nums"
               style={{ width: "14%", padding: "8px 6px" }}
             >
               {transaction.expense !== undefined && transaction.expense !== null
@@ -233,7 +233,7 @@ const Account = async ({
                   }).format(parseFloat(transaction.amount || "")) : "-"}
             </p>
             <p
-              className="text-right font-medium py-2 px-1.5"
+              className="text-right font-medium py-2 px-1.5 tabular-nums"
               style={{ width: "14%", padding: "8px 6px" }}
             >
               {new Intl.NumberFormat("en-GB", {
@@ -249,7 +249,7 @@ const Account = async ({
           <span className="font-semibold">Closing balance</span> at{" "}
           {format(new Date(to || ""), "dd MMM yyyy")}
         </span>
-        <span className="font-semibold">
+        <span className="font-semibold tabular-nums">
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
