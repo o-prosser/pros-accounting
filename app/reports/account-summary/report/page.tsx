@@ -109,7 +109,7 @@ const Account = async ({
                 }));
 
   return (
-    <div className="page-break-after">
+    <div style={{ pageBreakAfter: "always" }}>
       <h2
         className="font-medium capitalize"
         style={{ fontSize: "14pt", marginTop: "0.8cm", marginBottom: "0.1cm" }}
