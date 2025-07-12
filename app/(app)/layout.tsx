@@ -29,10 +29,12 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
       <MobileNavbar />
       <DesktopSidebar user={session.user} organisation={organisation} />
 
-      {/* Content */}
-      <main className="px-6 pt-6 pb-30 md:!pb-6 min-h-screen md:!pl-[22rem]">
-        {children}
-      </main>
+      <div className="min-h-screen w-screen bg-muted p-3 md:!pl-78">
+        {/* Content */}
+        <main className="px-6 pt-6 pb-30 md:!pb-6 min-h-screen bg-background border rounded-2xl">
+          {children}
+        </main>
+      </div>
 
       <Toaster />
     </>
