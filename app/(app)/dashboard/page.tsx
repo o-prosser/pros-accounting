@@ -7,6 +7,17 @@ import { Suspense } from "react";
 import TransactionsLoading from "./_components/index-loading";
 import { getSession } from "@/lib/auth";
 import SummaryWidget from "@/components/summary-widget";
+import {
+  HomeIcon,
+  BadgePoundSterlingIcon,
+  BanknoteArrowUpIcon,
+  ShoppingBagIcon,
+  ExternalLinkIcon,
+  DownloadIcon,
+  PlusIcon,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -17,16 +28,103 @@ const DashboardPage = async () => {
 
   return (
     <>
-      <Caption>{format(new Date(), "EEEE, do MMMM yyyy")}</Caption>
-      <Title>Welcome back, {session?.user.firstName}</Title>
+      <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
+      <Caption className="-mt-4">
+        It's {format(new Date(), "EEEE, do MMMM yyyy")} &mdash; here's an
+        overview of your accounts.
+      </Caption>
 
       <Suspense fallback={<TotalsLoading />}>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mt-6">
           <SummaryWidget account="charity" />
           <SummaryWidget account="club" />
-          <SummaryWidget account="dutch" className="md:col-span-2" chart={false} />
+          {/* <SummaryWidget
+            account="dutch"
+            className="md:col-span-2"
+            chart={false}
+          /> */}
         </div>
       </Suspense>
+
+      <div className="grid grid-cols-5 gap-6 mt-6">
+        <div className="rounded-2xl border bg-muted/50 p-3 col-span-2">
+          <h3 className="font-medium text-xl flex-1">Quick actions</h3>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Button className="mt-2" asChild variant="dark">
+              <Link href="/transactions/create">
+                <PlusIcon className="!size-4" />
+                Add a transaction
+              </Link>
+            </Button>
+            <Button className="mt-2" asChild variant="dark">
+              <Link href="/transfers/create">
+                <PlusIcon className="!size-4" />
+                Add a transfer
+              </Link>
+            </Button>
+          </div>
+          <Button
+            className="bg-background p-3 mt-2 text-sm border whitespace-normal items-end hover:underline hover:bg-background/50 w-full relative overflow-hidden"
+            asChild
+            variant={null}
+            size={null}
+          >
+            <Link href="">
+              <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
+              <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
+              <span className="w-full whitespace-normal relative">
+                Download this month's transactions and transfers in a printable
+                report.
+              </span>
+              <DownloadIcon className="size-4 text-muted-foreground relative" />
+            </Link>
+          </Button>
+          <Button
+            className="bg-background p-3 mt-2 text-sm border whitespace-normal items-end hover:underline hover:bg-background/50 w-full relative overflow-hidden"
+            asChild
+            variant={null}
+            size={null}
+          >
+            <Link href="">
+              <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
+              <div className="absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-background via-70% to-background"></div>
+              <span className="w-full whitespace-normal relative">
+                Export all transactions and transfers in an Excel spreadsheet
+                format.
+              </span>
+              <DownloadIcon className="size-4 text-muted-foreground relative" />
+            </Link>
+          </Button>
+          <Button
+            className="bg-background p-3 mt-2 text-sm border whitespace-normal items-end hover:underline hover:bg-background/50 w-full relative overflow-hidden"
+            asChild
+            variant={null}
+            size={null}
+          >
+            <Link href="">
+              <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
+              <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent via-background via-70% to-background"></div>
+              <span className="w-full whitespace-normal relative">
+                Generate a monthly account summary for either your charity or
+                club account.
+              </span>
+              <DownloadIcon className="size-4 text-muted-foreground relative" />
+            </Link>
+          </Button>
+        </div>
+        <div className="border rounded-2xl bg-muted/50 p-3 col-span-3">
+          <div className="flex items-start">
+            <h3 className="font-medium text-xl flex-1">Categories</h3>
+            <Button size="sm" variant="outline" asChild>
+              <Link href="">
+                <PlusIcon />
+                Add category
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
 
       <Heading className="mt-6 mb-2">Latest transactions</Heading>
       <Suspense fallback={<TransactionsLoading />}>

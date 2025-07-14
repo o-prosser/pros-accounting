@@ -14,6 +14,7 @@ import {
   ArrowLeftRightIcon,
   FileIcon,
   SettingsIcon,
+  FolderIcon,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -116,6 +117,12 @@ const DesktopSidebar = ({
           Categories
         </DesktopLink>
       </ActivePage>
+      <ActivePage pathname="/documents">
+        <DesktopLink href="/documents">
+          <FolderIcon />
+          Documents
+        </DesktopLink>
+      </ActivePage>
 
       <span className="text-xs font-medium uppercase text-muted-foreground pt-3">
         Cash book
@@ -126,26 +133,20 @@ const DesktopSidebar = ({
       <div className="gap-y-1 flex flex-col items-start mb-2 w-full">
         <ActivePage pathname="/transactions/cash-book/all">
           <DesktopLink href="/transactions/cash-book/all">
-            <div className="h-5 w-5 rounded-full border border-border to-foreground/10 from-foreground/50 bg-gradient-to-b"></div>
+            <div className="size-4.5 rounded-full border border-border from-foreground/10 to-foreground/10 via-foreground/50 bg-gradient-to-br"></div>
             All payments
           </DesktopLink>
         </ActivePage>
         <ActivePage pathname="/transactions/cash-book/charity">
           <DesktopLink href="/transactions/cash-book/charity">
-            <div className="h-5 w-5 rounded-full border border-orange-600 to-orange-600/10 from-orange-600/50 bg-gradient-to-b"></div>
+            <div className="size-4.5 rounded-full border border-orange-600 bg-gradient-to-br via-orange-600 from-orange-400 to-orange-400"></div>
             Charity
           </DesktopLink>
         </ActivePage>
         <ActivePage pathname="/transactions/cash-book/club">
           <DesktopLink href="/transactions/cash-book/club">
-            <div className="h-5 w-5 rounded-full border border-cyan-600 to-cyan-600/10 from-cyan-600/50 bg-gradient-to-b"></div>
+            <div className="size-4.5 rounded-full border border-cyan-600 bg-gradient-to-br via-cyan-600 from-cyan-400 to-cyan-400"></div>
             Club
-          </DesktopLink>
-        </ActivePage>
-        <ActivePage pathname="/transactions/cash-book/dutch">
-          <DesktopLink href="/transactions/cash-book/dutch">
-            <div className="h-5 w-5 rounded-full border border-green-600 to-green-600/10 from-green-600/50 bg-gradient-to-b"></div>
-            Dutch Visit
           </DesktopLink>
         </ActivePage>
       </div>

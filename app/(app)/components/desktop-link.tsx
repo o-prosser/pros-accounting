@@ -10,7 +10,7 @@ const DesktopLink = ({
     <Button
       asChild
       variant="ghost"
-      className="hover:bg-black w-full justify-start px-3 data-[active=true]:bg-background/50"
+      className="hover:bg-muted-foreground/20 w-full justify-start px-3 data-[active=true]:bg-muted-foreground/20 [[data-active='true']_&>svg]:!text-foreground [&>svg]:size-4.5"
       {...props}
     >
       <Link href={href}>{children}</Link>
