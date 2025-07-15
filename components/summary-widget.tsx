@@ -189,7 +189,9 @@ const SummaryWidget = async ({
         <div className="grid grid-cols-2 relative">
           <div>
             <p className="text-2xl font-mono font-semibold tracking-tight">
-              £14,000
+              {income + initial - expense == 0
+                ? "---"
+                : currency(income + initial - expense)}
             </p>
             <p className="font-medium text-muted-foreground">Current balance</p>
           </div>
@@ -204,7 +206,9 @@ const SummaryWidget = async ({
                 )}
               />
               <div className="flex items-end gap-1">
-                <p className="font-mono font-medium tracking-tight">£3,200</p>
+                <p className="font-mono font-medium tracking-tight">
+                  {income == 0 ? "---" : currency(income)}
+                </p>
                 <p className="text-sm pb-[0.5px] text-muted-foreground">
                   income
                 </p>
@@ -219,7 +223,9 @@ const SummaryWidget = async ({
                 )}
               />
               <div className="flex items-end gap-1">
-                <p className="font-mono font-medium tracking-tight">£2,475</p>
+                <p className="font-mono font-medium tracking-tight">
+                  {expense == 0 ? "---" : currency(expense)}
+                </p>
                 <p className="text-sm pb-[0.5px] text-muted-foreground">
                   expenses
                 </p>
