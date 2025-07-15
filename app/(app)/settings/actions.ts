@@ -20,11 +20,15 @@ export const invite = async (formData: FormData) => {
     from: "ProsAccounting <prosaccounting@prossermedia.co.uk>",
     to: email,
     subject: `Invitation to join ${organisation.name}`,
-    react: InviteEmail({organisationName: organisation.name, name: email.split("@")[0], link: ``})
-  })
+    react: InviteEmail({
+      organisationName: organisation.name,
+      name: email.split("@")[0],
+      link: ``,
+    }),
+  });
 
-  redirect("/settings?status=invited")
-}
+  redirect("/settings?status=invited");
+};
 
 const updateOrganisationSchema = z.object({
   name: z.string().min(3).max(255),
@@ -33,30 +37,37 @@ const updateOrganisationSchema = z.object({
   initialCharityBalance: z.string().nullable(),
   initialDutchBalance: z.string().nullable(),
   themeColour: z.string().nullable(),
-})
+});
 
 export const updateOrganisation = async (formData: FormData) => {
-  const fields = updateOrganisationSchema.safeParse(Object.fromEntries(formData));
+  const fields = updateOrganisationSchema.safeParse(
+    Object.fromEntries(formData),
+  );
 
   if (!fields.success) {
-    return {
-      errors: fields.error.flatten().fieldErrors,
-    };
+    // return {
+    //   errors: fields.error.flatten().fieldErrors,
+    // };
+
+    throw new Error();
   }
 
   const organisationId = (await selectCurrentOrganisation()).id;
 
-  await db.update(organisationsTable).set({
-    name: fields.data.name,
-    endOfFinancialYear: new Date(fields.data.endOfFinancialYear),
-    initialCharityBalance: fields.data.initialCharityBalance || null,
-    initialClubBalance: fields.data.initialClubBalance || null,
-    initialDutchBalance: fields.data.initialDutchBalance || null,
-    themeColour: fields.data.themeColour?.replace("#",""),
-  }).where(eq(organisationsTable.id, organisationId));
+  await db
+    .update(organisationsTable)
+    .set({
+      name: fields.data.name,
+      endOfFinancialYear: new Date(fields.data.endOfFinancialYear),
+      initialCharityBalance: fields.data.initialCharityBalance || null,
+      initialClubBalance: fields.data.initialClubBalance || null,
+      initialDutchBalance: fields.data.initialDutchBalance || null,
+      themeColour: fields.data.themeColour?.replace("#", ""),
+    })
+    .where(eq(organisationsTable.id, organisationId));
 
   revalidatePath("/settings");
-}
+};
 
 const addFinancialYearSchema = z.object({
   from: z.string().min(3).max(255),
@@ -65,14 +76,14 @@ const addFinancialYearSchema = z.object({
 });
 
 export const addFinancialYear = async (formData: FormData) => {
-  const fields = addFinancialYearSchema.safeParse(
-    Object.fromEntries(formData),
-  );
+  const fields = addFinancialYearSchema.safeParse(Object.fromEntries(formData));
 
   if (!fields.success) {
-    return {
-      errors: fields.error.flatten().fieldErrors,
-    };
+    // return {
+    //   errors: fields.error.flatten().fieldErrors,
+    // };
+
+    throw new Error();
   }
 
   await db.insert(financialYearsTable).values({
@@ -82,8 +93,8 @@ export const addFinancialYear = async (formData: FormData) => {
     isCurrent: isWithinInterval(new Date(), {
       start: new Date(fields.data.from),
       end: new Date(fields.data.to),
-    })
+    }),
   });
 
-  revalidatePath('/settings');
-}
+  revalidatePath("/settings");
+};
