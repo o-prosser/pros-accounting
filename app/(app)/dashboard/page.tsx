@@ -15,9 +15,19 @@ import {
   ExternalLinkIcon,
   DownloadIcon,
   PlusIcon,
+  ChevronDownIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { selectCurrentOrganisation } from "@/models/organisation";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -26,13 +36,52 @@ export const metadata: Metadata = { title: "Dashboard" };
 const DashboardPage = async () => {
   const session = await getSession();
 
+  const organisation = await selectCurrentOrganisation();
+
   return (
     <>
-      <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
-      <Caption className="-mt-4">
-        It&apos;s {format(new Date(), "EEEE, do MMMM yyyy")} &mdash; here&apos;s
-        an overview of your accounts.
-      </Caption>
+      <div className="flex justify-between items-end">
+        <div>
+          <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
+          <Caption className="-mt-4">
+            It&apos;s {format(new Date(), "EEEE, do MMMM yyyy")} &mdash;
+            here&apos;s an overview of your accounts.
+          </Caption>
+        </div>
+        {organisation.financialYears.filter((fy) => fy.isCurrent === true)
+          .length > 0 ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                {format(
+                  organisation.financialYears.find(
+                    (fy) => fy.isCurrent === true,
+                  )?.startDate || new Date(),
+                  "MMM yyyy",
+                )}{" "}
+                &mdash; present
+                <ChevronDownIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Financial years</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                {organisation.financialYears.map((fy, key) => (
+                  <DropdownMenuItem asChild key={key}>
+                    <Link href={`/dashboard?fy=${fy.id}`}>
+                      <div className="size-1.5 bg-popover-foreground/80 rounded-full mr-2"></div>
+                      {format(fy.startDate, "d MMMM yyyy")} &ndash;{" "}
+                      {format(fy.endDate, "d MMMM yyyy")}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          ""
+        )}
+      </div>
 
       <Suspense fallback={<TotalsLoading />}>
         <div className="grid md:grid-cols-2 gap-6 mt-6">
