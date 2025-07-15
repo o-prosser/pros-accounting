@@ -15,6 +15,8 @@ import {
   FileIcon,
   SettingsIcon,
   FolderIcon,
+  LucideLandmark,
+  ExternalLinkIcon,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -38,12 +40,12 @@ const DesktopSidebar = ({
   user: { firstName: string; lastName: string | null; email: string };
 }) => {
   return (
-    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-2 flex-col items-start p-3">
+    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-1 flex-col items-start p-3">
       <Logo className="h-6 w-auto mb-2 fill-foreground" />
 
       <div className="h-[2px] bg-background border-t w-full" />
 
-      <div className="flex w-full gap-2 mb-2">
+      <div className="flex w-full gap-2 mb-2 mt-1">
         <Button variant="outline" size="icon">
           <PlusIcon />
         </Button>
@@ -150,6 +152,27 @@ const DesktopSidebar = ({
           </DesktopLink>
         </ActivePage>
       </div>
+
+      <span className="text-xs font-medium uppercase text-muted-foreground pt-3">
+        Links
+      </span>
+
+      <div className="h-[2px] bg-background border-t w-full" />
+
+      <Button
+        asChild
+        variant="ghost"
+        className="hover:bg-muted-foreground/20 w-full justify-start px-3 data-[active=true]:bg-muted-foreground/20 [[data-active='true']_&>svg]:!text-foreground [&>svg]:size-4.5"
+      >
+        <a
+          href="https://www.lloydsbank.com/business/home.html#flyout"
+          target="_blank"
+        >
+          <LucideLandmark />
+          <span className="flex-1 text-left">Lloyds Bank</span>
+          <ExternalLinkIcon className="size-3" />
+        </a>
+      </Button>
 
       <span className="text-xs font-medium uppercase text-muted-foreground pt-3">
         Settings
