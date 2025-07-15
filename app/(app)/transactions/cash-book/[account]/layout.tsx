@@ -37,7 +37,7 @@ const TransactionsIndexLayout = ({
   params: Promise<{ account: string }>;
   children: React.ReactNode;
 }) => {
-  const {account: accountParam} = use(params);
+  const { account: accountParam } = use(params);
 
   const account =
     accountParam === "club"
@@ -67,9 +67,7 @@ const TransactionsIndexLayout = ({
       </Breadcrumb> */}
 
       <div className="flex items-start justify-between">
-        <Title icon={BanknoteIcon}>
-          Cash book{" "}
-        </Title>
+        <Title icon={BanknoteIcon}>Cash book </Title>
         <div className="flex gap-2">
           {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -99,7 +97,7 @@ const TransactionsIndexLayout = ({
           </DropdownMenu> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button>
+              <Button variant="dark">
                 <PlusIcon />
                 Add new
                 <ChevronDownIcon className="!h-3 !w-3 !text-muted-foreground !-ml-1" />

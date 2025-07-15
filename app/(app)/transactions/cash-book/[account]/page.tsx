@@ -7,8 +7,9 @@ import { isAfter, isBefore, isSameDay } from "date-fns";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 import { columnsWithoutAccount } from "./columnsWithoutAccount";
-import SummaryWidget from "@/components/summary-widget";
+import SummaryWidget from "./_components/summary-widget";
 import { PaymentFilterableDataTable } from "@/components/payment-filterable-data-table";
+import { selectCategories } from "@/models/category";
 
 export const metadata: Metadata = { title: "Transactions" };
 
@@ -39,6 +40,7 @@ const TransactionsPage = async (props: {
       ...t,
     }),
   );
+  const categories = await selectCategories();
 
   const payments = [...transactions, ...transfers].sort((a, b) =>
     isAfter(a.date, b.date) ? 1 : -1,
@@ -72,10 +74,10 @@ const TransactionsPage = async (props: {
       (total, current) => total + current,
       parseFloat(
         // @ts-ignore
-        ((payment.account||account) === "club"
+        ((payment.account || account) === "club"
           ? organisation.initialClubBalance
           : // @ts-ignore
-          (payment.account||account) === "charity"
+          (payment.account || account) === "charity"
           ? organisation.initialCharityBalance
           : organisation.initialDutchBalance) || "",
       ),
@@ -97,6 +99,8 @@ const TransactionsPage = async (props: {
       <PaymentFilterableDataTable
         columns={account ? columnsWithoutAccount : columns}
         data={balancedTransfersPayments.reverse()}
+        categories={categories}
+        categoryKey="category"
       />
     </>
   );
