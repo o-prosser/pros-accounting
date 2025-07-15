@@ -100,6 +100,7 @@ const TransactionsPage = async (props: {
         columns={account ? columnsWithoutAccount : columns}
         data={balancedTransfersPayments.reverse()}
         categories={categories}
+        // @ts-ignore
         categoryKey="categoryId"
       />
     </>
