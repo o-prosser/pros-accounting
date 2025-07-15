@@ -12,20 +12,20 @@ const schema = z.object({
   name: z.string().min(3).max(50),
   account: z.string().max(100),
   colour: z.string().nullable(),
-})
+});
 
 function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
 export const updateCategoryAction = async (formData: FormData) => {
   const fields = schema.safeParse(Object.fromEntries(formData));
 
   if (!fields.success) {
-    return {
-      error: fields.error.flatten().fieldErrors,
-    }
+    // return {
+    //   error: fields.error.flatten().fieldErrors,
+    // }
+    throw new Error(fields.error.flatten().fieldErrors);
   }
 
   try {
@@ -41,35 +41,34 @@ export const updateCategoryAction = async (formData: FormData) => {
   } catch (error) {
     throw error;
 
-    return {
-      error: {
-        name: ["An error occurred. Please try again"]
-      }
-    }
+    // return {
+    //   error: {
+    //     name: ["An error occurred. Please try again"]
+    //   }
+    // }
   }
 
-  redirect(`/categories/${fields.data.id}`)
-}
-
-
-
+  redirect(`/categories/${fields.data.id}`);
+};
 
 // Create sub category
-
 
 const schemaTwo = z.object({
   name: z.string().min(3).max(50),
   categoryId: z.string().uuid(),
 });
 
-export const createSubCategoryAction = async (prevState: any, formData: FormData) => {
+export const createSubCategoryAction = async (
+  prevState: any,
+  formData: FormData,
+) => {
   const fields = schemaTwo.safeParse(Object.fromEntries(formData));
 
   if (!fields.success) {
     return {
       error: fields.error.flatten().fieldErrors,
       success: false,
-      newId: ""
+      newId: "",
     };
   }
 
