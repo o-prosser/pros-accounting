@@ -16,7 +16,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { getColour } from "@/utils/colours";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
@@ -35,14 +39,14 @@ export type Transaction = {
   id: string;
   name?: string;
   date: string | Date;
-  account?: "club" |"charity"|"dutch"|null;
+  account?: "club" | "charity" | "dutch" | null;
   receiptBookNumber?: number | null;
   income?: string | null;
   expense?: string | null;
   balance?: number;
   amount?: string;
-  from?: "club" |"charity"|"dutch";
-  to?: "club" |"charity"|"dutch";
+  from?: "club" | "charity" | "dutch";
+  to?: "club" | "charity" | "dutch";
   notes: string | null;
   category?: {
     id: string;
@@ -76,7 +80,6 @@ export const columns: ColumnDef<Transaction>[] = [
       ) : (
         <Tooltip>
           <TooltipTrigger>
-
             <div className="h-7 flex font-medium">
               <div className={clsx(row.original.to && "relative flex")}>
                 <div className="flex items-center gap-1">
@@ -118,7 +121,9 @@ export const columns: ColumnDef<Transaction>[] = [
             </div>
           </TooltipTrigger>
           <TooltipContent align="start">
-            {row.original.notes || <span className="italic">Untitled transfer</span>}
+            {row.original.notes || (
+              <span className="italic">Untitled transfer</span>
+            )}
           </TooltipContent>
         </Tooltip>
       ),
@@ -161,7 +166,7 @@ export const columns: ColumnDef<Transaction>[] = [
   // },
   {
     header: "Account",
-    
+
     cell: ({ row }) => {
       return row.original.account ? (
         <div className="flex">
@@ -213,7 +218,7 @@ export const columns: ColumnDef<Transaction>[] = [
               {category.name}
             </span>
           </div>
-          {(subCategory !== null && subCategory !== undefined) ? (
+          {subCategory !== null && subCategory !== undefined ? (
             <div className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto bg-muted/50 border-muted-forergound">
               <span className="font-medium flex-shrink-0 text-muted-foreground">
                 {subCategory?.name}
@@ -245,38 +250,40 @@ export const columns: ColumnDef<Transaction>[] = [
 
       return (
         <div className="flex justify-between">
-        <span
-          className={clsx(
-            "text-rght font-medium",
-            row.original.income && "text-green-600",
-            row.original.expense && "text-red-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.to &&
-              "text-green-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.from &&
-              "text-red-600",
-          )}
-        >
-          {row.original.income ? "+" : ""}
-          {row.original.expense ? "-" : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.to
-            ? "+"
-            : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.from
-            ? "-"
-            : ""}
-          {formatted}
+          <span
+            className={clsx(
+              "text-rght font-medium",
+              row.original.income && "text-green-600",
+              row.original.expense && "text-red-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.to &&
+                "text-green-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.from &&
+                "text-red-600",
+            )}
+          >
+            {row.original.income ? "+" : ""}
+            {row.original.expense ? "-" : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.to
+              ? "+"
+              : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.from
+              ? "-"
+              : ""}
+            {formatted}
           </span>
 
           <span className="text-muted-foreground">
             {row.original.balance !== undefined
-              ? "(" + new Intl.NumberFormat("en-GB", {
+              ? "(" +
+                new Intl.NumberFormat("en-GB", {
                   style: "currency",
                   currency: "GBP",
-                }).format(row.original.balance) + ")"
+                }).format(row.original.balance) +
+                ")"
               : ""}
           </span>
         </div>
@@ -302,14 +309,15 @@ export const columns: ColumnDef<Transaction>[] = [
   // },
   {
     id: "actions",
-    header: "Actions",
+    header: "",
     cell: ({ row }) => {
       return (
         <div className="flex -ml-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="ghost"
+                variant="outline"
+                size="icon"
                 className="h-8 w-8 p-0 text-muted-foreground"
               >
                 <span className="sr-only">Open menu</span>

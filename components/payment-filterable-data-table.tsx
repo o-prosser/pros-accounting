@@ -168,14 +168,17 @@ export function PaymentFilterableDataTable<TData, TValue>({
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<
+    SelectCategory[]
+  >([]);
 
   const filteredData = useMemo(() => {
     if (selectedCategories.length === 0) {
       return data;
     }
+    const selectedCategoriesIds = selectedCategories.map((c) => c.id);
     return data.filter((item) =>
-      selectedCategories.includes(item[categoryKey] as string),
+      selectedCategoriesIds.includes(item[categoryKey] as string),
     );
   }, [data, selectedCategories, categoryKey]);
 
@@ -216,7 +219,6 @@ export function PaymentFilterableDataTable<TData, TValue>({
           </div>
 
           <CategoryFilter
-            // @ts-ignore
             onCategoriesChange={setSelectedCategories}
             categories={categories}
           />
@@ -236,7 +238,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
       ) : (
         ""
       )}
-      <div className="rounded-md border">
+      <div className="rounded-2xl border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

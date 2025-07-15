@@ -284,15 +284,16 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
   // },
   {
     id: "actions",
-    header: "Actions",
+    header: "",
     cell: ({ row }) => {
       return (
-        <div className="flex -ml-2">
+        <div className="flex justify-end -ml-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="ghost"
-                className="h-8 w-8 p-0 text-muted-foreground"
+                variant="outline"
+                size="icon"
+                className="h-6 w-6 p-0 text-muted-foreground"
               >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
