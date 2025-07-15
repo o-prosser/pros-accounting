@@ -30,8 +30,8 @@ const DashboardPage = async () => {
     <>
       <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
       <Caption className="-mt-4">
-        It's {format(new Date(), "EEEE, do MMMM yyyy")} &mdash; here's an
-        overview of your accounts.
+        It&apos;s {format(new Date(), "EEEE, do MMMM yyyy")} &mdash; here&apos;s
+        an overview of your accounts.
       </Caption>
 
       <Suspense fallback={<TotalsLoading />}>
@@ -74,8 +74,8 @@ const DashboardPage = async () => {
               <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
               <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
               <span className="w-full whitespace-normal relative">
-                Download this month's transactions and transfers in a printable
-                report.
+                Download this month&apos;s transactions and transfers in a
+                printable report.
               </span>
               <DownloadIcon className="size-4 text-muted-foreground relative" />
             </Link>

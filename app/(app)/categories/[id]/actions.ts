@@ -25,7 +25,7 @@ export const updateCategoryAction = async (formData: FormData) => {
     // return {
     //   error: fields.error.flatten().fieldErrors,
     // }
-    throw new Error(fields.error.flatten().fieldErrors);
+    throw new Error("");
   }
 
   try {
