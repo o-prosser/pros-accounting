@@ -40,8 +40,8 @@ const DesktopSidebar = ({
   user: { firstName: string; lastName: string | null; email: string };
 }) => {
   return (
-    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-1 flex-col items-start p-3">
-      <Logo className="h-6 w-auto mb-2 fill-foreground" />
+    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-1 flex-col items-start p-3 overflow-auto">
+      <Logo className="h-6 w-auto mb-2 fill-foreground shrink-0" />
 
       <div className="h-[2px] bg-background border-t w-full" />
 
