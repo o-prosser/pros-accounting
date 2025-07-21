@@ -46,10 +46,35 @@ const DesktopSidebar = ({
       <div className="h-[2px] bg-background border-t w-full" />
 
       <div className="flex w-full gap-2 mb-2 mt-1">
-        <Button variant="outline" size="icon">
-          <PlusIcon />
-        </Button>
-        <Button variant="outline" className="flex-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="dark:border-background/80 dark:bg-background/70 dark:hover:bg-background/30"
+            >
+              <PlusIcon />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem asChild>
+              <Link href="/transactions/create">
+                <BanknoteIcon className="h-4 w-4 text-muted-foreground mr-2" />
+                Add transaction
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/transfers/create">
+                <ArrowLeftRightIcon className="h-4 w-4 text-muted-foreground mr-2" />
+                Add transfer
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Button
+          variant="outline"
+          className="flex-1 dark:border-background/80 dark:bg-background/70 dark:hover:bg-background/30"
+        >
           <SearchIcon className="!size-4" />
           <span className="flex-1 text-left">Search</span>
           <div className="flex gap-px">
