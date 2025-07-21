@@ -4,8 +4,15 @@ import { columns } from "./table";
 import { selectTransfers } from "@/models/transfer";
 import { isAfter } from "date-fns";
 
-const Transactions = async () => {
-  const transactions = await selectTransactions({ account: null });
+const Transactions = async ({
+  financialYear,
+}: {
+  financialYear: { id: string };
+}) => {
+  const transactions = await selectTransactions({
+    account: null,
+    financialYear,
+  });
   const transfers = await selectTransfers();
 
   const payments = [...transactions, ...transfers].sort((a, b) =>

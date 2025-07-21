@@ -98,3 +98,29 @@ export const addFinancialYear = async (formData: FormData) => {
 
   revalidatePath("/settings");
 };
+
+export const makeFinancialYearCurrent = async (formData: FormData) => {
+  const financialYearId = formData.get("financialYearId") as string;
+
+  if (!financialYearId) {
+    // return {
+    //   error: "Financial year ID is required",
+    // };
+
+    throw new Error();
+  }
+
+  const organisation = await selectCurrentOrganisation();
+
+  await db
+    .update(financialYearsTable)
+    .set({ isCurrent: false })
+    .where(eq(financialYearsTable.organisationId, organisation.id));
+
+  await db
+    .update(financialYearsTable)
+    .set({ isCurrent: true })
+    .where(eq(financialYearsTable.id, financialYearId));
+
+  revalidatePath("/settings");
+};

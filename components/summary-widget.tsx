@@ -68,10 +68,17 @@ const monthNames = [
   "December",
 ];
 
-export const getTotals = async () => {
+export const getTotals = async ({
+  financialYear,
+}: {
+  financialYear?: { id: string };
+}) => {
   const months = await getMonths();
-  const transactions = await selectTransactions({ account: null });
-  const transfers = await selectTransfers();
+  const transactions = await selectTransactions({
+    account: null,
+    financialYear,
+  });
+  const transfers = await selectTransfers({ financialYear });
 
   return {
     charity: months.map((month) => ({
@@ -133,6 +140,7 @@ const SummaryWidget = async ({
   chart = true,
   viewButton = true,
   min = false,
+  currentFinancialYear,
   className,
   ...props
 }: {
@@ -140,20 +148,35 @@ const SummaryWidget = async ({
   chart?: boolean;
   viewButton?: boolean;
   min?: boolean;
+  currentFinancialYear?: { id: string; startDate: Date; endDate: Date };
 } & React.ComponentProps<"div">) => {
-  const transactions = await selectTransactions({ account: null });
-  const transfers = await selectTransfers();
+  const transactions = await selectTransactions({
+    account: null,
+    financialYear: currentFinancialYear,
+  });
+  const transfers = await selectTransfers({
+    financialYear: currentFinancialYear,
+  });
 
-  const income = getTotal({ transactions, transfers, type: "income", account });
+  const income = getTotal({
+    transactions,
+    transfers,
+    type: "income",
+    account,
+    financialYear: currentFinancialYear,
+  });
   const expense = getTotal({
     transactions,
     transfers,
     type: "expense",
     account,
+    financialYear: currentFinancialYear,
   });
   const initial = await getInitialBalance(account);
 
-  const monthlyTotals = await getTotals();
+  const monthlyTotals = await getTotals({
+    financialYear: currentFinancialYear,
+  });
 
   return (
     <div className="rounded-2xl p-3 border bg-muted/50 group">

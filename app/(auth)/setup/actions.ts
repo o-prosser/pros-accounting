@@ -1,13 +1,13 @@
 "use server";
 
-import { usersTable } from "@/drizzle/schema";
+import { financialYearsTable, usersTable } from "@/drizzle/schema";
 import { organisationsTable } from "@/drizzle/schema/organisations";
 import { createSession, getSession } from "@/lib/auth";
 import db from "@/lib/db";
 import { insertSession } from "@/models/session";
 import { insertUser } from "@/models/user";
 import { hashPassword } from "@/utils/auth";
-import { addMonths } from "date-fns";
+import { addMonths, subDays } from "date-fns";
 import { DrizzleError, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -57,6 +57,13 @@ export const setupAction = async (formData: FormData) => {
           organisationId: organisation[0].id,
         })
         .where(eq(usersTable.id, session.user.id));
+
+      await db.insert(financialYearsTable).values({
+        organisationId: organisation[0].id,
+        startDate: new Date(),
+        endDate: subDays(addMonths(new Date(), 12), 1),
+        isCurrent: true,
+      });
     }
   } catch (error) {
     throw error;

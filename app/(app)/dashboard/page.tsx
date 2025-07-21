@@ -1,5 +1,5 @@
 import { Caption, Heading, Title } from "@/components/ui/typography";
-import { format } from "date-fns";
+import { format, isPast } from "date-fns";
 import { Metadata } from "next";
 import Transactions from "./_components";
 import TotalsLoading from "./_components/totals-loading";
@@ -9,10 +9,6 @@ import { getSession } from "@/lib/auth";
 import SummaryWidget from "@/components/summary-widget";
 import {
   HomeIcon,
-  BadgePoundSterlingIcon,
-  BanknoteArrowUpIcon,
-  ShoppingBagIcon,
-  ExternalLinkIcon,
   DownloadIcon,
   PlusIcon,
   ChevronDownIcon,
@@ -33,10 +29,21 @@ export const metadata: Metadata = { title: "Dashboard" };
 
 // export const runtime = "edge";
 
-const DashboardPage = async () => {
+const DashboardPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const session = await getSession();
 
   const organisation = await selectCurrentOrganisation();
+
+  const awaitedSearchParams = await searchParams;
+  const financialYearId = awaitedSearchParams.fy as string | undefined;
+
+  const currentFinancialYear = financialYearId
+    ? organisation.financialYears.find((fy) => fy.id === financialYearId)
+    : organisation.financialYears.find((fy) => fy.isCurrent === true);
 
   return (
     <>
@@ -54,12 +61,16 @@ const DashboardPage = async () => {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 {format(
-                  organisation.financialYears.find(
-                    (fy) => fy.isCurrent === true,
-                  )?.startDate || new Date(),
+                  currentFinancialYear?.startDate || new Date(),
                   "MMM yyyy",
                 )}{" "}
-                &mdash; present
+                &mdash;{" "}
+                {isPast(currentFinancialYear?.endDate || new Date())
+                  ? format(
+                      currentFinancialYear?.endDate || new Date(),
+                      "MMM yyyy",
+                    )
+                  : "present"}
                 <ChevronDownIcon />
               </Button>
             </DropdownMenuTrigger>
@@ -85,8 +96,14 @@ const DashboardPage = async () => {
 
       <Suspense fallback={<TotalsLoading />}>
         <div className="grid md:grid-cols-2 gap-6 mt-6">
-          <SummaryWidget account="charity" />
-          <SummaryWidget account="club" />
+          <SummaryWidget
+            account="charity"
+            currentFinancialYear={currentFinancialYear}
+          />
+          <SummaryWidget
+            account="club"
+            currentFinancialYear={currentFinancialYear}
+          />
           {/* <SummaryWidget
             account="dutch"
             className="md:col-span-2"
@@ -180,7 +197,7 @@ const DashboardPage = async () => {
       </div>
 
       <Suspense fallback={<TransactionsLoading />}>
-        <Transactions />
+        <Transactions financialYear={currentFinancialYear} />
       </Suspense>
     </>
   );
