@@ -175,7 +175,10 @@ const DashboardPage = async () => {
         </div>
       </div>
 
-      <Heading className="mt-6 mb-2">Latest transactions</Heading>
+      <div className="rounded-t-2xl p-3 pb-9 border-x border-t mt-6 -mb-6">
+        <h3 className="font-medium text-xl flex-1">Latest payments</h3>
+      </div>
+
       <Suspense fallback={<TransactionsLoading />}>
         <Transactions />
       </Suspense>
