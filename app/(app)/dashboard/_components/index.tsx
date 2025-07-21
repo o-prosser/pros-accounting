@@ -7,7 +7,7 @@ import { isAfter } from "date-fns";
 const Transactions = async ({
   financialYear,
 }: {
-  financialYear: { id: string };
+  financialYear?: { id: string };
 }) => {
   const transactions = await selectTransactions({
     account: null,
