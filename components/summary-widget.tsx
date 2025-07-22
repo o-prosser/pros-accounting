@@ -21,6 +21,7 @@ import {
   differenceInMonths,
   getMonth,
   getYear,
+  isWithinInterval,
   startOfMonth,
   subMonths,
 } from "date-fns";
@@ -159,15 +160,36 @@ const SummaryWidget = async ({
   });
 
   const income = getTotal({
-    transactions,
-    transfers,
+    transactions: transactions.filter((t) =>
+      currentFinancialYear
+        ? isWithinInterval(t.date, {
+            start: currentFinancialYear.startDate,
+            end: currentFinancialYear.endDate,
+          })
+        : true,
+    ),
+    transfers: transfers.filter((t) =>
+      currentFinancialYear
+        ? isWithinInterval(t.date, {
+            start: currentFinancialYear.startDate,
+            end: currentFinancialYear.endDate,
+          })
+        : true,
+    ),
     type: "income",
     account,
     financialYear: currentFinancialYear,
   });
   const expense = getTotal({
     transactions,
-    transfers,
+    transfers: transfers.filter((t) =>
+      currentFinancialYear
+        ? isWithinInterval(t.date, {
+            start: currentFinancialYear.startDate,
+            end: currentFinancialYear.endDate,
+          })
+        : true,
+    ),
     type: "expense",
     account,
     financialYear: currentFinancialYear,
