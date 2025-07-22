@@ -1,11 +1,11 @@
 import { Account } from "@/enums";
-import { Card, CardTitle } from "./ui/card";
-import { Caption } from "./ui/typography";
+import { Card, CardTitle } from "@/components/ui/card";
+import { Caption } from "@/components/ui/typography";
 import { selectTransactions } from "@/models/transaction";
 import { selectTransfers } from "@/models/transfer";
 import { getInitialBalance, getTotal } from "@/utils/totals";
 import { currency } from "@/utils/currency";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
   ArrowRightIcon,
@@ -21,11 +21,10 @@ import {
   differenceInMonths,
   getMonth,
   getYear,
-  isWithinInterval,
   startOfMonth,
   subMonths,
 } from "date-fns";
-import IncomeExpenseChart from "./summary-chart";
+// import IncomeExpenseChart from "/summary-chart";
 import { cn } from "@/lib/utils";
 
 const getMonths = async () => {
@@ -69,17 +68,10 @@ const monthNames = [
   "December",
 ];
 
-export const getTotals = async ({
-  financialYear,
-}: {
-  financialYear?: { id: string };
-}) => {
+export const getTotals = async () => {
   const months = await getMonths();
-  const transactions = await selectTransactions({
-    account: null,
-    financialYear,
-  });
-  const transfers = await selectTransfers({ financialYear });
+  const transactions = await selectTransactions({ account: null });
+  const transfers = await selectTransfers();
 
   return {
     charity: months.map((month) => ({
@@ -141,7 +133,6 @@ const SummaryWidget = async ({
   chart = true,
   viewButton = true,
   min = false,
-  currentFinancialYear,
   className,
   ...props
 }: {
@@ -149,59 +140,23 @@ const SummaryWidget = async ({
   chart?: boolean;
   viewButton?: boolean;
   min?: boolean;
-  currentFinancialYear?: { id: string; startDate: Date; endDate: Date };
 } & React.ComponentProps<"div">) => {
-  const transactions = await selectTransactions({
-    account: null,
-    financialYear: currentFinancialYear,
-  });
-  const transfers = await selectTransfers({
-    financialYear: currentFinancialYear,
-  });
+  const transactions = await selectTransactions({ account: null });
+  const transfers = await selectTransfers();
 
-  const income = getTotal({
-    transactions: transactions.filter((t) =>
-      currentFinancialYear
-        ? isWithinInterval(t.date, {
-            start: currentFinancialYear.startDate,
-            end: currentFinancialYear.endDate,
-          })
-        : true,
-    ),
-    transfers: transfers.filter((t) =>
-      currentFinancialYear
-        ? isWithinInterval(t.date, {
-            start: currentFinancialYear.startDate,
-            end: currentFinancialYear.endDate,
-          })
-        : true,
-    ),
-    type: "income",
-    account,
-    financialYear: currentFinancialYear,
-  });
+  const income = getTotal({ transactions, transfers, type: "income", account });
   const expense = getTotal({
     transactions,
-    transfers: transfers.filter((t) =>
-      currentFinancialYear
-        ? isWithinInterval(t.date, {
-            start: currentFinancialYear.startDate,
-            end: currentFinancialYear.endDate,
-          })
-        : true,
-    ),
+    transfers,
     type: "expense",
     account,
-    financialYear: currentFinancialYear,
   });
   const initial = await getInitialBalance(account);
 
-  const monthlyTotals = await getTotals({
-    financialYear: currentFinancialYear,
-  });
+  const monthlyTotals = await getTotals();
 
   return (
-    <div className="rounded-2xl p-3 border bg-muted/50 group">
+    <div className="rounded-2xl p-3 border bg-muted/50 group mb-6">
       <div className="flex gap-2 items-center">
         <div
           className={cn(
@@ -223,16 +178,17 @@ const SummaryWidget = async ({
           className="size-7 opacity-0 group-hover:opacity-100 transition"
           asChild
         >
-          <Link href={`/cashbook?account=${account}`}>
+          <Link href={`/transactions/cash-book/${account}`}>
             <ExternalLinkIcon />
           </Link>
         </Button>
       </div>
-      <div className="bg-background border rounded-lg p-3 mt-2 relative overflow-hidden">
-        <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
-        <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
-        <div className="grid grid-cols-2 relative">
-          <div>
+
+      <div className="grid gap-2 grid-cols-3">
+        <div className="bg-background border rounded-lg p-3 mt-2 relative overflow-hidden">
+          <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
+          <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
+          <div className="relative">
             <p className="text-2xl font-mono font-semibold tracking-tight">
               {income + initial - expense == 0
                 ? "---"
@@ -240,9 +196,16 @@ const SummaryWidget = async ({
             </p>
             <p className="font-medium text-muted-foreground">Current balance</p>
           </div>
+        </div>
 
-          <div>
-            <div className="flex items-center gap-2 mb-1">
+        <div className="bg-background border rounded-lg p-3 mt-2 relative overflow-hidden">
+          <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
+          <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
+          <div className="relative">
+            <p className="text-2xl font-mono font-semibold tracking-tight">
+              {income == 0 ? "---" : currency(income)}
+            </p>
+            <div className="font-medium text-muted-foreground flex gap-1.5 items-center">
               <BanknoteArrowUpIcon
                 className={cn(
                   "size-4",
@@ -250,16 +213,20 @@ const SummaryWidget = async ({
                   account === "club" && "text-cyan-600",
                 )}
               />
-              <div className="flex items-end gap-1">
-                <p className="font-mono font-medium tracking-tight">
-                  {income == 0 ? "---" : currency(income)}
-                </p>
-                <p className="text-sm pb-[0.5px] text-muted-foreground">
-                  income
-                </p>
-              </div>
+              Total income
             </div>
-            <div className="flex items-center gap-2">
+          </div>
+        </div>
+
+        <div className="bg-background border rounded-lg p-3 mt-2 relative overflow-hidden">
+          <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
+          <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
+
+          <div className="relative">
+            <p className="text-2xl font-mono font-semibold tracking-tight">
+              {expense == 0 ? "---" : currency(expense)}
+            </p>
+            <div className="font-medium text-muted-foreground flex gap-1.5 items-center">
               <ShoppingBagIcon
                 className={cn(
                   "size-4",
@@ -267,26 +234,19 @@ const SummaryWidget = async ({
                   account === "club" && "text-cyan-600",
                 )}
               />
-              <div className="flex items-end gap-1">
-                <p className="font-mono font-medium tracking-tight">
-                  {expense == 0 ? "---" : currency(expense)}
-                </p>
-                <p className="text-sm pb-[0.5px] text-muted-foreground">
-                  expenses
-                </p>
-              </div>
+              Total expenses
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-background border rounded-lg p-3 mt-2">
+      {/* <div className="bg-background border rounded-lg p-3 mt-2">
         <IncomeExpenseChart
           min={min}
           data={monthlyTotals[account]}
           account={account}
         />
-      </div>
+      </div> */}
     </div>
 
     // <Card

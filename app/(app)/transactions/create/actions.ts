@@ -23,7 +23,9 @@ const schema = z.object({
   category: z
     .string()
     .length(36, { message: "You must add a category to the transaction." }),
-  account: z.enum(["charity", "club", "dutch"], {message: "The account type is required."}),
+  account: z.enum(["charity", "club", "dutch"], {
+    message: "The account type is required.",
+  }),
   subCategory: z.string().optional().nullable(),
   notes: z.string().nullable(),
   fileId: z.string().nullable(),
@@ -83,7 +85,8 @@ export const createTransactionAction = async (
         notes: fields.data.notes,
         fileId: fields.data.fileId || null,
         organisationId: organisation.id,
-        financialYearId: organisation.financialYears.find((f) => f.isCurrent)?.id
+        financialYearId: organisation.financialYears.find((f) => f.isCurrent)
+          ?.id,
       })
       .returning({ id: transactionsTable.id });
 
@@ -96,5 +99,5 @@ export const createTransactionAction = async (
     };
   }
 
-  redirect(`/transactions/cash-book/${fields.data.account}`);
+  redirect(`/cashbook?account=${fields.data.account}`);
 };

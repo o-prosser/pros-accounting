@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 // import { ThemeProvider } from "@/components/theme-provider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
-import {ViewTransitions} from 'next-view-transitions'
+import { ViewTransitions } from "next-view-transitions";
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     "twitter:card": "summary_large_image",
     "og:url": "https://prosaccounting.owenprosser.co.uk",
     "og:image": "https://prosaccounting.owenprosser.co.uk/thumbnail.jpg",
-    "og:type": "website"
-  }
+    "og:type": "website",
+  },
 };
 
 export default function RootLayout({
@@ -68,24 +68,24 @@ export default function RootLayout({
 }>) {
   return (
     <TooltipProvider delayDuration={300}>
-      <ViewTransitions>
-        <html lang="en" suppressHydrationWarning>
-          <body
-            className={generalSans.className + " antialiased"}
-            style={{ viewTransitionName: "app" }}
+      {/* <ViewTransitions> */}
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={generalSans.className + " antialiased"}
+          style={{ viewTransitionName: "app" }}
+        >
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
-            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </body>
-        </html>
-      </ViewTransitions>
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+      {/* </ViewTransitions> */}
     </TooltipProvider>
   );
 }

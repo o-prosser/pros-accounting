@@ -69,7 +69,9 @@ export const columns: ColumnDef<Transaction>[] = [
         <Tooltip>
           <TooltipTrigger>
             <Button asChild variant="link" size={null}>
-              <Link href={`/transactions/${row.original.id}`}>
+              <Link
+                href={`/transactions/cash-book/all/transaction/${row.original.id}`}
+              >
                 {row.original.name.substring(0, 30)}
                 {row.original.name.length > 30 ? "..." : ""}
               </Link>
@@ -312,7 +314,7 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "",
     cell: ({ row }) => {
       return (
-        <div className="flex -ml-2">
+        <div className="flex -ml-2 justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -328,7 +330,7 @@ export const columns: ColumnDef<Transaction>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               {row.original.name ? (
                 <>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link
                       href={`/transactions/create?name=${encodeURIComponent(
                         row.original.name,

@@ -158,20 +158,20 @@ const DesktopSidebar = ({
       <div className="h-[2px] bg-background border-t w-full" />
 
       <div className="gap-y-1 flex flex-col items-start mb-2 w-full">
-        <ActivePage pathname="/transactions/cash-book/all">
-          <DesktopLink href="/transactions/cash-book/all">
+        <ActivePage pathname="/cashbook">
+          <DesktopLink href="/cashbook">
             <div className="size-4.5 rounded-full border border-border from-foreground/10 to-foreground/10 via-foreground/50 bg-gradient-to-br"></div>
             All payments
           </DesktopLink>
         </ActivePage>
-        <ActivePage pathname="/transactions/cash-book/charity">
-          <DesktopLink href="/transactions/cash-book/charity">
+        <ActivePage pathname="/cashbook?account=charity">
+          <DesktopLink href="/cashbook?account=charity">
             <div className="size-4.5 rounded-full border border-orange-600 bg-gradient-to-br via-orange-600 from-orange-400 to-orange-400"></div>
             Charity
           </DesktopLink>
         </ActivePage>
-        <ActivePage pathname="/transactions/cash-book/club">
-          <DesktopLink href="/transactions/cash-book/club">
+        <ActivePage pathname="/cashbook?account=club">
+          <DesktopLink href="/cashbook?account=club">
             <div className="size-4.5 rounded-full border border-cyan-600 bg-gradient-to-br via-cyan-600 from-cyan-400 to-cyan-400"></div>
             Club
           </DesktopLink>

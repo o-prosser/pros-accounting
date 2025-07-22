@@ -33,52 +33,66 @@ const schema = z.object({
   fileId: z.string().nullable(),
 });
 
-export const updateTransactionAction = async (prevState: any, formData: FormData) => {
+export const updateTransactionAction = async (
+  prevState: any,
+  formData: FormData,
+) => {
   const fields = schema.safeParse(Object.fromEntries(formData));
 
   if (!fields.success) {
     return {
       errors: fields.error.flatten().fieldErrors,
-    }
+    };
   }
 
-    if (
-      (fields.data.income !== "" &&
-        fields.data.income !== null &&
-        fields.data.expense !== "" &&
-        fields.data.expense !== null) ||
-      ((fields.data.income == "" || fields.data.income == null) &&
-        (fields.data.expense == "" || fields.data.expense == null))
-    )
-      return {
-        errors: {
-          income: ["Provide either an income or an expense."],
-        },
-      };
+  if (
+    (fields.data.income !== "" &&
+      fields.data.income !== null &&
+      fields.data.expense !== "" &&
+      fields.data.expense !== null) ||
+    ((fields.data.income == "" || fields.data.income == null) &&
+      (fields.data.expense == "" || fields.data.expense == null))
+  )
+    return {
+      errors: {
+        income: ["Provide either an income or an expense."],
+      },
+    };
 
   try {
     const organisation = await selectCurrentOrganisation();
 
-    const transaction = await db.update(transactionsTable).set({
-      name: fields.data.name,
-      date: new Date(fields.data.date),
-      account: fields.data.account,
-      receiptBookNumber: fields.data.receiptBookNumber ? parseInt(fields.data.receiptBookNumber) : null,
-      income: (fields.data.income !== "" && fields.data.income !== null) ? fields.data.income : undefined,
-      expense: (fields.data.expense !== "" && fields.data.expense !== null) ? fields.data.expense : undefined,
-      categoryId: fields.data.category,
-      subCategoryId: fields.data.subCategory,
-      notes: fields.data.notes,
-      fileId: fields.data.fileId || null,
-      organisationId: organisation.id,
-    }).where(eq(transactionsTable.id, fields.data.id));
+    const transaction = await db
+      .update(transactionsTable)
+      .set({
+        name: fields.data.name,
+        date: new Date(fields.data.date),
+        account: fields.data.account,
+        receiptBookNumber: fields.data.receiptBookNumber
+          ? parseInt(fields.data.receiptBookNumber)
+          : null,
+        income:
+          fields.data.income !== "" && fields.data.income !== null
+            ? fields.data.income
+            : undefined,
+        expense:
+          fields.data.expense !== "" && fields.data.expense !== null
+            ? fields.data.expense
+            : undefined,
+        categoryId: fields.data.category,
+        subCategoryId: fields.data.subCategory,
+        notes: fields.data.notes,
+        fileId: fields.data.fileId || null,
+        organisationId: organisation.id,
+      })
+      .where(eq(transactionsTable.id, fields.data.id));
   } catch (error) {
     return {
       errors: {
-        name: ["An error occurred. Please try again"]
-      }
-    }
+        name: ["An error occurred. Please try again"],
+      },
+    };
   }
 
-  redirect(`/transactions/cash-book/${fields.data.account}`)
-}
+  redirect(`/cashbook?account=${fields.data.account}`);
+};

@@ -1,7 +1,6 @@
 "use client";
 
 import SortIcon from "@/components/sort-icon";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,11 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -25,15 +19,8 @@ import { getColour } from "@/utils/colours";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { format, sub } from "date-fns";
-import {
-  ArrowRightIcon,
-  ArrowUpDown,
-  FilterIcon,
-  HashIcon,
-  MoreHorizontal,
-} from "lucide-react";
+import { ArrowRightIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
@@ -60,7 +47,7 @@ export type Transaction = {
   activeAccount?: string;
 };
 
-export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
     header: "Transaction",
@@ -69,9 +56,7 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
         <Tooltip>
           <TooltipTrigger>
             <Button asChild variant="link" size={null}>
-              <Link
-                href={`/transactions/cash-book/all/transaction/${row.original.id}`}
-              >
+              <Link href={`/cashbook/transactions/${row.original.id}`}>
                 {row.original.name.substring(0, 30)}
                 {row.original.name.length > 30 ? "..." : ""}
               </Link>
@@ -123,11 +108,9 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
             </div>
           </TooltipTrigger>
           <TooltipContent align="start">
-            <p>
-              {row.original.notes || (
-                <span className="italic">Untitled transfer</span>
-              )}
-            </p>
+            {row.original.notes || (
+              <span className="italic">Untitled transfer</span>
+            )}
           </TooltipContent>
         </Tooltip>
       ),
@@ -148,7 +131,7 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
         </div>
       );
     },
-    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM yyyy"),
+    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM"),
   },
   // {
   //   header: "Receipt no.",
@@ -168,6 +151,33 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
   //     </div>
   //   ),
   // },
+  {
+    header: "Account",
+
+    cell: ({ row }) => {
+      return row.original.account ? (
+        <div className="flex">
+          <div className={clsx(row.original.to && "relative flex")}>
+            <div className="flex items-center gap-1">
+              <div
+                className={clsx(
+                  "h-2 w-2 rounded-full flex-shrink-0",
+                  row.original.account === "club"
+                    ? "bg-cyan-600"
+                    : row.original.account === "charity"
+                    ? "bg-orange-600"
+                    : "bg-green-600",
+                )}
+              />
+              <span className="capitalize">{row.original.account}</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      );
+    },
+  },
   {
     accessorKey: "category",
     header: "Category",
@@ -289,13 +299,13 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
     header: "",
     cell: ({ row }) => {
       return (
-        <div className="flex justify-end -ml-2">
+        <div className="flex -ml-2 justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
                 size="icon"
-                className="h-6 w-6 p-0 text-muted-foreground"
+                className="h-8 w-8 p-0 text-muted-foreground"
               >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
@@ -305,7 +315,7 @@ export const columnsWithoutAccount: ColumnDef<Transaction>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               {row.original.name ? (
                 <>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link
                       href={`/transactions/create?name=${encodeURIComponent(
                         row.original.name,

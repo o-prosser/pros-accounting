@@ -33,9 +33,11 @@ export const runtime = "edge";
 const TransactionsIndexLayout = ({
   params,
   children,
+  modal,
 }: {
   params: Promise<{ account: string }>;
   children: React.ReactNode;
+  modal?: React.ReactNode;
 }) => {
   const { account: accountParam } = use(params);
 
@@ -130,6 +132,8 @@ const TransactionsIndexLayout = ({
       </div>
 
       {children}
+
+      {modal}
     </>
   );
 };

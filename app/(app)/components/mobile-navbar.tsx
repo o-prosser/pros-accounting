@@ -1,4 +1,10 @@
-import { BanknoteIcon, FileTextIcon, HomeIcon, SettingsIcon, TagIcon } from "lucide-react";
+import {
+  BanknoteIcon,
+  FileTextIcon,
+  HomeIcon,
+  SettingsIcon,
+  TagIcon,
+} from "lucide-react";
 import MobileLink from "./mobile-link";
 
 const MobileNavbar = () => {
@@ -7,7 +13,7 @@ const MobileNavbar = () => {
       <MobileLink href="/dashboard">
         <HomeIcon />
       </MobileLink>
-      <MobileLink href="/transactions/cash-book/all">
+      <MobileLink href="/cashbook">
         <BanknoteIcon />
       </MobileLink>
       <MobileLink href="/categories">
@@ -21,6 +27,6 @@ const MobileNavbar = () => {
       </MobileLink>
     </nav>
   );
-}
+};
 
 export default MobileNavbar;

@@ -69,7 +69,7 @@ export const createTransferAction = async (
     };
   }
 
-  redirect(`/transactions/cash-book/${fields.data.to}`);
+  redirect(`/cashbook?account=${fields.data.to}`);
 };
 
 export const updateTransferAction = async (
@@ -118,7 +118,7 @@ export const updateTransferAction = async (
     };
   }
 
-  redirect(`/transactions/cash-book/${fields.data.to}`);
+  redirect(`/cashbook?account=${fields.data.to}`);
 };
 
 export const deleteTransferAction = async (
