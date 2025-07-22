@@ -37,7 +37,7 @@ const TransactionsIndexLayout = ({
 }: {
   params: Promise<{ account: string }>;
   children: React.ReactNode;
-  modal?: React.ReactNode;
+  modal: React.ReactNode;
 }) => {
   const { account: accountParam } = use(params);
 
