@@ -7,7 +7,7 @@ const CashbookLayout = async ({
   sidepanel,
 }: {
   children: React.ReactNode;
-  sidepanel?: React.ReactNode;
+  sidepanel: React.ReactNode;
 }) => {
   return (
     <>
