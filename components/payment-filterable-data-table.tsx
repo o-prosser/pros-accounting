@@ -197,7 +197,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
   });
 
   return (
-    <div className="">
+    <div>
       {searchable ? (
         <div className="items-center flex rounded-2xl bg-muted/50 p-3 border mb-3 gap-2">
           <h3 className="font-medium text-xl flex-1">Recent payments</h3>

@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { selectCurrentOrganisation } from "@/models/organisation";
+// import { seed } from "../transactions/cash-book/[account]/seed";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -199,6 +200,10 @@ const DashboardPage = async ({
       <Suspense fallback={<TransactionsLoading />}>
         <Transactions financialYear={currentFinancialYear} />
       </Suspense>
+
+      {/* <form action={seed}>
+        <Button>Run</Button>
+      </form> */}
     </>
   );
 };

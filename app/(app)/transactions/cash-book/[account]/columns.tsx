@@ -250,6 +250,8 @@ export const columns: ColumnDef<Transaction>[] = [
         currency: "GBP",
       }).format(amount);
 
+      const pathname = usePathname();
+
       return (
         <div className="flex justify-between">
           <span
@@ -278,7 +280,7 @@ export const columns: ColumnDef<Transaction>[] = [
             {formatted}
           </span>
 
-          <span className="text-muted-foreground">
+          <span className="text-muted-foreground hidden @xl:inline">
             {row.original.balance !== undefined
               ? "(" +
                 new Intl.NumberFormat("en-GB", {

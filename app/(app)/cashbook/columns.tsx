@@ -21,6 +21,7 @@ import clsx from "clsx";
 import { format, sub } from "date-fns";
 import { ArrowRightIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
@@ -131,7 +132,15 @@ export const columns: ColumnDef<Transaction>[] = [
         </div>
       );
     },
-    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM"),
+    cell: ({ row }) => {
+      const pathname = usePathname();
+
+      if (pathname.includes("transactions")) {
+        return format(new Date(row.getValue("date")), "dd MMM");
+      } else {
+        return format(new Date(row.getValue("date")), "dd MMM yyyy");
+      }
+    },
   },
   // {
   //   header: "Receipt no.",
@@ -235,6 +244,8 @@ export const columns: ColumnDef<Transaction>[] = [
         currency: "GBP",
       }).format(amount);
 
+      const pathname = usePathname();
+
       return (
         <div className="flex justify-between">
           <span
@@ -263,16 +274,20 @@ export const columns: ColumnDef<Transaction>[] = [
             {formatted}
           </span>
 
-          <span className="text-muted-foreground">
-            {row.original.balance !== undefined
-              ? "(" +
-                new Intl.NumberFormat("en-GB", {
-                  style: "currency",
-                  currency: "GBP",
-                }).format(row.original.balance) +
-                ")"
-              : ""}
-          </span>
+          {pathname.includes("transactions") ? (
+            ""
+          ) : (
+            <span className="text-muted-foreground">
+              {row.original.balance !== undefined
+                ? "(" +
+                  new Intl.NumberFormat("en-GB", {
+                    style: "currency",
+                    currency: "GBP",
+                  }).format(row.original.balance) +
+                  ")"
+                : ""}
+            </span>
+          )}
         </div>
       );
     },
