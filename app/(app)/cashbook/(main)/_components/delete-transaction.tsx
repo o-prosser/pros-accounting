@@ -60,7 +60,7 @@ const DeleteTransaction = ({
       if (pathname.includes("transactions/")) router.back();
       // router.refresh();
     }
-  }, [state?.success]);
+  }, [state?.success, router, pathname]);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {

@@ -133,13 +133,16 @@ export const columns: ColumnDef<Transaction>[] = [
       );
     },
     cell: ({ row }) => {
-      const pathname = usePathname();
-
-      if (pathname.includes("transactions")) {
-        return format(new Date(row.getValue("date")), "dd MMM");
-      } else {
-        return format(new Date(row.getValue("date")), "dd MMM yyyy");
-      }
+      return (
+        <>
+          <span className="hidden group-data-[sidepanel-visible=true]:!inline">
+            {format(new Date(row.getValue("date")), "dd MMM")}
+          </span>
+          <span className="group-data-[sidepanel-visible=true]:hidden">
+            {format(new Date(row.getValue("date")), "dd MMM yyyy")}
+          </span>
+        </>
+      );
     },
   },
   // {
@@ -274,20 +277,16 @@ export const columns: ColumnDef<Transaction>[] = [
             {formatted}
           </span>
 
-          {pathname.includes("transactions") ? (
-            ""
-          ) : (
-            <span className="text-muted-foreground">
-              {row.original.balance !== undefined
-                ? "(" +
-                  new Intl.NumberFormat("en-GB", {
-                    style: "currency",
-                    currency: "GBP",
-                  }).format(row.original.balance) +
-                  ")"
-                : ""}
-            </span>
-          )}
+          <span className="text-muted-foreground group-data-[sidepanel-visible=true]:hidden">
+            {row.original.balance !== undefined
+              ? "(" +
+                new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(row.original.balance) +
+                ")"
+              : ""}
+          </span>
         </div>
       );
     },

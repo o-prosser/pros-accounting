@@ -3,6 +3,7 @@ import { selectCategories } from "@/models/category";
 import { getPaymentsForTable } from "@/utils/transactions";
 import { columns } from "./columns";
 import SummaryWidget from "./_components/summary-widget";
+import CheckSidepanelVisible from "./_components/check-sidepanel-visible";
 
 const CashbookPage = async ({
   searchParams,
@@ -23,13 +24,15 @@ const CashbookPage = async ({
       ) : (
         ""
       )}
-      <PaymentFilterableDataTable
-        columns={columns}
-        data={balancedTransfersPayments.reverse()}
-        categories={categories}
-        // @ts-ignore
-        categoryKey="categoryId"
-      />
+      <CheckSidepanelVisible>
+        <PaymentFilterableDataTable
+          columns={columns}
+          data={balancedTransfersPayments.reverse()}
+          categories={categories}
+          // @ts-ignore
+          categoryKey="categoryId"
+        />
+      </CheckSidepanelVisible>
     </>
   );
 };
