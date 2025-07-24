@@ -328,6 +328,9 @@ export const columns: ColumnDef<Transaction>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <Link href={`/transactions/${row.original.id}`}>View</Link>
+              </DropdownMenuItem>
               {row.original.name ? (
                 <>
                   <DropdownMenuItem asChild>
@@ -346,9 +349,6 @@ export const columns: ColumnDef<Transaction>[] = [
                     >
                       Duplicate
                     </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href={`/transactions/${row.original.id}`}>View</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link href={`/transactions/${row.original.id}/edit`}>

@@ -1,11 +1,16 @@
+import { Button } from "@/components/ui/button";
 import { Caption } from "@/components/ui/typography";
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { getColour } from "@/utils/colours";
 import clsx from "clsx";
 import { format } from "date-fns";
-import { HashIcon } from "lucide-react";
+import { CopyPlusIcon, HashIcon, PencilIcon, TrashIcon } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { deleteTransaction } from "../../../actions";
+import { FormButton } from "@/components/form-button";
+import DeleteTransaction from "../../../_components/delete-transaction";
 
 const TransactionsSidePanelPage = async ({
   params,
@@ -63,7 +68,7 @@ const TransactionsSidePanelPage = async ({
         </div>
         <div className="py-3">
           <p className="text-sm font-medium text-muted-foreground pb-px">
-            Transaction
+            Date
           </p>
           <p> {format(transaction.date, "EEEE, dd MMMM yyyy")}</p>
         </div>
@@ -98,7 +103,7 @@ const TransactionsSidePanelPage = async ({
         </div>
         <div className="py-3">
           <p className="text-sm font-medium text-muted-foreground pb-px">
-            Transaction
+            Account
           </p>
           <div className="flex items-center gap-1.5 pl-1.5">
             <div
@@ -142,6 +147,34 @@ const TransactionsSidePanelPage = async ({
             Notes
           </p>
           <p>{transaction.notes || "No notes provided."}</p>
+        </div>
+
+        <div className="flex gap-2">
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/cashbook/transactions/${transaction.id}/edit`}>
+              <PencilIcon />
+              Edit
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm">
+            <Link
+              href={`/transactions/create?name=${encodeURIComponent(
+                transaction.name,
+              )}&income=${encodeURIComponent(
+                transaction.income || "",
+              )}&expense=${encodeURIComponent(
+                transaction.expense || "",
+              )}&category=${encodeURIComponent(
+                transaction.categoryId,
+              )}&subCategory=${encodeURIComponent(
+                transaction.subCategoryId || "",
+              )}`}
+            >
+              <CopyPlusIcon />
+              Duplicate
+            </Link>
+          </Button>
+          <DeleteTransaction transaction={transaction} />
         </div>
       </div>
     </>
