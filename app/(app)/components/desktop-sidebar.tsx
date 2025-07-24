@@ -149,13 +149,23 @@ const DesktopSidebar = ({
             All payments
           </DesktopLink>
         </ActivePage>
-        <ActivePage pathname="/cashbook?account=charity">
+        <ActivePage
+          match="searchParam"
+          pathname="/cashbook"
+          searchParamName="account"
+          searchParamContent="charity"
+        >
           <DesktopLink href="/cashbook?account=charity">
             <div className="size-4.5 rounded-full border border-orange-600 bg-gradient-to-br via-orange-600 from-orange-400 to-orange-400"></div>
             Charity
           </DesktopLink>
         </ActivePage>
-        <ActivePage pathname="/cashbook?account=club">
+        <ActivePage
+          match="searchParam"
+          pathname="/cashbook"
+          searchParamName="account"
+          searchParamContent="club"
+        >
           <DesktopLink href="/cashbook?account=club">
             <div className="size-4.5 rounded-full border border-cyan-600 bg-gradient-to-br via-cyan-600 from-cyan-400 to-cyan-400"></div>
             Club
