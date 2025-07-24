@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
 import CloseButton from "./close-button";
 
 const SidepanelLayout = ({ children }: { children: React.ReactNode }) => {

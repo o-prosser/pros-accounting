@@ -1,5 +1,4 @@
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import Modal from "../modal";
 import AddPaymentForm from "./_components/form";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
@@ -13,7 +12,7 @@ const AddPaymentModalPage = async ({
   const categories = await selectCategoriesMin();
 
   return (
-    <Modal>
+    <>
       <DialogClose asChild>
         <Button
           variant="ghost"
@@ -31,7 +30,7 @@ const AddPaymentModalPage = async ({
         searchParams={await searchParams}
         categories={categories}
       />
-    </Modal>
+    </>
   );
 };
 
