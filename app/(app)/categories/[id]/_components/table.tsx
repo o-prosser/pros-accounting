@@ -31,7 +31,7 @@ export type Transaction = {
   id: string;
   name: string;
   date: string | Date;
-  receiptBookNumber: number | null;
+  receiptBookNumber: string | null;
   income: string | null;
   expense: string | null;
   notes: string | null;
