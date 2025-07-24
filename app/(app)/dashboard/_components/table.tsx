@@ -32,16 +32,16 @@ import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
-  name?: string;
+  name: string | null;
   date: string | Date;
-  account?: "club" |"charity"|"dutch"|null;
-  receiptBookNumber?: number | null;
+  account?: "club" | "charity" | "dutch" | null;
+  receiptBookNumber?: string | null;
   income?: string | null;
   expense?: string | null;
   balance?: number;
   amount?: string;
-  from?: "club" |"charity"|"dutch";
-  to?: "club" |"charity"|"dutch";
+  from?: "club" | "charity" | "dutch";
+  to?: "club" | "charity" | "dutch";
   notes: string | null;
   category?: {
     id: string;
@@ -134,7 +134,7 @@ export const columns: ColumnDef<Transaction>[] = [
   // },
   {
     header: "Account",
-    
+
     cell: ({ row }) => {
       return row.original.account ? (
         <div className="flex">
@@ -186,7 +186,7 @@ export const columns: ColumnDef<Transaction>[] = [
               {category.name}
             </span>
           </div>
-          {(subCategory !== null && subCategory !== undefined) ? (
+          {subCategory !== null && subCategory !== undefined ? (
             <div className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto bg-muted/50 border-muted-forergound">
               <span className="font-medium flex-shrink-0 text-muted-foreground">
                 {subCategory?.name}
@@ -218,38 +218,40 @@ export const columns: ColumnDef<Transaction>[] = [
 
       return (
         <div className="flex justify-between">
-        <span
-          className={clsx(
-            "text-rght font-medium",
-            row.original.income && "text-green-600",
-            row.original.expense && "text-red-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.to &&
-              "text-green-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.from &&
-              "text-red-600",
-          )}
-        >
-          {row.original.income ? "+" : ""}
-          {row.original.expense ? "-" : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.to
-            ? "+"
-            : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.from
-            ? "-"
-            : ""}
-          {formatted}
+          <span
+            className={clsx(
+              "text-rght font-medium",
+              row.original.income && "text-green-600",
+              row.original.expense && "text-red-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.to &&
+                "text-green-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.from &&
+                "text-red-600",
+            )}
+          >
+            {row.original.income ? "+" : ""}
+            {row.original.expense ? "-" : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.to
+              ? "+"
+              : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.from
+              ? "-"
+              : ""}
+            {formatted}
           </span>
 
           <span className="text-muted-foreground">
             {row.original.balance !== undefined
-              ? "(" + new Intl.NumberFormat("en-GB", {
+              ? "(" +
+                new Intl.NumberFormat("en-GB", {
                   style: "currency",
                   currency: "GBP",
-                }).format(row.original.balance) + ")"
+                }).format(row.original.balance) +
+                ")"
               : ""}
           </span>
         </div>
