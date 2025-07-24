@@ -21,7 +21,6 @@ import clsx from "clsx";
 import { format, sub } from "date-fns";
 import { ArrowRightIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
@@ -246,8 +245,6 @@ export const columns: ColumnDef<Transaction>[] = [
         style: "currency",
         currency: "GBP",
       }).format(amount);
-
-      const pathname = usePathname();
 
       return (
         <div className="flex justify-between">
