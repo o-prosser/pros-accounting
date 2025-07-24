@@ -11,18 +11,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { format } from "date-fns";
-import { ArrowUpDown, FilterIcon, HashIcon, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  FilterIcon,
+  HashIcon,
+  MoreHorizontal,
+} from "lucide-react";
 import Link from "next/link";
 
 export type Transaction = {
   id: string;
   name: string;
-  date: string|Date;
-  receiptBookNumber: number | null;
+  date: string | Date;
+  receiptBookNumber: string | null;
   income: string | null;
   expense: string | null;
   notes: string | null;
