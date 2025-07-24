@@ -1,0 +1,1 @@
+ALTER TABLE "transactions" ALTER COLUMN "receiptBookNumber" SET DATA TYPE numeric;

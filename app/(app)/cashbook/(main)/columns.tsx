@@ -25,10 +25,10 @@ import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
-  name?: string;
+  name: string | null;
   date: string | Date;
   account?: "club" | "charity" | "dutch" | null;
-  receiptBookNumber?: number | null;
+  receiptBookNumber: string | null;
   income?: string | null;
   expense?: string | null;
   balance?: number;
