@@ -117,20 +117,12 @@ const DashboardPage = async ({
         <div className="rounded-2xl border bg-muted/50 p-3 col-span-2">
           <h3 className="font-medium text-xl flex-1">Quick actions</h3>
 
-          <div className="grid grid-cols-2 gap-3">
-            <Button className="mt-2" asChild variant="dark">
-              <Link href="/transactions/create">
-                <PlusIcon className="!size-4" />
-                Add a transaction
-              </Link>
-            </Button>
-            <Button className="mt-2" asChild variant="dark">
-              <Link href="/transfers/create">
-                <PlusIcon className="!size-4" />
-                Add a transfer
-              </Link>
-            </Button>
-          </div>
+          <Button className="mt-2 w-full" asChild variant="dark">
+            <Link href="/cashbook/create">
+              <PlusIcon className="!size-4" />
+              Add a payment
+            </Link>
+          </Button>
           <Button
             className="bg-background p-3 mt-2 text-sm border whitespace-normal items-end hover:underline hover:bg-background/50 w-full relative overflow-hidden"
             asChild

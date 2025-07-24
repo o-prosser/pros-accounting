@@ -14,7 +14,7 @@ const AddPaymentPage = async ({
       <BackButton />
 
       <div className="rounded-2xl border bg-muted/50 p-3">
-        <h3 className="font-medium text-xl flex-1">Add payment</h3>
+        <h3 className="font-medium text-xl flex-1 mb-3">Add payment</h3>
 
         <AddPaymentForm
           searchParams={await searchParams}
