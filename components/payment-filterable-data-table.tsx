@@ -46,6 +46,7 @@ import { SelectCategory, SelectFinancialYear } from "@/drizzle/schema";
 import Link from "next/link";
 import { format, isPast } from "date-fns";
 import { useSearchParams } from "next/navigation";
+import LoadingIndicator from "./loading-indicator";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -278,6 +279,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
                             <div className="size-1.5 bg-popover-foreground/80 rounded-full mr-2"></div>
                             {format(fy.startDate, "d MMMM yyyy")} &ndash;{" "}
                             {format(fy.endDate, "d MMMM yyyy")}
+                            <LoadingIndicator />
                           </Link>
                         </DropdownMenuItem>
                       ))}

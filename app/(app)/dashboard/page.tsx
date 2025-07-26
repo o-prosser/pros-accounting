@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { selectCurrentOrganisation } from "@/models/organisation";
+import LoadingIndicator from "@/components/loading-indicator";
 // import { seed } from "../transactions/cash-book/[account]/seed";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -84,6 +85,7 @@ const DashboardPage = async ({
                       <div className="size-1.5 bg-popover-foreground/80 rounded-full mr-2"></div>
                       {format(fy.startDate, "d MMMM yyyy")} &ndash;{" "}
                       {format(fy.endDate, "d MMMM yyyy")}
+                      <LoadingIndicator />
                     </Link>
                   </DropdownMenuItem>
                 ))}
