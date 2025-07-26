@@ -1,6 +1,6 @@
 import { selectCategoriesMin } from "@/models/category";
 import BackButton from "@/components/back-button";
-import AddPaymentForm from "../@modal/(.)create/_components/form";
+import AddPaymentForm from "../(main)/@modal/(.)create/_components/form";
 
 const AddPaymentPage = async ({
   searchParams,
