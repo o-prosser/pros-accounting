@@ -343,7 +343,13 @@ export const columns: ColumnDef<Transaction>[] = [
             <DropdownMenuContent align="end" className="w-40">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Link href={`/transactions/${row.original.id}`}>View</Link>
+                <Link
+                  href={`/cashbook/${
+                    row.original.from ? "transfers" : "transactions"
+                  }/${row.original.id}`}
+                >
+                  Details
+                </Link>
               </DropdownMenuItem>
               {row.original.name ? (
                 <>
@@ -365,7 +371,11 @@ export const columns: ColumnDef<Transaction>[] = [
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link href={`/transactions/${row.original.id}/edit`}>
+                    <Link
+                      href={`/cashbook/${
+                        row.original.from ? "transfers" : "transactions"
+                      }/${row.original.id}/edit`}
+                    >
                       Edit
                     </Link>
                   </DropdownMenuItem>
