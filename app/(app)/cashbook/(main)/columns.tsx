@@ -57,8 +57,14 @@ export const columns: ColumnDef<Transaction>[] = [
           <TooltipTrigger>
             <Button asChild variant="link" size={null}>
               <Link href={`/cashbook/transactions/${row.original.id}`}>
-                {row.original.name.substring(0, 30)}
-                {row.original.name.length > 30 ? "..." : ""}
+                <span className="group-data-[sidepanel-visible:=true]:hidden">
+                  {row.original.name.substring(0, 30)}
+                  {row.original.name.length > 30 ? "..." : ""}
+                </span>
+                <span className="hidden group-data-[sidepanel-visible:=true]:!inline">
+                  {row.original.name.substring(0, 20)}
+                  {row.original.name.length > 20 ? "..." : ""}
+                </span>
               </Link>
             </Button>
           </TooltipTrigger>
