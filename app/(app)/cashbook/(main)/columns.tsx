@@ -72,7 +72,39 @@ export const columns: ColumnDef<Transaction>[] = [
               </Link>
             </Button>
           </TooltipTrigger>
-          <TooltipContent align="start">{row.original.name}</TooltipContent>
+          <TooltipContent align="start">
+            {row.original.to ? (
+              <div className="flex font-medium gap-1 items-center">
+                <div
+                  className={clsx(
+                    "h-2 w-2 rounded-full flex-shrink-0",
+                    row.original.from === "club"
+                      ? "bg-cyan-600"
+                      : row.original.from === "charity"
+                      ? "bg-orange-600"
+                      : "bg-green-600",
+                  )}
+                />
+                <span className="capitalize">{row.original.from}</span>
+
+                <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
+
+                <div
+                  className={clsx(
+                    "h-2 w-2 rounded-full flex-shrink-0",
+                    row.original.to === "club"
+                      ? "bg-cyan-600"
+                      : row.original.to === "charity"
+                      ? "bg-orange-600"
+                      : "bg-green-600",
+                  )}
+                />
+                <span className="capitalize">{row.original.to}</span>
+              </div>
+            ) : (
+              row.original.name
+            )}
+          </TooltipContent>
         </Tooltip>
       ) : (
         <Tooltip>
@@ -126,7 +158,49 @@ export const columns: ColumnDef<Transaction>[] = [
             </Button>
           </TooltipTrigger>
           <TooltipContent align="start">
-            {row.original.notes || (
+            {row.original.notes ? (
+              row.original.notes
+            ) : row.original.name ? (
+              <div className="h-7 flex font-medium">
+                <div className={clsx(row.original.to && "relative flex")}>
+                  <div className="flex items-center gap-1">
+                    <div
+                      className={clsx(
+                        "h-2 w-2 rounded-full flex-shrink-0",
+                        row.original.from === "club"
+                          ? "bg-cyan-600"
+                          : row.original.from === "charity"
+                          ? "bg-orange-600"
+                          : "bg-green-600",
+                      )}
+                    />
+                    <span className="capitalize">{row.original.from}</span>
+                  </div>
+
+                  {row.original.to ? (
+                    <div className="flex absolute left-full inset-y-0 items-center ml-1 gap-1">
+                      <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
+
+                      <div className="flex items-center gap-1">
+                        <div
+                          className={clsx(
+                            "h-2 w-2 rounded-full flex-shrink-0",
+                            row.original.to === "club"
+                              ? "bg-cyan-600"
+                              : row.original.to === "charity"
+                              ? "bg-orange-600"
+                              : "bg-green-600",
+                          )}
+                        />
+                        <span className="capitalize">{row.original.to}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            ) : (
               <span className="italic">Untitled transfer</span>
             )}
           </TooltipContent>
