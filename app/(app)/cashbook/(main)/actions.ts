@@ -1,6 +1,6 @@
 "use server";
 
-import { transactionsTable } from "@/drizzle/schema";
+import { transactionsTable, transfersTable } from "@/drizzle/schema";
 import db from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -28,4 +28,26 @@ export const deleteTransaction = async (prevState: any, formData: FormData) => {
   };
 
   // redirect(`/cashbook?account=${transaction?.account || ""}`);
+};
+
+export const deleteTransfer = async (prevState: any, formData: FormData) => {
+  const id = formData.get("id") as string;
+  if (!id || id === null || id.length !== 36)
+    throw new Error("Invalid ID provided");
+
+  const transfer = await db.query.transfersTable.findFirst({
+    where: (fields, { eq }) => eq(fields.id, id),
+    columns: { from: true },
+  });
+
+  await db.delete(transfersTable).where(eq(transfersTable.id, id));
+
+  revalidatePath(`/cashbook?account=${transfer?.from || ""}`);
+
+  return {
+    success: true,
+    errors: {
+      id: [],
+    },
+  };
 };

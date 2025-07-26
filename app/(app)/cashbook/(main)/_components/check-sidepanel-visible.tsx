@@ -8,7 +8,9 @@ const CheckSidepanelVisible = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className="group"
-      data-sidepanel-visible={pathname.includes("transactions")}
+      data-sidepanel-visible={
+        pathname.includes("transactions") || pathname.includes("transfers")
+      }
     >
       {children}
     </div>
