@@ -13,7 +13,7 @@ const Transactions = async ({
     account: null,
     financialYear,
   });
-  const transfers = await selectTransfers();
+  const transfers = await selectTransfers({ financialYear });
 
   const payments = [...transactions, ...transfers].sort((a, b) =>
     isAfter(a.date, b.date) ? -1 : 1,
