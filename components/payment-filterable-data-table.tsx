@@ -36,12 +36,16 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Label } from "./ui/label";
-import { SelectCategory } from "@/drizzle/schema";
+import { SelectCategory, SelectFinancialYear } from "@/drizzle/schema";
+import Link from "next/link";
+import { format, isPast } from "date-fns";
+import { useSearchParams } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -161,10 +165,14 @@ export function PaymentFilterableDataTable<TData, TValue>({
   searchable = true,
   categoryKey,
   categories,
+  financialYears,
+  currentFinancialYear,
 }: DataTableProps<TData, TValue> & {
   searchable?: boolean;
   categories: SelectCategory[];
   categoryKey: keyof TData;
+  financialYears: SelectFinancialYear[];
+  currentFinancialYear?: SelectFinancialYear;
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -195,6 +203,8 @@ export function PaymentFilterableDataTable<TData, TValue>({
       columnFilters,
     },
   });
+
+  const searchParams = useSearchParams();
 
   return (
     <div>
@@ -230,8 +240,53 @@ export function PaymentFilterableDataTable<TData, TValue>({
                 <ListFilter />
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="w-auto">
-              <p className="font-semibold !pb-1.5 text-sm">Category</p>
+            <PopoverContent align="end" className="w-72">
+              <p className="font-semibold !pb-1.5 text-sm">Financial year</p>
+              {financialYears.filter((fy) => fy.isCurrent === true).length >
+              0 ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-foreground w-full justify-between"
+                    >
+                      {format(
+                        currentFinancialYear?.startDate || new Date(),
+                        "MMM yyyy",
+                      )}{" "}
+                      &mdash;{" "}
+                      {isPast(currentFinancialYear?.endDate || new Date())
+                        ? format(
+                            currentFinancialYear?.endDate || new Date(),
+                            "MMM yyyy",
+                          )
+                        : "present"}
+                      <ChevronDownIcon />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>Financial years</DropdownMenuLabel>
+                    <DropdownMenuGroup>
+                      {financialYears.map((fy, key) => (
+                        <DropdownMenuItem asChild key={key}>
+                          <Link
+                            href={`/cashbook?fy=${
+                              fy.id
+                            }&account=${searchParams.get("account")}`}
+                          >
+                            <div className="size-1.5 bg-popover-foreground/80 rounded-full mr-2"></div>
+                            {format(fy.startDate, "d MMMM yyyy")} &ndash;{" "}
+                            {format(fy.endDate, "d MMMM yyyy")}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                ""
+              )}
             </PopoverContent>
           </Popover>
         </div>
