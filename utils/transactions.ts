@@ -27,7 +27,7 @@ export const getPaymentsForTable = async ({
     }),
   );
 
-  const categories = await selectCategories();
+  const categories = await selectCategories({});
 
   const payments = [...transactions, ...transfers].sort((a, b) =>
     isAfter(a.date, b.date) ? 1 : -1,
