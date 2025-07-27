@@ -12,6 +12,8 @@ import {
   DownloadIcon,
   PlusIcon,
   ChevronDownIcon,
+  ShoppingBagIcon,
+  BanknoteArrowUpIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -25,6 +27,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import LoadingIndicator from "@/components/loading-indicator";
+import { selectCategories } from "@/models/category";
+import { currency } from "@/utils/currency";
 // import { seed } from "../transactions/cash-book/[account]/seed";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -46,6 +50,10 @@ const DashboardPage = async ({
   const currentFinancialYear = financialYearId
     ? organisation.financialYears.find((fy) => fy.id === financialYearId)
     : organisation.financialYears.find((fy) => fy.isCurrent === true);
+
+  const categories = await selectCategories({
+    financialYear: currentFinancialYear,
+  });
 
   return (
     <>
@@ -178,12 +186,60 @@ const DashboardPage = async ({
           <div className="flex items-start">
             <h3 className="font-medium text-xl flex-1">Categories</h3>
             <Button size="sm" variant="outline" asChild>
-              <Link href="">
+              <Link href="/categories/create">
                 <PlusIcon />
                 Add category
               </Link>
             </Button>
           </div>
+
+          {categories.slice(0, 3).map((category, idx) => (
+            <Button
+              className="bg-background p-3 mt-2 text-sm border whitespace-normal grid grid-cols-2 hover:underline hover:bg-background/50 w-full relative overflow-hidden"
+              asChild
+              variant={null}
+              size={null}
+              key={idx}
+            >
+              <Link href="">
+                <div>
+                  <h3 className="font-medium text-base">{category.name}</h3>
+                  <p className="text-muted-foreground text-sm">
+                    {category.totals.paymentNumber} payment
+                    {category.totals.paymentNumber === 1 ? "" : "s"}
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <BanknoteArrowUpIcon className="size-4 text-muted-foreground" />
+                    <div className="flex items-end gap-1">
+                      <p className="font-mono font-medium tracking-tight text-sm">
+                        {category.totals.income == 0
+                          ? "---"
+                          : currency(category.totals.income)}
+                      </p>
+                      <p className="text-sm pb-[0.5px] text-muted-foreground">
+                        income
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ShoppingBagIcon className="size-4 text-muted-foreground" />
+                    <div className="flex items-end gap-1">
+                      <p className="font-mono font-medium tracking-tight text-sm">
+                        {category.totals.expense == 0
+                          ? "---"
+                          : currency(category.totals.expense)}
+                      </p>
+                      <p className="text-sm pb-[0.5px] text-muted-foreground">
+                        expenses
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </Button>
+          ))}
         </div>
       </div>
 
