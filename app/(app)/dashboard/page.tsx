@@ -57,7 +57,7 @@ const DashboardPage = async ({
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row gap-2 justify-between items-end">
+      <div className="flex flex-col sm:!flex-row gap-2 justify-between items-end">
         <div>
           <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
           <Caption className="-mt-4">
