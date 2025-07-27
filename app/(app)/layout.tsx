@@ -31,7 +31,7 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
 
       <div className="min-h-screen w-screen bg-muted p-3 md:!pl-78">
         {/* Content */}
-        <main className="px-6 pt-6 pb-30 md:!pb-6 min-h-screen bg-background border rounded-2xl">
+        <main className="px-6 pt-6 pb-30 md:!pb-6 min-h-[calc(100vh-1.5rem)] bg-background border rounded-2xl">
           {children}
         </main>
       </div>
