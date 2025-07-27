@@ -416,7 +416,7 @@ export const columns: ColumnDef<Transaction>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild className="cursor-pointer">
                 <Link
                   href={`/cashbook/${
                     row.original.from ? "transfers" : "transactions"
@@ -425,44 +425,48 @@ export const columns: ColumnDef<Transaction>[] = [
                   Details
                 </Link>
               </DropdownMenuItem>
-              {row.original.name ? (
+              {row.original.to ? (
                 <>
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild className="cursor-pointer">
                     <Link
                       href={`/transactions/create?name=${encodeURIComponent(
-                        row.original.name,
-                      )}&income=${encodeURIComponent(
-                        row.original.income || "",
-                      )}&expense=${encodeURIComponent(
-                        row.original.expense || "",
+                        row.original.name || "",
+                      )}&amount=${encodeURIComponent(
+                        row.original.amount || "",
                       )}&category=${encodeURIComponent(
                         row.original.category?.id || "",
-                      )}&subCategory=${encodeURIComponent(
-                        row.original.subCategory?.id || "",
                       )}`}
                     >
                       Duplicate
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link
-                      href={`/cashbook/${
-                        row.original.from ? "transfers" : "transactions"
-                      }/${row.original.id}/edit`}
-                    >
-                      Edit
-                    </Link>
-                  </DropdownMenuItem>
                 </>
               ) : (
                 <>
-                  <DropdownMenuItem>
-                    <Link href={`/transfers/${row.original.id}/edit`}>
-                      Edit
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link
+                      href={`/transactions/create?name=${encodeURIComponent(
+                        row.original.name || "",
+                      )}&amount=${encodeURIComponent(
+                        row.original.income || row.original.expense || "",
+                      )}&category=${encodeURIComponent(
+                        row.original.category?.id || "",
+                      )}`}
+                    >
+                      Duplicate
                     </Link>
                   </DropdownMenuItem>
                 </>
               )}
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link
+                  href={`/cashbook/${
+                    row.original.from ? "transfers" : "transactions"
+                  }/${row.original.id}/edit`}
+                >
+                  Edit
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
