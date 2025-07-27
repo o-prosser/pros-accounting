@@ -242,7 +242,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
               </Button>
             </PopoverTrigger>
             <PopoverContent align="end" className="w-72">
-              <p className="font-semibold !pb-1.5 text-sm">Financial year</p>
+              <p className="font-medium !pb-1.5 text-sm">Financial year</p>
               {financialYears.filter((fy) => fy.isCurrent === true).length >
               0 ? (
                 <DropdownMenu>
