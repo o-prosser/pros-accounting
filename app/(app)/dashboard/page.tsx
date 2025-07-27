@@ -57,7 +57,7 @@ const DashboardPage = async ({
 
   return (
     <>
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row gap-2 justify-between items-end">
         <div>
           <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
           <Caption className="-mt-4">
@@ -123,8 +123,8 @@ const DashboardPage = async ({
         </div>
       </Suspense>
 
-      <div className="grid grid-cols-5 gap-6 mt-6">
-        <div className="rounded-2xl border bg-muted/50 p-3 col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mt-6">
+        <div className="rounded-2xl border bg-muted/50 p-3 md:col-span-2">
           <h3 className="font-medium text-xl flex-1">Quick actions</h3>
 
           <Button className="mt-2 w-full" asChild variant="dark">
@@ -182,7 +182,7 @@ const DashboardPage = async ({
             </Link>
           </Button>
         </div>
-        <div className="border rounded-2xl bg-muted/50 p-3 col-span-3">
+        <div className="border rounded-2xl bg-muted/50 p-3 md:col-span-3">
           <div className="flex items-start">
             <h3 className="font-medium text-xl flex-1">Categories</h3>
             <Button size="sm" variant="outline" asChild>

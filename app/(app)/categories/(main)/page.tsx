@@ -32,10 +32,10 @@ const CategoriesPage = async (props: {
 
   return (
     <>
-      <div className="rounded-2xl border overflow-hidden divide-y">
+      <div className="rounded-2xl border overflow-hidden divide-y @container">
         {categories.map((category, idx) => (
           <div
-            className="hover:bg-muted/50 grid grid-cols-3 p-3 align-middle"
+            className="hover:bg-muted/50 grid grid-cols-2 @md:grid-cols-3 p-3 align-middle"
             key={idx}
           >
             {/* Left */}
@@ -82,7 +82,7 @@ const CategoriesPage = async (props: {
             </div>
 
             {/* End */}
-            <div className="flex items-center justify-end gap-3">
+            <div className="flex items-end @md:items-center justify-between @md:justify-end gap-3 col-span-2 @md:col-span-1 mt-3 @md:mt-0">
               <p className="text-muted-foreground text-sm">
                 Last updated{" "}
                 {formatDistance(

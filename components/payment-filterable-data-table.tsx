@@ -218,12 +218,14 @@ export function PaymentFilterableDataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="@container">
       {searchable ? (
-        <div className="items-center flex rounded-2xl bg-muted/50 p-3 border mb-3 gap-2">
-          <h3 className="font-medium text-xl flex-1">Recent payments</h3>
+        <div className="items-center @lg:flex rounded-2xl bg-muted/50 p-3 border mb-3">
+          <h3 className="font-medium text-xl flex-1 mb-2 @lg:mb-0">
+            Recent payments
+          </h3>
 
-          <div className="relative">
+          <div className="relative inline-block mr-2">
             <div className="h-10 absolute left-3 inset-y-0 grid place-items-center">
               <SearchIcon className="text-muted-foreground size-4" />
             </div>
@@ -235,7 +237,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
               onChange={(event) =>
                 table.getColumn("name")?.setFilterValue(event.target.value)
               }
-              className="max-w-xs placeholder:text-foreground placeholder:font-medium pl-9"
+              className="w-full @lg:max-w-xs placeholder:text-foreground placeholder:font-medium pl-9"
             />
           </div>
 
@@ -246,7 +248,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
 
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" className="ml-2">
                 Filter
                 <ListFilter />
               </Button>

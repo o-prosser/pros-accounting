@@ -25,7 +25,7 @@ const CategoriesLayout = async ({
         </Button>
       </div>
 
-      <div className="flex h-full w-full gap-6">
+      <div className="flex h-full w-full gap-6 flex-col-reverse md:flex-row">
         <div className="flex-1">{children}</div>
         {sidepanel}
       </div>
