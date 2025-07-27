@@ -27,13 +27,10 @@ export const createCategoryAction = async (
 
   if (!fields.success) {
     return {
-      error: fields.error.flatten().fieldErrors,
+      error: z.prettifyError(fields.error),
       success: false,
-      newId: "",
     };
   }
-
-  let id = "";
 
   try {
     const organisation = await selectCurrentOrganisation();
@@ -50,15 +47,12 @@ export const createCategoryAction = async (
         organisationId: organisation.id,
       })
       .returning({ id: categoriesTable.id });
-
-    id = category[0].id;
   } catch (error) {
+    console.error("Error creating category:", error);
+
     return {
       success: false,
-      newId: "",
-      errors: {
-        name: ["An error occurred. Please try again"],
-      },
+      errors: "Failed to create category.",
     };
   }
 
@@ -66,9 +60,6 @@ export const createCategoryAction = async (
 
   return {
     success: true,
-    newId: id,
-    errors: {
-      name: "",
-    },
+    errors: null,
   };
 };

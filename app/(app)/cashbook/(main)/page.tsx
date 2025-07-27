@@ -17,14 +17,15 @@ const CashbookPage = async ({
   const account =
     accountParam === "club" || accountParam === "charity" ? accountParam : null;
 
-  const categories = await selectCategories();
   const organisation = await selectCurrentOrganisation();
-  const balancedTransfersPayments = await getPaymentsForTable({ account });
-
   const financialYearId = awaitedSearchParams.fy as string | undefined;
   const currentFinancialYear = financialYearId
     ? organisation.financialYears.find((fy) => fy.id === financialYearId)
     : organisation.financialYears.find((fy) => fy.isCurrent === true);
+  const categories = await selectCategories({
+    financialYear: currentFinancialYear,
+  });
+  const balancedTransfersPayments = await getPaymentsForTable({ account });
 
   return (
     <>

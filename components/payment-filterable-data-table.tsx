@@ -60,10 +60,16 @@ const CategoryFilter = ({
   categories: SelectCategory[];
   onCategoriesChange: (categories: SelectCategory[]) => void;
 }) => {
+  const searchParams = useSearchParams();
+  const searchParamCategoryId = searchParams.get("category");
+  const searchParamCategory = categories.find(
+    (c) => searchParamCategoryId === c.id,
+  );
+
   // Categories filter
   const [selectedCategories, setSelectedCategories] = useState<
     SelectCategory[]
-  >([]);
+  >(searchParamCategory ? [searchParamCategory] : []);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredCategories = categories.filter((category) =>
@@ -175,11 +181,17 @@ export function PaymentFilterableDataTable<TData, TValue>({
   financialYears: SelectFinancialYear[];
   currentFinancialYear?: SelectFinancialYear;
 }) {
+  const searchParams = useSearchParams();
+  const searchParamCategoryId = searchParams.get("category");
+  const searchParamCategory = categories.find(
+    (c) => searchParamCategoryId === c.id,
+  );
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [selectedCategories, setSelectedCategories] = useState<
     SelectCategory[]
-  >([]);
+  >(searchParamCategory ? [searchParamCategory] : []);
 
   const filteredData = useMemo(() => {
     if (selectedCategories.length === 0) {
@@ -204,8 +216,6 @@ export function PaymentFilterableDataTable<TData, TValue>({
       columnFilters,
     },
   });
-
-  const searchParams = useSearchParams();
 
   return (
     <div>

@@ -4,7 +4,7 @@ import { organisationsTable } from "./organisations";
 import { transactionsTable } from "./transactions";
 import { subCategoriesTable } from "./subCategories";
 import { accountEnum } from "./enums";
-import { financialYearsTable } from ".";
+import { financialYearsTable, transfersTable } from ".";
 
 export const categoriesTable = pgTable("categories", {
   id: uuid("id")
@@ -40,6 +40,7 @@ export const categoriesRelations = relations(
       references: [financialYearsTable.id],
     }),
     transactions: many(transactionsTable),
+    transfers: many(transfersTable),
     subCategories: many(subCategoriesTable),
   }),
 );
