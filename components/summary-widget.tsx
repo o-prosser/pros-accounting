@@ -30,7 +30,11 @@ import { cn } from "@/lib/utils";
 
 const getMonths = async () => {
   const organisation = await selectCurrentOrganisation();
-  const financialStart = addDays(organisation.endOfFinancialYear, 1);
+  const financialStart = addDays(
+    organisation.financialYears.find((fy) => fy.isCurrent)?.startDate ||
+      new Date(),
+    1,
+  );
 
   const startFromFinancialStart =
     differenceInMonths(startOfMonth(new Date()), financialStart) <= 6;
