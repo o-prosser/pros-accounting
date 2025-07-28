@@ -24,6 +24,9 @@ const schema = z.object({
   account: z.enum(["charity", "club"], {
     message: "The account type is required.",
   }),
+  receiptBookNumber: z.string().nullable().optional(),
+  fileId: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
 });
 
 export const createPaymentAction = async (
@@ -53,6 +56,7 @@ export const createPaymentAction = async (
           amount: parseFloat(fields.data.amount).toString(),
           categoryId: fields.data.category,
           from: fields.data.account,
+          receiptBookNumber: fields.data.receiptBookNumber,
           to: fields.data.account === "charity" ? "club" : "charity",
           financialYearId: currentFinancialYearId,
           organisationId: organisation.id,
@@ -74,6 +78,9 @@ export const createPaymentAction = async (
               : null,
           categoryId: fields.data.category,
           account: fields.data.account,
+          receiptBookNumber: fields.data.receiptBookNumber,
+          fileId: fields.data.fileId,
+          notes: fields.data.notes,
           financialYearId: currentFinancialYearId,
           organisationId: organisation.id,
         })

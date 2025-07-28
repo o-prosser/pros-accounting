@@ -105,6 +105,7 @@ export const selectCategoriesMin = async () => {
       id: true,
       name: true,
       account: true,
+      financialYearId: true,
     },
     with: {
       subCategories: {

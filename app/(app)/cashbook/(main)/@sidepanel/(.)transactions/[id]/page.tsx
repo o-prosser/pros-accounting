@@ -5,12 +5,19 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { getColour } from "@/utils/colours";
 import clsx from "clsx";
 import { format } from "date-fns";
-import { CopyPlusIcon, HashIcon, PencilIcon, TrashIcon } from "lucide-react";
+import {
+  CopyPlusIcon,
+  HashIcon,
+  PaperclipIcon,
+  PencilIcon,
+  TrashIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteTransaction } from "../../../actions";
 import { FormButton } from "@/components/form-button";
 import DeleteTransaction from "../../../_components/delete-transaction";
+import { formatSize, getFileUrl } from "@/utils/files";
 
 const TransactionsSidePanelPage = async ({
   params,
@@ -148,6 +155,39 @@ const TransactionsSidePanelPage = async ({
           </p>
           <p>{transaction.notes || "No notes provided."}</p>
         </div>
+
+        {transaction.file ? (
+          <div className="py-3">
+            <p className="text-sm font-medium text-muted-foreground pb-px">
+              Documents
+            </p>
+            <div className="rounded-md border flex items-center justify-between p-3 text-sm bg-background">
+              <div className="flex w-0 flex-1 items-center">
+                <PaperclipIcon
+                  aria-hidden="true"
+                  className="h-5 w-5 flex-shrink-0 text-muted-foreground"
+                />
+                <div className="ml-2 flex min-w-0 flex-1 gap-2">
+                  <span className="truncate font-medium">
+                    {transaction.file.name}
+                  </span>
+                  <span className="flex-shrink-0 text-gray-400">
+                    {formatSize(parseInt(transaction.file.size || ""))}
+                  </span>
+                </div>
+              </div>
+              <div className="ml-4 flex-shrink-0">
+                <Button asChild variant="link" size={null}>
+                  <Link href={getFileUrl(transaction.file.key)} download>
+                    Download
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
 
         <div className="flex gap-2">
           <Button asChild variant="outline" size="sm">

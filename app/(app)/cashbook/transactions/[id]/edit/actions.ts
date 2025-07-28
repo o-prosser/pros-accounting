@@ -26,6 +26,9 @@ const schema = z.object({
   account: z.enum(["charity", "club"], {
     message: "The account type is required.",
   }),
+  receiptBookNumber: z.string().nullable(),
+  fileId: z.string().nullable(),
+  notes: z.string().nullable(),
 });
 
 export const updateTransactionAction = async (
@@ -58,6 +61,9 @@ export const updateTransactionAction = async (
             : null,
         categoryId: fields.data.category,
         account: fields.data.account,
+        receiptBookNumber: fields.data.receiptBookNumber,
+        fileId: fields.data.fileId,
+        notes: fields.data.notes,
       })
       .where(eq(transactionsTable.id, fields.data.id))
       .returning({ id: transactionsTable.id });
