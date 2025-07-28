@@ -50,7 +50,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="w-full max-w-full">
       {searchable ? (
         <div className="flex items-center py-4">
           <Input
@@ -65,7 +65,7 @@ export function DataTable<TData, TValue>({
       ) : (
         ""
       )}
-      <div className="rounded-2xl border">
+      <div className="rounded-2xl border overflow-x-scroll">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

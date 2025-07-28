@@ -218,7 +218,7 @@ export function PaymentFilterableDataTable<TData, TValue>({
   });
 
   return (
-    <div className="@container">
+    <div className="@container w-full max-w-full">
       {searchable ? (
         <div className="items-center @lg:flex rounded-2xl bg-muted/50 p-3 border mb-3">
           <h3 className="font-medium text-xl flex-1 mb-2 @lg:mb-0">
@@ -307,8 +307,8 @@ export function PaymentFilterableDataTable<TData, TValue>({
       ) : (
         ""
       )}
-      <div className="rounded-2xl border">
-        <Table>
+      <div className="rounded-2xl border overflow-x-scroll">
+        <Table className="min-w-2xl w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

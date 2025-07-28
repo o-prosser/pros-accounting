@@ -130,7 +130,11 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "date",
     header: "Date",
-    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM"),
+    cell: ({ row }) => (
+      <span className="whitespace-nowrap">
+        {format(row.getValue("date"), "dd MMM yyyy")}
+      </span>
+    ),
   },
   // {
   //   header: "Receipt no.",
@@ -155,7 +159,7 @@ export const columns: ColumnDef<Transaction>[] = [
 
     cell: ({ row }) => {
       return row.original.account ? (
-        <div className="flex">
+        <div className="flex min-w-max">
           <div className={clsx(row.original.to && "relative flex")}>
             <div className="flex items-center gap-1">
               <div
@@ -185,7 +189,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const subCategory = row.original.subCategory;
 
       return category ? (
-        <div className="flex gap-2">
+        <div className="flex gap-2 min-w-max">
           <div
             className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto"
             style={{

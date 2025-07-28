@@ -57,7 +57,7 @@ const DashboardPage = async ({
 
   return (
     <>
-      <div className="flex flex-col sm:!flex-row gap-2 justify-between items-end">
+      <div className="flex flex-col sm:!flex-row gap-2 justify-between sm:items-end">
         <div>
           <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
           <Caption className="-mt-4">
@@ -69,7 +69,11 @@ const DashboardPage = async ({
           .length > 0 ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-auto place-self-end"
+              >
                 {format(
                   currentFinancialYear?.startDate || new Date(),
                   "MMM yyyy",

@@ -289,7 +289,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const subCategory = row.original.subCategory;
 
       return category ? (
-        <div className="flex gap-2">
+        <div className="flex gap-2 min-w-max">
           <div
             className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto"
             style={{
@@ -339,7 +339,7 @@ export const columns: ColumnDef<Transaction>[] = [
       }).format(amount);
 
       return (
-        <div className="flex justify-between">
+        <div className="flex justify-between min-w-max">
           <span
             className={clsx(
               "text-rght font-medium",
@@ -366,7 +366,7 @@ export const columns: ColumnDef<Transaction>[] = [
             {formatted}
           </span>
 
-          <span className="text-muted-foreground group-data-[sidepanel-visible=true]:hidden">
+          <span className="text-muted-foreground group-data-[sidepanel-visible=true]:hidden pl-6">
             {row.original.balance !== undefined
               ? "(" +
                 new Intl.NumberFormat("en-GB", {
