@@ -205,7 +205,7 @@ const DashboardPage = async ({
               size={null}
               key={idx}
             >
-              <Link href="">
+              <Link href={`/categories/category/${category.id}`}>
                 <div>
                   <h3 className="font-medium text-base">{category.name}</h3>
                   <p className="text-muted-foreground text-sm">
