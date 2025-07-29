@@ -10,7 +10,7 @@ import {
 import { Title } from "@/components/ui/typography";
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "@/models/organisation";
-import { formatSize } from "@/utils/files";
+import { formatSize, getFileUrl } from "@/utils/files";
 import { EyeIcon, FilesIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -64,9 +64,12 @@ const FilesPage = async () => {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 p-0 text-muted-foreground"
+                    asChild
                   >
-                    <span className="sr-only">Open</span>
-                    <EyeIcon className="h-4 w-4" />
+                    <Link href={getFileUrl(file.key)} download>
+                      <span className="sr-only">Open</span>
+                      <EyeIcon className="h-4 w-4" />
+                    </Link>
                   </Button>
                 </TableCell>
               </TableRow>
