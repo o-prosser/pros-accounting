@@ -1,5 +1,6 @@
 import { filesTable } from "@/drizzle/schema";
 import db from "@/lib/db";
+import { selectCurrentOrganisation } from "@/models/organisation";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 

@@ -1,8 +1,13 @@
 "use server";
 
-import { transactionsTable, transfersTable } from "@/drizzle/schema";
+import {
+  filesTable,
+  transactionsTable,
+  transfersTable,
+} from "@/drizzle/schema";
 import db from "@/lib/db";
 import { selectCurrentOrganisation } from "@/models/organisation";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
@@ -63,6 +68,16 @@ export const createPaymentAction = async (
         })
         .returning({ id: transfersTable.id });
     } else {
+      if (fields.data.fileId) {
+        await db
+          .update(filesTable)
+          .set({
+            organisationId: organisation.id,
+            financialYearId: currentFinancialYearId,
+          })
+          .where(eq(filesTable.id, fields.data.fileId));
+      }
+
       const transaction = await db
         .insert(transactionsTable)
         .values({
