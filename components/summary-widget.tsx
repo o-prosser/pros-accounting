@@ -210,22 +210,20 @@ const SummaryWidget = async ({
     ),
     type: "income",
     account,
-    financialYear: currentFinancialYear,
   });
   const expenseForBalance = getTotal({
     transactions: transactions.filter((t) =>
       currentFinancialYear
-        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        ? isBefore(t.date, currentFinancialYear.endDate)
         : true,
     ),
     transfers: transfers.filter((t) =>
       currentFinancialYear
-        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        ? isBefore(t.date, currentFinancialYear.endDate)
         : true,
     ),
     type: "expense",
     account,
-    financialYear: currentFinancialYear,
   });
   const initial = await getInitialBalance(account);
 
