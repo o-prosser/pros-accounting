@@ -144,7 +144,7 @@ const CategoryFilter = ({
               </div>
             ))
           ) : (
-            <p className="text-sm text-muted-foreground py-2">
+            <p className="text-sm text-muted-foreground py-2 px-3">
               No categories found
             </p>
           )}
