@@ -6,7 +6,7 @@ import { getColour } from "@/utils/colours";
 import clsx from "clsx";
 import { format, isAfter, isWithinInterval, isBefore } from "date-fns";
 import { ArrowRightIcon, HashIcon } from "lucide-react";
-import {selectTransactions} from '@/models/transaction'
+import { selectTransactions } from "@/models/transaction";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 
 const Account = async ({
@@ -79,10 +79,10 @@ const Account = async ({
 
   type Payment = {
     id: string;
-    name?: string;
+    name: string | null;
     date: string | Date;
     account?: "club" | "charity" | "dutch" | null;
-    receiptBookNumber?: number | null;
+    receiptBookNumber: string | null;
     income?: string | null;
     expense?: string | null;
     balance?: number;
@@ -103,10 +103,11 @@ const Account = async ({
   };
 
   const paymentsInDate: Payment[] = balancedTransfersPayments.filter((t) =>
-                isWithinInterval(t.date, {
-                  start: new Date(from || ""),
-                  end: new Date(to || ""),
-                }));
+    isWithinInterval(t.date, {
+      start: new Date(from || ""),
+      end: new Date(to || ""),
+    }),
+  );
 
   return (
     <div style={{ pageBreakAfter: "always" }}>
@@ -138,7 +139,10 @@ const Account = async ({
           <span className="font-semibold">Opening balance</span> at{" "}
           {format(new Date(from || ""), "dd MMM yyyy")}
         </span>
-        <span className="font-semibold tabular-nums" style={{fontVariantNumeric: "tabular-nums"}}>
+        <span
+          className="font-semibold tabular-nums"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
@@ -146,9 +150,9 @@ const Account = async ({
             balancedTransfersPayments
               .filter((t) => isBefore(t.date, new Date(from || "")))
               .reverse()[0] !== undefined
-              ? (balancedTransfersPayments
+              ? balancedTransfersPayments
                   .filter((t) => isBefore(t.date, new Date(from || "")))
-                  .reverse()[0].balance || 0)
+                  .reverse()[0].balance || 0
               : account === "club"
               ? parseFloat(organisation.initialClubBalance || "")
               : parseFloat(organisation.initialCharityBalance || ""),
@@ -176,7 +180,7 @@ const Account = async ({
               className="font-medium"
             >
               <p className="line-clamp-1">
-                {transaction.name} 
+                {transaction.name}
                 {/* ({format(transaction.date, "dd MMM yyyy")}) */}
               </p>
             </div>
@@ -188,8 +192,9 @@ const Account = async ({
               <div
                 className="h-2 w-2 rounded-full flex-shrink-0"
                 style={{
-                  backgroundColor: getColour(transaction.category?.colour || null)
-                    .foreground,
+                  backgroundColor: getColour(
+                    transaction.category?.colour || null,
+                  ).foreground,
                 }}
               />
               <span
@@ -203,7 +208,11 @@ const Account = async ({
             </div>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{ width: "14%", padding: "8px 6px", fontVariantNumeric: "tabular-nums" }}
+              style={{
+                width: "14%",
+                padding: "8px 6px",
+                fontVariantNumeric: "tabular-nums",
+              }}
             >
               {transaction.income
                 ? new Intl.NumberFormat("en-GB", {
@@ -219,7 +228,11 @@ const Account = async ({
             </p>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{ width: "14%", padding: "8px 6px", fontVariantNumeric: "tabular-nums" }}
+              style={{
+                width: "14%",
+                padding: "8px 6px",
+                fontVariantNumeric: "tabular-nums",
+              }}
             >
               {transaction.expense !== undefined && transaction.expense !== null
                 ? new Intl.NumberFormat("en-GB", {
@@ -230,11 +243,16 @@ const Account = async ({
                 ? new Intl.NumberFormat("en-GB", {
                     style: "currency",
                     currency: "GBP",
-                  }).format(parseFloat(transaction.amount || "")) : "-"}
+                  }).format(parseFloat(transaction.amount || ""))
+                : "-"}
             </p>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{ width: "14%", padding: "8px 6px", fontVariantNumeric: "tabular-nums" }}
+              style={{
+                width: "14%",
+                padding: "8px 6px",
+                fontVariantNumeric: "tabular-nums",
+              }}
             >
               {new Intl.NumberFormat("en-GB", {
                 style: "currency",
@@ -249,7 +267,10 @@ const Account = async ({
           <span className="font-semibold">Closing balance</span> at{" "}
           {format(new Date(to || ""), "dd MMM yyyy")}
         </span>
-        <span className="font-semibold tabular-nums" style={{fontVariantNumeric: "tabular-nums"}}>
+        <span
+          className="font-semibold tabular-nums"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",

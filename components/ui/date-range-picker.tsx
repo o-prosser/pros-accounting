@@ -1,33 +1,48 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { addDays, format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
+import * as React from "react";
+import { addDays, format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 export function DateRangePicker({
   className,
   defaultFrom,
-  defaultTo
-}: React.HTMLAttributes<HTMLDivElement> & {defaultFrom?: Date, defaultTo?: Date}) {
+  defaultTo,
+}: React.HTMLAttributes<HTMLDivElement> & {
+  defaultFrom?: Date;
+  defaultTo?: Date;
+}) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: defaultFrom ||  new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-    to: defaultTo || addDays(new Date(new Date().getFullYear(), new Date().getMonth(), 1), 28),
-  })
+    from:
+      defaultFrom ||
+      new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    to:
+      defaultTo ||
+      addDays(new Date(new Date().getFullYear(), new Date().getMonth(), 1), 28),
+  });
 
   return (
-    <div className={cn("grid grid-cols-2 gap-2", className)}>
-      <input type="hidden" name="from" value={date?.from && format(date.from, "yyyy-MM-dd")}  />
-      <input type="hidden" name="to" value={date?.to && format(date.to, "yyyy-MM-dd")}  />
+    <div className={cn("", className)}>
+      <input
+        type="hidden"
+        name="from"
+        value={date?.from && format(date.from, "yyyy-MM-dd")}
+      />
+      <input
+        type="hidden"
+        name="to"
+        value={date?.to && format(date.to, "yyyy-MM-dd")}
+      />
 
       <Popover>
         <PopoverTrigger asChild>
@@ -36,7 +51,7 @@ export function DateRangePicker({
             variant={"outline"}
             className={cn(
               "w-[300px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
             )}
           >
             <CalendarIcon className="mr-2 -ml-1.5 h-4 w-4 text-muted-foreground" />
@@ -66,5 +81,5 @@ export function DateRangePicker({
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

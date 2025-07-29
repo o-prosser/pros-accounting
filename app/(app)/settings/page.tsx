@@ -4,9 +4,19 @@ import { Label } from "@/components/ui/label";
 import { Muted, Heading, Title } from "@/components/ui/typography";
 import { selectCurrentOrganisation } from "@/models/organisation";
 import { Metadata } from "next";
-import { addFinancialYear, invite, updateOrganisation } from "./actions";
+import {
+  addFinancialYear,
+  invite,
+  makeFinancialYearCurrent,
+  updateOrganisation,
+} from "./actions";
 import { format } from "date-fns";
-import { PoundSterlingIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  CircleDotIcon,
+  CircleSmallIcon,
+  PoundSterlingIcon,
+} from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,10 +24,19 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SettingsIcon } from "@/components/icons/settings";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -126,16 +145,27 @@ const SettingsPage = async () => {
 
         <hr className="my-6" />
 
-        <div className="max-w-2xl">
-          <Heading>Financial years</Heading>
+        <div className="rounded-2xl p-3 border bg-muted/50 group">
+          <div className="flex gap-2 items-center">
+            <div className="bg-gradient-to-br size-7 rounded-lg grid place-items-center via-50% via-foreground from-foreground/70 to-foreground/70">
+              <CalendarIcon className="size-4 text-background" />
+            </div>
+            <h3 className="font-medium text-xl flex-1">Financial years</h3>
+          </div>
 
-          <div className="rounded-md border">
+          <p className="text-sm text-muted-foreground mt-2">
+            Manage your financial years to affect all reports and transactions.
+            You can start a new financial year at any time, which will
+            automatically close the previous year.
+          </p>
 
+          <div className="rounded-lg border bg-background overflow-hidden mt-3">
             <Table>
-              <TableHeader>
+              <TableHeader className="bg-background">
                 <TableRow>
-                  <TableHead>Period</TableHead>
-                  <TableHead></TableHead>
+                  <TableHead>Start</TableHead>
+                  <TableHead>End</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
@@ -143,37 +173,63 @@ const SettingsPage = async () => {
                 {organisation.financialYears.map((financialYear, idx) => (
                   <TableRow key={idx}>
                     <TableCell>
-                      {format(financialYear.startDate, "E, dd MMM")} &ndash;{" "}
-                      {format(financialYear.endDate, "E, dd MMM")}
+                      {format(financialYear.startDate, "E, dd MMM yyyy")}
                     </TableCell>
                     <TableCell>
-                      {financialYear.isCurrent ? (
-                        
-                        <Badge>Current</Badge>
-                      ) : ""}
+                      {format(financialYear.endDate, "E, dd MMM yyyy")}
                     </TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>
+                      {financialYear.isCurrent ? <Badge>Current</Badge> : ""}
+                    </TableCell>
+                    <TableCell className="flex justify-end">
+                      <form action={makeFinancialYearCurrent}>
+                        <input
+                          type="hidden"
+                          name="financialYearId"
+                          value={financialYear.id}
+                        />
+                        <input
+                          type="hidden"
+                          name="organisationId"
+                          value={organisation.id}
+                        />
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          title="Make current"
+                          type="submit"
+                          className={cn(
+                            "h-8 w-8 p-0 text-muted-foreground",
+                            financialYear.isCurrent &&
+                              "opacity-50 pointer-events-none",
+                          )}
+                          disabled={financialYear.isCurrent ? true : false}
+                        >
+                          <span className="sr-only">Open menu</span>
+                          <CircleSmallIcon className="h-4 w-4" />
+                        </Button>
+                      </form>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
 
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Add financial year</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form action={addFinancialYear}>
-                <input type="hidden" name="organisationId" defaultValue={organisation.id} />
+          <form
+            action={addFinancialYear}
+            className="rounded-lg bg-background border p-3 mt-3 flex items-center gap-2"
+          >
+            <h4 className="font-medium shrink-0 flex-1">Add financial year</h4>
+            <input
+              type="hidden"
+              name="organisationId"
+              defaultValue={organisation.id}
+            />
 
-                <Label>Period</Label>
-                <DateRangePicker className="mb-6" />
-
-                <FormButton type="submit">Add</FormButton>
-              </form>
-            </CardContent>
-          </Card>
+            <DateRangePicker />
+            <FormButton type="submit">Add</FormButton>
+          </form>
         </div>
 
         <hr className="my-6" />

@@ -74,10 +74,10 @@ const TransactionLogReport = async (routeData: {
 
   const payments: {
     id: string;
-    name?: string;
+    name: string | null;
     date: string | Date;
     account?: "club" | "charity" | "dutch" | null;
-    receiptBookNumber?: number | null;
+    receiptBookNumber: string | null;
     income?: string | null;
     expense?: string | null;
     balance?: number;

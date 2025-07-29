@@ -32,16 +32,16 @@ import { usePathname } from "next/navigation";
 
 export type Transaction = {
   id: string;
-  name?: string;
+  name: string | null;
   date: string | Date;
-  account?: "club" |"charity"|"dutch"|null;
-  receiptBookNumber?: number | null;
+  account?: "club" | "charity" | "dutch" | null;
+  receiptBookNumber?: string | null;
   income?: string | null;
   expense?: string | null;
   balance?: number;
   amount?: string;
-  from?: "club" |"charity"|"dutch";
-  to?: "club" |"charity"|"dutch";
+  from?: "club" | "charity" | "dutch";
+  to?: "club" | "charity" | "dutch";
   notes: string | null;
   category?: {
     id: string;
@@ -62,57 +62,79 @@ export const columns: ColumnDef<Transaction>[] = [
     cell: ({ row }) =>
       row.original.name ? (
         <Button asChild variant="link" size={null}>
-          <Link href={`/transactions/${row.original.id}`}>
-            {row.original.name.substring(0, 30)}
-            {row.original.name.length > 30 ? "..." : ""}
+          <Link
+            href={`/cashbook/${
+              row.original.to ? "transfers" : `transactions`
+            }/${row.original.id}`}
+          >
+            <span className="group-data-[sidepanel-visible:=true]:hidden">
+              {row.original.name.substring(0, 30)}
+              {row.original.name.length > 30 ? "..." : ""}
+            </span>
+            <span className="hidden group-data-[sidepanel-visible:=true]:!inline">
+              {row.original.name.substring(0, 20)}
+              {row.original.name.length > 20 ? "..." : ""}
+            </span>
           </Link>
         </Button>
       ) : (
-        <div className="h-7 flex font-medium">
-          <div className={clsx(row.original.to && "relative flex")}>
-            <div className="flex items-center gap-1">
-              <div
-                className={clsx(
-                  "h-2 w-2 rounded-full flex-shrink-0",
-                  row.original.from === "club"
-                    ? "bg-cyan-600"
-                    : row.original.from === "charity"
-                    ? "bg-orange-600"
-                    : "bg-green-600",
-                )}
-              />
-              <span className="capitalize">{row.original.from}</span>
-            </div>
-
-            {row.original.to ? (
-              <div className="flex absolute left-full inset-y-0 items-center ml-1 gap-1">
-                <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
-
+        <Button asChild variant="link" size={null}>
+          <Link
+            href={`/cashbook/${
+              row.original.to ? "transfers" : `transactions`
+            }/${row.original.id}`}
+          >
+            <div className="h-7 flex font-medium">
+              <div className={clsx(row.original.to && "relative flex")}>
                 <div className="flex items-center gap-1">
                   <div
                     className={clsx(
                       "h-2 w-2 rounded-full flex-shrink-0",
-                      row.original.to === "club"
+                      row.original.from === "club"
                         ? "bg-cyan-600"
-                        : row.original.to === "charity"
+                        : row.original.from === "charity"
                         ? "bg-orange-600"
                         : "bg-green-600",
                     )}
                   />
-                  <span className="capitalize">{row.original.to}</span>
+                  <span className="capitalize">{row.original.from}</span>
                 </div>
+
+                {row.original.to ? (
+                  <div className="flex absolute left-full inset-y-0 items-center ml-1 gap-1">
+                    <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
+
+                    <div className="flex items-center gap-1">
+                      <div
+                        className={clsx(
+                          "h-2 w-2 rounded-full flex-shrink-0",
+                          row.original.to === "club"
+                            ? "bg-cyan-600"
+                            : row.original.to === "charity"
+                            ? "bg-orange-600"
+                            : "bg-green-600",
+                        )}
+                      />
+                      <span className="capitalize">{row.original.to}</span>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
+            </div>
+          </Link>
+        </Button>
       ),
   },
   {
     accessorKey: "date",
     header: "Date",
-    cell: ({ row }) => format(row.getValue("date"), "E, dd MMM"),
+    cell: ({ row }) => (
+      <span className="whitespace-nowrap">
+        {format(row.getValue("date"), "dd MMM yyyy")}
+      </span>
+    ),
   },
   // {
   //   header: "Receipt no.",
@@ -134,10 +156,10 @@ export const columns: ColumnDef<Transaction>[] = [
   // },
   {
     header: "Account",
-    
+
     cell: ({ row }) => {
       return row.original.account ? (
-        <div className="flex">
+        <div className="flex min-w-max">
           <div className={clsx(row.original.to && "relative flex")}>
             <div className="flex items-center gap-1">
               <div
@@ -167,7 +189,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const subCategory = row.original.subCategory;
 
       return category ? (
-        <div className="flex gap-2">
+        <div className="flex gap-2 min-w-max">
           <div
             className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto"
             style={{
@@ -186,7 +208,7 @@ export const columns: ColumnDef<Transaction>[] = [
               {category.name}
             </span>
           </div>
-          {(subCategory !== null && subCategory !== undefined) ? (
+          {subCategory !== null && subCategory !== undefined ? (
             <div className="rounded-full flex border py-0.5 px-2 items-center gap-1 w-auto bg-muted/50 border-muted-forergound">
               <span className="font-medium flex-shrink-0 text-muted-foreground">
                 {subCategory?.name}
@@ -218,38 +240,40 @@ export const columns: ColumnDef<Transaction>[] = [
 
       return (
         <div className="flex justify-between">
-        <span
-          className={clsx(
-            "text-rght font-medium",
-            row.original.income && "text-green-600",
-            row.original.expense && "text-red-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.to &&
-              "text-green-600",
-            row.original.activeAccount &&
-              row.original.activeAccount === row.original.from &&
-              "text-red-600",
-          )}
-        >
-          {row.original.income ? "+" : ""}
-          {row.original.expense ? "-" : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.to
-            ? "+"
-            : ""}
-          {row.original.activeAccount &&
-          row.original.activeAccount === row.original.from
-            ? "-"
-            : ""}
-          {formatted}
+          <span
+            className={clsx(
+              "text-rght font-medium",
+              row.original.income && "text-green-600",
+              row.original.expense && "text-red-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.to &&
+                "text-green-600",
+              row.original.activeAccount &&
+                row.original.activeAccount === row.original.from &&
+                "text-red-600",
+            )}
+          >
+            {row.original.income ? "+" : ""}
+            {row.original.expense ? "-" : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.to
+              ? "+"
+              : ""}
+            {row.original.activeAccount &&
+            row.original.activeAccount === row.original.from
+              ? "-"
+              : ""}
+            {formatted}
           </span>
 
           <span className="text-muted-foreground">
             {row.original.balance !== undefined
-              ? "(" + new Intl.NumberFormat("en-GB", {
+              ? "(" +
+                new Intl.NumberFormat("en-GB", {
                   style: "currency",
                   currency: "GBP",
-                }).format(row.original.balance) + ")"
+                }).format(row.original.balance) +
+                ")"
               : ""}
           </span>
         </div>

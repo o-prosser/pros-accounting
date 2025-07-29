@@ -7,7 +7,14 @@ import { selectTransfers } from "./transfer";
 import { isBefore, isSameDay } from "date-fns";
 
 export const selectTransactions = cache(
-  async (params: { account: "club" | "charity" | "dutch" | null } | undefined) => {
+  async (
+    params:
+      | {
+          account: "club" | "charity" | "dutch" | null;
+          financialYear?: { id: string };
+        }
+      | undefined,
+  ) => {
     const organisation = await selectCurrentOrganisation();
 
     const transactions = await db.query.transactionsTable.findMany({
@@ -15,8 +22,15 @@ export const selectTransactions = cache(
         and(
           eq(fields.organisationId, organisation.id),
           params?.account ? eq(fields.account, params.account) : undefined,
+          params?.financialYear
+            ? eq(fields.financialYearId, params.financialYear.id)
+            : undefined,
         ),
-      orderBy: (fields, { desc, asc }) => [desc(fields.date), asc(fields.receiptBookNumber), asc(fields.name)],
+      orderBy: (fields, { desc, asc }) => [
+        desc(fields.date),
+        asc(fields.receiptBookNumber),
+        asc(fields.name),
+      ],
       with: {
         category: {
           columns: { name: true, id: true, account: true, colour: true },
@@ -45,14 +59,20 @@ export const selectTransactions = cache(
     const transactionsWithBalance = transactions.map((transaction, idx) => {
       const previousTransactions = idx > 0 ? transactions.slice(0, idx) : [];
 
-      const total = transactions.filter((t) => t.account === transaction.account).map((t) => t.income ? t.income : `-${t.expense}`).slice(idx).reduce((total, current) => total + parseFloat(current || ""), 0);
+      const total = transactions
+        .filter((t) => t.account === transaction.account)
+        .map((t) => (t.income ? t.income : `-${t.expense}`))
+        .slice(idx)
+        .reduce((total, current) => total + parseFloat(current || ""), 0);
       const transfersTotal = transfers
         .filter((t) =>
           isSameDay(t.date, transaction.date)
             ? (t.notes || "") < transaction.name
             : isBefore(t.date, transaction.date),
         )
-        .map(t => t.from === transaction.account ? `-${t.amount}` : t.amount)
+        .map((t) =>
+          t.from === transaction.account ? `-${t.amount}` : t.amount,
+        )
         .reduce((total, current) => total + parseFloat(current || ""), 0);
 
       return {
@@ -66,12 +86,12 @@ export const selectTransactions = cache(
           ),
         ...transaction,
       };
-    })    
+    });
 
     // return params?.account
     //   ? transactions.filter((t) => t.category.account === params.account)
     //   : transactions;
 
-    return transactions
+    return transactions;
   },
 );

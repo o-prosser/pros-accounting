@@ -11,7 +11,12 @@ import {
   ChevronsUpDownIcon,
   ChevronDownIcon,
   BanknoteIcon,
-  ArrowLeftRightIcon
+  ArrowLeftRightIcon,
+  FileIcon,
+  SettingsIcon,
+  FolderIcon,
+  LucideLandmark,
+  ExternalLinkIcon,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -25,8 +30,6 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "../_components/theme-toggle";
 import Link from "next/link";
 import { logout } from "../actions";
-import { ChartColumnIcon } from "@/components/icons/chart-column";
-import { SettingsIcon } from "@/components/icons/settings";
 import { HomeIcon } from "@/components/icons/home";
 
 const DesktopSidebar = ({
@@ -34,13 +37,49 @@ const DesktopSidebar = ({
   user,
 }: {
   organisation: { name: string };
-  user: { firstName: string; lastName: string | null, email: string };
+  user: { firstName: string; lastName: string | null; email: string };
 }) => {
   return (
-    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 bg-muted w-80 py-6 px-3 gap-y-2 flex-col items-start rounded-2xl">
-      <Logo className="h-6 pl-3 w-auto mb-4 fill-foreground" />
+    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-1 flex-col items-start p-3 overflow-auto">
+      <Logo className="h-6 w-auto mb-2 fill-foreground shrink-0" />
 
-      <div className="flex w-full gap-2 mb-2">
+      <div className="h-[2px] bg-background border-t w-full" />
+
+      <div className="flex w-full gap-2 mb-2 mt-1">
+        <Button
+          asChild
+          variant="outline"
+          size="icon"
+          className="dark:border-background/80 dark:bg-background/70 dark:hover:bg-background/30"
+        >
+          <Link href="/cashbook/create">
+            <PlusIcon />
+          </Link>
+        </Button>
+        <Button
+          variant="outline"
+          className="flex-1 dark:border-background/80 dark:bg-background/70 dark:hover:bg-background/30"
+        >
+          <SearchIcon className="!size-4" />
+          <span className="flex-1 text-left">Search</span>
+          <div className="flex gap-px">
+            <div className="text-xs size-4 grid place-items-center bg-muted rounded">
+              ⌘
+            </div>
+            <div className="text-xs size-4 grid place-items-center bg-muted rounded">
+              K
+            </div>
+          </div>
+        </Button>
+      </div>
+
+      <span className="text-xs font-medium uppercase text-muted-foreground">
+        {organisation.name}
+      </span>
+
+      <div className="h-[2px] bg-background border-t w-full" />
+
+      {/* <div className="flex w-full gap-2 mb-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -67,60 +106,100 @@ const DesktopSidebar = ({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* <Button size="icon" variant="outline" className="h-9 w-9">
+         <Button size="icon" variant="outline" className="h-9 w-9">
           <SearchIcon />
-        </Button> */}
-      </div>
+        </Button>
+      </div> */}
 
       <ActivePage pathname="/dashboard" match="eq">
         <DesktopLink href="/dashboard">
-          <HomeIcon className="fill-icon [&>#unfilled]:fill-muted" />
-          Home
+          <HomeIcon />
+          Dashboard
         </DesktopLink>
       </ActivePage>
       <ActivePage pathname="/reports">
         <DesktopLink href="/reports">
-          <ChartColumnIcon />
-          Reporting
+          <FileIcon />
+          Reports
+        </DesktopLink>
+      </ActivePage>
+      <ActivePage pathname="/categories">
+        <DesktopLink href="/categories">
+          <TagIcon />
+          Categories
+        </DesktopLink>
+      </ActivePage>
+      <ActivePage pathname="/documents">
+        <DesktopLink href="/documents">
+          <FolderIcon />
+          Documents
         </DesktopLink>
       </ActivePage>
 
-      <label htmlFor="" className="text-sm font-semibold pl-3 pt-4">
+      <span className="text-xs font-medium uppercase text-muted-foreground pt-3">
         Cash book
-      </label>
+      </span>
+
+      <div className="h-[2px] bg-background border-t w-full" />
+
       <div className="gap-y-1 flex flex-col items-start mb-2 w-full">
-        <ActivePage pathname="/transactions/cash-book/all">
-          <DesktopLink href="/transactions/cash-book/all">
-            <div className="h-5 w-5 rounded-full border border-border to-foreground/10 from-foreground/50 bg-gradient-to-b"></div>
+        <ActivePage pathname="/cashbook">
+          <DesktopLink href="/cashbook">
+            <div className="size-4.5 rounded-full border border-border from-foreground/10 to-foreground/10 via-foreground/50 bg-gradient-to-br"></div>
             All payments
           </DesktopLink>
         </ActivePage>
-        <ActivePage pathname="/transactions/cash-book/charity">
-          <DesktopLink href="/transactions/cash-book/charity">
-            <div className="h-5 w-5 rounded-full border border-orange-600 to-orange-600/10 from-orange-600/50 bg-gradient-to-b"></div>
+        <ActivePage
+          match="searchParam"
+          pathname="/cashbook"
+          searchParamName="account"
+          searchParamContent="charity"
+        >
+          <DesktopLink href="/cashbook?account=charity">
+            <div className="size-4.5 rounded-full border border-orange-600 bg-gradient-to-br via-orange-600 from-orange-400 to-orange-400"></div>
             Charity
           </DesktopLink>
         </ActivePage>
-        <ActivePage pathname="/transactions/cash-book/club">
-          <DesktopLink href="/transactions/cash-book/club">
-            <div className="h-5 w-5 rounded-full border border-cyan-600 to-cyan-600/10 from-cyan-600/50 bg-gradient-to-b"></div>
+        <ActivePage
+          match="searchParam"
+          pathname="/cashbook"
+          searchParamName="account"
+          searchParamContent="club"
+        >
+          <DesktopLink href="/cashbook?account=club">
+            <div className="size-4.5 rounded-full border border-cyan-600 bg-gradient-to-br via-cyan-600 from-cyan-400 to-cyan-400"></div>
             Club
-          </DesktopLink>
-        </ActivePage>
-        <ActivePage pathname="/transactions/cash-book/dutch">
-          <DesktopLink href="/transactions/cash-book/dutch">
-            <div className="h-5 w-5 rounded-full border border-green-600 to-green-600/10 from-green-600/50 bg-gradient-to-b"></div>
-            Dutch Visit
           </DesktopLink>
         </ActivePage>
       </div>
 
-      <ActivePage pathname="/categories">
-        <DesktopLink href="/categories">
-          <TagIcon className="fill-icon" />
-          Categories
-        </DesktopLink>
-      </ActivePage>
+      <span className="text-xs font-medium uppercase text-muted-foreground pt-3">
+        Links
+      </span>
+
+      <div className="h-[2px] bg-background border-t w-full" />
+
+      <Button
+        asChild
+        variant="ghost"
+        className="hover:bg-muted-foreground/20 w-full justify-start px-3 data-[active=true]:bg-muted-foreground/20 [[data-active='true']_&>svg]:!text-foreground [&>svg]:size-4.5"
+      >
+        <a
+          href="https://www.lloydsbank.com/business/home.html#flyout"
+          target="_blank"
+        >
+          <LucideLandmark />
+          <span className="flex-1 text-left">Lloyds Bank</span>
+          <ExternalLinkIcon className="size-3" />
+        </a>
+      </Button>
+
+      <span className="text-xs font-medium uppercase text-muted-foreground pt-3">
+        Settings
+      </span>
+
+      <div className="h-[2px] bg-background border-t w-full" />
+
       {/* <ActivePage pathname="/transfers">
         <DesktopLink href="/transfers">
           <ArrowRightLeftIcon />
@@ -129,13 +208,13 @@ const DesktopSidebar = ({
       </ActivePage> */}
       <ActivePage pathname="/settings" match="eq">
         <DesktopLink href="/settings">
-          <SettingsIcon className="fill-icon [&>circle]:fill-muted" />
+          <SettingsIcon />
           Configuration
         </DesktopLink>
       </ActivePage>
       <ActivePage pathname="/help" match="eq">
         <DesktopLink href="/help">
-          <HelpCircleIcon className="fill-icon" />
+          <HelpCircleIcon />
           Help
         </DesktopLink>
       </ActivePage>

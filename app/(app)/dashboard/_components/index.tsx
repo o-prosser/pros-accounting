@@ -4,9 +4,16 @@ import { columns } from "./table";
 import { selectTransfers } from "@/models/transfer";
 import { isAfter } from "date-fns";
 
-const Transactions = async () => {
-  const transactions = await selectTransactions({ account: null });
-  const transfers = await selectTransfers();
+const Transactions = async ({
+  financialYear,
+}: {
+  financialYear?: { id: string };
+}) => {
+  const transactions = await selectTransactions({
+    account: null,
+    financialYear,
+  });
+  const transfers = await selectTransfers({ financialYear });
 
   const payments = [...transactions, ...transfers].sort((a, b) =>
     isAfter(a.date, b.date) ? -1 : 1,
