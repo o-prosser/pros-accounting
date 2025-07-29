@@ -76,51 +76,12 @@ export const getInitialBalance = async (
 ) => {
   const organisation = await selectCurrentOrganisation();
 
-  if (!account) return 0;
-
-  if (!date) {
-    if (account === "club")
-      return parseFloat(organisation.initialClubBalance || "0");
-    if (account === "charity")
-      return parseFloat(organisation.initialCharityBalance || "0");
-    if (account === "dutch")
-      return parseFloat(organisation.initialDutchBalance || "0");
-
-    return 0;
-  }
-
-  const transactions = await selectTransactions({
-    account: null,
-  });
-  const transfers = await selectTransfers({});
-
-  const income = getTotal({
-    transactions: transactions.filter((t) =>
-      date ? isBefore(t.date, date) : true,
-    ),
-    transfers: transfers.filter((t) => (date ? isBefore(t.date, date) : true)),
-    type: "income",
-    account,
-  });
-  const expense = getTotal({
-    transactions: transactions.filter((t) =>
-      date ? isBefore(t.date, date) : true,
-    ),
-    transfers: transfers.filter((t) => (date ? isBefore(t.date, date) : true)),
-    type: "expense",
-    account,
-  });
-
   if (account === "club")
-    return parseFloat(organisation.initialClubBalance || "") + income - expense;
+    return parseFloat(organisation.initialClubBalance || "");
   if (account === "charity")
-    return (
-      parseFloat(organisation.initialCharityBalance || "") + income - expense
-    );
+    return parseFloat(organisation.initialCharityBalance || "");
   if (account === "dutch")
-    return (
-      parseFloat(organisation.initialDutchBalance || "") + income - expense
-    );
+    return parseFloat(organisation.initialDutchBalance || "");
 
   return 0;
 };

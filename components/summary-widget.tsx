@@ -21,6 +21,7 @@ import {
   differenceInMonths,
   getMonth,
   getYear,
+  isBefore,
   isWithinInterval,
   startOfMonth,
   subMonths,
@@ -157,11 +158,8 @@ const SummaryWidget = async ({
 } & React.ComponentProps<"div">) => {
   const transactions = await selectTransactions({
     account: null,
-    financialYear: currentFinancialYear,
   });
-  const transfers = await selectTransfers({
-    financialYear: currentFinancialYear,
-  });
+  const transfers = await selectTransfers({});
 
   const income = getTotal({
     transactions: transactions.filter((t) =>
@@ -193,6 +191,27 @@ const SummaryWidget = async ({
             end: currentFinancialYear.endDate,
           })
         : true,
+    ),
+    type: "expense",
+    account,
+    financialYear: currentFinancialYear,
+  });
+
+  const incomeForBalance = getTotal({
+    transactions: transactions.filter((t) =>
+      currentFinancialYear ? isBefore(addDays(t.date, 1), new Date()) : true,
+    ),
+    transfers: transfers.filter((t) =>
+      currentFinancialYear ? isBefore(addDays(t.date, 1), new Date()) : true,
+    ),
+    type: "income",
+    account,
+    financialYear: currentFinancialYear,
+  });
+  const expenseForBalance = getTotal({
+    transactions,
+    transfers: transfers.filter((t) =>
+      currentFinancialYear ? isBefore(addDays(t.date, 1), new Date()) : true,
     ),
     type: "expense",
     account,
@@ -238,9 +257,9 @@ const SummaryWidget = async ({
         <div className="grid grid-cols-2 relative">
           <div>
             <p className="text-2xl font-mono font-semibold tracking-tight">
-              {income + initial - expense == 0
+              {incomeForBalance + initial - expenseForBalance == 0
                 ? "---"
-                : currency(income + initial - expense)}
+                : currency(incomeForBalance + initial - expenseForBalance)}
             </p>
             <p className="font-medium text-muted-foreground">Current balance</p>
           </div>
