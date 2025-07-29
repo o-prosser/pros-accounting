@@ -199,19 +199,29 @@ const SummaryWidget = async ({
 
   const incomeForBalance = getTotal({
     transactions: transactions.filter((t) =>
-      currentFinancialYear ? isBefore(addDays(t.date, 1), new Date()) : true,
+      currentFinancialYear
+        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        : true,
     ),
     transfers: transfers.filter((t) =>
-      currentFinancialYear ? isBefore(addDays(t.date, 1), new Date()) : true,
+      currentFinancialYear
+        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        : true,
     ),
     type: "income",
     account,
     financialYear: currentFinancialYear,
   });
   const expenseForBalance = getTotal({
-    transactions,
+    transactions: transactions.filter((t) =>
+      currentFinancialYear
+        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        : true,
+    ),
     transfers: transfers.filter((t) =>
-      currentFinancialYear ? isBefore(addDays(t.date, 1), new Date()) : true,
+      currentFinancialYear
+        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        : true,
     ),
     type: "expense",
     account,
