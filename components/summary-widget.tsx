@@ -200,12 +200,12 @@ const SummaryWidget = async ({
   const incomeForBalance = getTotal({
     transactions: transactions.filter((t) =>
       currentFinancialYear
-        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        ? isBefore(t.date, addDays(currentFinancialYear.endDate, 1))
         : true,
     ),
     transfers: transfers.filter((t) =>
       currentFinancialYear
-        ? isBefore(addDays(t.date, 1), currentFinancialYear.endDate)
+        ? isBefore(t.date, addDays(currentFinancialYear.endDate, 1))
         : true,
     ),
     type: "income",
@@ -214,12 +214,12 @@ const SummaryWidget = async ({
   const expenseForBalance = getTotal({
     transactions: transactions.filter((t) =>
       currentFinancialYear
-        ? isBefore(t.date, currentFinancialYear.endDate)
+        ? isBefore(t.date, addDays(currentFinancialYear.endDate, 1))
         : true,
     ),
     transfers: transfers.filter((t) =>
       currentFinancialYear
-        ? isBefore(t.date, currentFinancialYear.endDate)
+        ? isBefore(t.date, addDays(currentFinancialYear.endDate, 1))
         : true,
     ),
     type: "expense",

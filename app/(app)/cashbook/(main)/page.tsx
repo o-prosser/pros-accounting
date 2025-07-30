@@ -30,7 +30,12 @@ const CashbookPage = async ({
   return (
     <>
       {account ? (
-        <SummaryWidget account={account} viewButton={false} chart={false} />
+        <SummaryWidget
+          account={account}
+          viewButton={false}
+          chart={false}
+          financialYear={currentFinancialYear}
+        />
       ) : (
         ""
       )}
