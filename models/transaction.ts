@@ -28,8 +28,7 @@ export const selectTransactions = cache(
         ),
       orderBy: (fields, { desc, asc }) => [
         desc(fields.date),
-        asc(fields.receiptBookNumber),
-        asc(fields.name),
+        desc(fields.createdAt),
       ],
       with: {
         category: {
