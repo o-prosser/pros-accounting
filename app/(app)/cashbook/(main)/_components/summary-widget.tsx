@@ -134,15 +134,20 @@ const SummaryWidget = async ({
   viewButton = true,
   min = false,
   className,
+  financialYear,
   ...props
 }: {
   account: Account;
   chart?: boolean;
   viewButton?: boolean;
   min?: boolean;
+  financialYear?: { id: string };
 } & React.ComponentProps<"div">) => {
-  const transactions = await selectTransactions({ account: null });
-  const transfers = await selectTransfers();
+  const transactions = await selectTransactions({
+    account: null,
+    financialYear,
+  });
+  const transfers = await selectTransfers({ financialYear });
 
   const income = getTotal({ transactions, transfers, type: "income", account });
   const expense = getTotal({
@@ -152,8 +157,6 @@ const SummaryWidget = async ({
     account,
   });
   const initial = await getInitialBalance(account);
-
-  const monthlyTotals = await getTotals();
 
   return (
     <div className="rounded-2xl p-3 border bg-muted/50 group mb-6">
