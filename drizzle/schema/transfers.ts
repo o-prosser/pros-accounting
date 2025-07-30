@@ -7,6 +7,7 @@ import {
   text,
   timestamp,
   uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { organisationsTable } from "./organisations";
 import { accountEnum } from "./enums";
@@ -19,7 +20,9 @@ export const transfersTable = pgTable("transfers", {
     .unique()
     .primaryKey()
     .default(sql`gen_random_uuid()`),
+  name: varchar("name", { length: 50 }),
   date: date("date", { mode: "date" }).notNull(),
+  receiptBookNumber: numeric("receiptBookNumber"),
   from: accountEnum("from").notNull(),
   to: accountEnum("to").notNull(),
   amount: numeric("amount").notNull(),
