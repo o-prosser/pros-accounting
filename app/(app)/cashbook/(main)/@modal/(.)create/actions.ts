@@ -94,7 +94,7 @@ export const createPaymentAction = async (
           categoryId: fields.data.category,
           account: fields.data.account,
           receiptBookNumber: fields.data.receiptBookNumber,
-          fileId: fields.data.fileId,
+          fileId: fields.data.fileId === "" ? undefined : fields.data.fileId,
           notes: fields.data.notes,
           financialYearId: currentFinancialYearId,
           organisationId: organisation.id,

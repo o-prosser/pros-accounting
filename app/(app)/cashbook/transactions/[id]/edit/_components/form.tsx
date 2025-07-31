@@ -239,49 +239,34 @@ const EditTransactionForm = ({
         )} */}
       </div>
 
-      <Accordion type="single" collapsible>
-        <AccordionItem value="1">
-          <AccordionTrigger className="bg-muted px-3 py-2 cursor-pointer mt-3">
-            More details
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="mt-2">
-              <Label htmlFor="name">Receipt book number</Label>
-              <Input
-                id="receiptBookNumber"
-                name="receiptBookNumber"
-                type="number"
-                autoComplete="off"
-                defaultValue={transaction.receiptBookNumber || ""}
-                className="mt-0.5 w-full"
-              />
-            </div>
+      <div className="mt-3">
+        <Label htmlFor="name">Receipt book number</Label>
+        <Input
+          id="receiptBookNumber"
+          name="receiptBookNumber"
+          type="number"
+          autoComplete="off"
+          defaultValue={transaction.receiptBookNumber || ""}
+          className="mt-0.5 w-full"
+        />
+      </div>
 
-            {type === "transfer" ? (
-              ""
-            ) : (
-              <>
-                <div className="mt-3">
-                  <Label htmlFor="name">Notes</Label>
-                  <Input
-                    id="notes"
-                    name="notes"
-                    type="text"
-                    autoComplete="off"
-                    defaultValue={transaction.notes || ""}
-                    className="mt-0.5 w-full"
-                  />
-                </div>
+      <div className="mt-3">
+        <Label htmlFor="name">Notes</Label>
+        <Input
+          id="notes"
+          name="notes"
+          type="text"
+          autoComplete="off"
+          defaultValue={transaction.notes || ""}
+          className="mt-0.5 w-full"
+        />
+      </div>
 
-                <div className="mt-3">
-                  <Label htmlFor="fileId">File</Label>
-                  <UploadFiles file={transaction.file} />
-                </div>
-              </>
-            )}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="mt-3">
+        <Label htmlFor="fileId">File</Label>
+        <UploadFiles file={transaction.file} />
+      </div>
 
       <div className="mt-4 flex justify-end">
         <FormButton>Update payment</FormButton>

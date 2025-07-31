@@ -61,8 +61,10 @@ export const updateTransactionAction = async (
             : null,
         categoryId: fields.data.category,
         account: fields.data.account,
-        receiptBookNumber: fields.data.receiptBookNumber,
-        fileId: fields.data.fileId,
+        receiptBookNumber: fields.data.receiptBookNumber
+          ? parseInt(fields.data.receiptBookNumber).toString()
+          : undefined,
+        fileId: fields.data.fileId === "" ? undefined : fields.data.fileId,
         notes: fields.data.notes,
       })
       .where(eq(transactionsTable.id, fields.data.id))
