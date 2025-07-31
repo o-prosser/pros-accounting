@@ -215,14 +215,14 @@ const Account = async ({
               {format(transaction.date, "d/M")}
             </p>
             <div
-              style={{ width: "38.5%", padding: "8px 6px" }}
+              style={{ width: "38.5%", padding: "5px 6px" }}
               className="font-medium"
             >
               <p className="line-clamp-1">{transaction.name}</p>
               <p className="italic">{transaction.notes}</p>
             </div>
 
-            <div style={{ width: "26.5%", padding: "8px 6px" }}>
+            <div style={{ width: "26.5%", padding: "5px 6px" }}>
               <div className="flex items-center gap-1">
                 <div
                   className="h-2 w-2 rounded-full flex-shrink-0"
@@ -243,10 +243,10 @@ const Account = async ({
               </div>
             </div>
             <p
-              className="text-right font-medium py-2 px-1.5 tabular-nums"
+              className="text-right font-medium py-[5px] px-1.5 tabular-nums"
               style={{
                 width: "14%",
-                padding: "8px 6px",
+                padding: "5px 6px",
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -265,10 +265,10 @@ const Account = async ({
               )}
             </p>
             <p
-              className="text-right font-medium py-2 px-1.5 tabular-nums"
+              className="text-right font-medium py-[5px] px-1.5 tabular-nums"
               style={{
                 width: "14%",
-                padding: "8px 6px",
+                padding: "5px 6px",
                 fontVariantNumeric: "tabular-nums",
               }}
             >
