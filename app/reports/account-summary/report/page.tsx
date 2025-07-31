@@ -4,10 +4,11 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import { selectTransfers } from "@/models/transfer";
 import { getColour } from "@/utils/colours";
 import clsx from "clsx";
-import { format, isAfter, isWithinInterval, isBefore } from "date-fns";
+import { format, isAfter, isWithinInterval, isBefore, addDays } from "date-fns";
 import { ArrowRightIcon, HashIcon } from "lucide-react";
 import { selectTransactions } from "@/models/transaction";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
+import { getInitialBalance, getTotal } from "@/utils/totals";
 
 const Account = async ({
   account,
@@ -34,48 +35,48 @@ const Account = async ({
     isAfter(a.date, b.date) ? 1 : -1,
   );
 
-  const balancedTransfersPayments: Payment[] = payments.map((payment, idx) => {
-    if (account === null && payment.hasOwnProperty("amount")) return payment;
-    const previousPayments = payments.slice(0, idx + 1);
-    const previousPaymentValues: number[] = previousPayments.map(
-      (previousPayment) => {
-        if (!previousPayment.hasOwnProperty("amount")) {
-          // @ts-ignore
-          return previousPayment.account === (payment.account || account)
-            ? // @ts-ignore
-              parseFloat(`${previousPayment.income}`) ||
-                // @ts-ignore
-                parseFloat(`-${previousPayment.expense}`)
-            : 0;
-        } else {
-          // @ts-ignore
-          return previousPayment.from === (payment.account || account)
-            ? // @ts-ignore
-              parseFloat(`-${previousPayment.amount}`)
-            : // @ts-ignore
-              parseFloat(previousPayment.amount);
-        }
-      },
-    );
+  // const balancedTransfersPayments: Payment[] = payments.map((payment, idx) => {
+  //   if (account === null && payment.hasOwnProperty("amount")) return payment;
+  //   const previousPayments = payments.slice(0, idx + 1);
+  //   const previousPaymentValues: number[] = previousPayments.map(
+  //     (previousPayment) => {
+  //       if (!previousPayment.hasOwnProperty("amount")) {
+  //         // @ts-ignore
+  //         return previousPayment.account === (payment.account || account)
+  //           ? // @ts-ignore
+  //             parseFloat(`${previousPayment.income}`) ||
+  //               // @ts-ignore
+  //               parseFloat(`-${previousPayment.expense}`)
+  //           : 0;
+  //       } else {
+  //         // @ts-ignore
+  //         return previousPayment.from === (payment.account || account)
+  //           ? // @ts-ignore
+  //             parseFloat(`-${previousPayment.amount}`)
+  //           : // @ts-ignore
+  //             parseFloat(previousPayment.amount);
+  //       }
+  //     },
+  //   );
 
-    const previousPaymentsTotal = previousPaymentValues.reduce(
-      (total, current) => total + current,
-      parseFloat(
-        // @ts-ignore
-        ((payment.account || account) === "club"
-          ? organisation.initialClubBalance
-          : // @ts-ignore
-          (payment.account || account) === "charity"
-          ? organisation.initialCharityBalance
-          : organisation.initialDutchBalance) || "",
-      ),
-    );
+  //   const previousPaymentsTotal = previousPaymentValues.reduce(
+  //     (total, current) => total + current,
+  //     parseFloat(
+  //       // @ts-ignore
+  //       ((payment.account || account) === "club"
+  //         ? organisation.initialClubBalance
+  //         : // @ts-ignore
+  //         (payment.account || account) === "charity"
+  //         ? organisation.initialCharityBalance
+  //         : organisation.initialDutchBalance) || "",
+  //     ),
+  //   );
 
-    return {
-      balance: previousPaymentsTotal,
-      ...payment,
-    };
-  });
+  //   return {
+  //     balance: previousPaymentsTotal,
+  //     ...payment,
+  //   };
+  // });
 
   type Payment = {
     id: string;
@@ -102,12 +103,60 @@ const Account = async ({
     activeAccount?: string;
   };
 
-  const paymentsInDate: Payment[] = balancedTransfersPayments.filter((t) =>
+  const paymentsInDate: Payment[] = payments.filter((t) =>
     isWithinInterval(t.date, {
       start: new Date(from || ""),
       end: new Date(to || ""),
     }),
   );
+
+  const initialAccountBalance = await getInitialBalance(account);
+
+  const initialBalance =
+    initialAccountBalance +
+    getTotal({
+      transactions: transactions.filter((t) =>
+        isBefore(t.date, addDays(new Date(from || ""), 1)),
+      ),
+      transfers: transfers.filter((t) =>
+        isBefore(t.date, addDays(new Date(from || ""), 1)),
+      ),
+      account,
+      type: "income",
+    }) -
+    getTotal({
+      transactions: transactions.filter((t) =>
+        isBefore(t.date, addDays(new Date(from || ""), 1)),
+      ),
+      transfers: transfers.filter((t) =>
+        isBefore(t.date, addDays(new Date(from || ""), 1)),
+      ),
+      account,
+      type: "expense",
+    });
+
+  const finalBalance =
+    initialAccountBalance +
+    getTotal({
+      transactions: transactions.filter((t) =>
+        isBefore(t.date, addDays(new Date(to || ""), 1)),
+      ),
+      transfers: transfers.filter((t) =>
+        isBefore(t.date, addDays(new Date(to || ""), 1)),
+      ),
+      account,
+      type: "income",
+    }) -
+    getTotal({
+      transactions: transactions.filter((t) =>
+        isBefore(t.date, addDays(new Date(to || ""), 1)),
+      ),
+      transfers: transfers.filter((t) =>
+        isBefore(t.date, addDays(new Date(to || ""), 1)),
+      ),
+      account,
+      type: "expense",
+    });
 
   return (
     <div style={{ pageBreakAfter: "always" }}>
@@ -119,8 +168,8 @@ const Account = async ({
       </h2>
 
       <div className="flex font-semibold text-[10pt] border-b border-t divide-x border-x bg-muted">
-        {/* <p style={{ width: "16.5%", padding: "8px 6px" }}>Date</p> */}
-        <p style={{ width: "32%", padding: "8px 6px" }}>Transaction</p>
+        <p style={{ width: "7%", padding: "8px 6px" }}>Date</p>
+        <p style={{ width: "38.5%", padding: "8px 6px" }}>Transaction</p>
         <p style={{ width: "26.5%", padding: "8px 6px" }}>Category</p>
 
         <p style={{ width: "14%", padding: "8px 6px" }} className="text-right">
@@ -129,9 +178,9 @@ const Account = async ({
         <p style={{ width: "14%", padding: "8px 6px" }} className="text-right">
           Expenditure
         </p>
-        <p style={{ width: "14%", padding: "8px 6px" }} className="text-right">
+        {/* <p style={{ width: "14%", padding: "8px 6px" }} className="text-right">
           Balance
-        </p>
+        </p> */}
       </div>
 
       <div className="border-b border-x bg-muted/50 px-2 py-1.5 text-[10pt] flex justify-between">
@@ -146,21 +195,11 @@ const Account = async ({
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
-          }).format(
-            balancedTransfersPayments
-              .filter((t) => isBefore(t.date, new Date(from || "")))
-              .reverse()[0] !== undefined
-              ? balancedTransfersPayments
-                  .filter((t) => isBefore(t.date, new Date(from || "")))
-                  .reverse()[0].balance || 0
-              : account === "club"
-              ? parseFloat(organisation.initialClubBalance || "")
-              : parseFloat(organisation.initialCharityBalance || ""),
-          )}
+          }).format(initialBalance)}
         </span>
       </div>
 
-      {balancedTransfersPayments
+      {payments
         .filter((t) =>
           isWithinInterval(t.date, {
             start: new Date(from || ""),
@@ -170,41 +209,38 @@ const Account = async ({
         .map((transaction, idx) => (
           <div
             key={idx}
-            className="flex items-center text-[10pt] border-b divide-x border-x"
+            className="flex items-stretch text-[10pt] border-b divide-x border-x"
           >
-            {/* <p className="py-2 px-1" style={{ width: "16.5%" }}>
-            {format(transaction.date, "dd MMM yyyy")}
-          </p> */}
+            <p className="py-2 px-1" style={{ width: "7%" }}>
+              {format(transaction.date, "d/M")}
+            </p>
             <div
-              style={{ width: "32%", padding: "8px 6px" }}
+              style={{ width: "38.5%", padding: "8px 6px" }}
               className="font-medium"
             >
-              <p className="line-clamp-1">
-                {transaction.name}
-                {/* ({format(transaction.date, "dd MMM yyyy")}) */}
-              </p>
+              <p className="line-clamp-1">{transaction.name}</p>
+              <p className="italic">{transaction.notes}</p>
             </div>
 
-            <div
-              className="flex items-center gap-1"
-              style={{ width: "26.5%", padding: "8px 6px" }}
-            >
-              <div
-                className="h-2 w-2 rounded-full flex-shrink-0"
-                style={{
-                  backgroundColor: getColour(
-                    transaction.category?.colour || null,
-                  ).foreground,
-                }}
-              />
-              <span
-                className="capitalize"
-                // style={{
-                //   color: getColour(transaction.category.colour).foreground,
-                // }}
-              >
-                {transaction.category?.name}
-              </span>
+            <div style={{ width: "26.5%", padding: "8px 6px" }}>
+              <div className="flex items-center gap-1">
+                <div
+                  className="h-2 w-2 rounded-full flex-shrink-0"
+                  style={{
+                    backgroundColor: getColour(
+                      transaction.category?.colour || null,
+                    ).foreground,
+                  }}
+                />
+                <span
+                  className="capitalize"
+                  // style={{
+                  //   color: getColour(transaction.category.colour).foreground,
+                  // }}
+                >
+                  {transaction.category?.name}
+                </span>
+              </div>
             </div>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
@@ -214,17 +250,19 @@ const Account = async ({
                 fontVariantNumeric: "tabular-nums",
               }}
             >
-              {transaction.income
-                ? new Intl.NumberFormat("en-GB", {
-                    style: "currency",
-                    currency: "GBP",
-                  }).format(parseFloat(transaction.income || ""))
-                : transaction.to === account
-                ? new Intl.NumberFormat("en-GB", {
-                    style: "currency",
-                    currency: "GBP",
-                  }).format(parseFloat(transaction.amount || ""))
-                : "-"}
+              {transaction.income ? (
+                new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(parseFloat(transaction.income || ""))
+              ) : transaction.to === account ? (
+                new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(parseFloat(transaction.amount || ""))
+              ) : (
+                <span className="text-white">-</span>
+              )}
             </p>
             <p
               className="text-right font-medium py-2 px-1.5 tabular-nums"
@@ -234,30 +272,20 @@ const Account = async ({
                 fontVariantNumeric: "tabular-nums",
               }}
             >
-              {transaction.expense !== undefined && transaction.expense !== null
-                ? new Intl.NumberFormat("en-GB", {
-                    style: "currency",
-                    currency: "GBP",
-                  }).format(parseFloat(transaction.expense || ""))
-                : transaction.from === account
-                ? new Intl.NumberFormat("en-GB", {
-                    style: "currency",
-                    currency: "GBP",
-                  }).format(parseFloat(transaction.amount || ""))
-                : "-"}
-            </p>
-            <p
-              className="text-right font-medium py-2 px-1.5 tabular-nums"
-              style={{
-                width: "14%",
-                padding: "8px 6px",
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
-              {new Intl.NumberFormat("en-GB", {
-                style: "currency",
-                currency: "GBP",
-              }).format(transaction.balance || 0)}
+              {transaction.expense !== undefined &&
+              transaction.expense !== null ? (
+                new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(parseFloat(transaction.expense || ""))
+              ) : transaction.from === account ? (
+                new Intl.NumberFormat("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
+                }).format(parseFloat(transaction.amount || ""))
+              ) : (
+                <span className="text-white">-</span>
+              )}
             </p>
           </div>
         ))}
@@ -274,16 +302,7 @@ const Account = async ({
           {new Intl.NumberFormat("en-GB", {
             style: "currency",
             currency: "GBP",
-          }).format(
-            balancedTransfersPayments
-              .filter((t) =>
-                isWithinInterval(t.date, {
-                  start: new Date(from || ""),
-                  end: new Date(to || ""),
-                }),
-              )
-              .reverse()[0].balance || 0,
-          )}
+          }).format(finalBalance)}
         </span>
       </div>
     </div>
