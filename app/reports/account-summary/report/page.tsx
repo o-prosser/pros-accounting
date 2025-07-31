@@ -160,14 +160,25 @@ const Account = async ({
 
   return (
     <div style={{ pageBreakAfter: "always" }}>
-      <h2
-        className="font-medium capitalize"
-        style={{ fontSize: "14pt", marginTop: "0.8cm", marginBottom: "0.1cm" }}
-      >
-        {account} account
+      <h1 className="font-semibold capitalize" style={{ fontSize: "22pt" }}>
+        {account} Account Summary &mdash;{" "}
+        {format(new Date(from || ""), "MMMM yyyy")}
+      </h1>
+      <h2 className="font-medium" style={{ fontSize: "14pt" }}>
+        {organisation.name}
       </h2>
 
-      <div className="flex font-semibold text-[10pt] border-b border-t divide-x border-x bg-muted">
+      <p className="font-[8pt] mt-2">
+        Period from{" "}
+        {format(
+          from ? new Date(from) : organisation.endOfFinancialYear,
+          "dd/MM/yyyy",
+        )}{" "}
+        to {format(to ? new Date(to) : new Date(), "dd/MM/yyyy")}
+        &mdash; generated {format(new Date(), "dd/MM/yyyy")}
+      </p>
+
+      <div className="flex font-semibold text-[10pt] border-b border-t divide-x border-x bg-muted mt-4">
         <p style={{ width: "7%", padding: "8px 6px" }}>Date</p>
         <p style={{ width: "38.5%", padding: "8px 6px" }}>Transaction</p>
         <p style={{ width: "26.5%", padding: "8px 6px" }}>Category</p>
@@ -411,30 +422,6 @@ const AccountSummaryReport = async (routeData: {
 
   return (
     <div className="text-[12pt]">
-      <h1 className="font-semibold" style={{ fontSize: "22pt" }}>
-        Account Summary &mdash;{" "}
-        {format(new Date(searchParams.from || ""), "MMMM yyyy")}
-      </h1>
-      <h2 className="font-medium" style={{ fontSize: "14pt" }}>
-        {organisation.name}
-      </h2>
-
-      <p className="font-[8pt] mt-2">
-        Period from{" "}
-        {format(
-          searchParams.from
-            ? new Date(searchParams.from)
-            : organisation.endOfFinancialYear,
-          "dd/MM/yyyy",
-        )}{" "}
-        to{" "}
-        {format(
-          searchParams.to ? new Date(searchParams.to) : new Date(),
-          "dd/MM/yyyy",
-        )}
-        .
-      </p>
-
       {searchParams.club === "on" ? (
         <Account account="club" from={searchParams.from} to={searchParams.to} />
       ) : (
