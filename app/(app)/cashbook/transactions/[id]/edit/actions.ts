@@ -26,9 +26,9 @@ const schema = z.object({
   account: z.enum(["charity", "club"], {
     message: "The account type is required.",
   }),
-  receiptBookNumber: z.string().nullable(),
-  fileId: z.string().nullable(),
-  notes: z.string().nullable(),
+  receiptBookNumber: z.string().nullable().optional(),
+  fileId: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
 });
 
 export const updateTransactionAction = async (

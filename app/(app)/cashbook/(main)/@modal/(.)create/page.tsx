@@ -3,12 +3,16 @@ import AddPaymentForm from "./_components/form";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { selectCategoriesMin } from "@/models/category";
+import { selectCurrentOrganisation } from "@/models/organisation";
 
 const AddPaymentModalPage = async ({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string }>;
 }) => {
+  const organisation = await selectCurrentOrganisation();
+  const financialYear = organisation.financialYears.find((fy) => fy.isCurrent);
+
   const categories = await selectCategoriesMin();
 
   return (
@@ -28,7 +32,11 @@ const AddPaymentModalPage = async ({
       </DialogHeader>
       <AddPaymentForm
         searchParams={await searchParams}
-        categories={categories}
+        categories={
+          financialYear
+            ? categories.filter((c) => c.financialYearId === financialYear.id)
+            : categories
+        }
       />
     </>
   );
