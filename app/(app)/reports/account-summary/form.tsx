@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
 import { ToggleButton } from "@/components/ui/toggle-button";
+import { endOfMonth, startOfMonth } from "date-fns";
 
 const AccountSummaryForm = ({
   organisation,
@@ -49,12 +50,8 @@ const AccountSummaryForm = ({
       <Label htmlFor="date">Date</Label>
       <DateRangePicker
         className="mb-6"
-        defaultFrom={
-          organisation.financialYears.find((f) => f.isCurrent)?.startDate
-        }
-        defaultTo={
-          organisation.financialYears.find((f) => f.isCurrent)?.endDate
-        }
+        defaultFrom={startOfMonth(new Date())}
+        defaultTo={endOfMonth(new Date())}
       />
 
       {/* <Label>Columns</Label>
