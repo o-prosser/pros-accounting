@@ -10,6 +10,21 @@ import { selectTransactions } from "@/models/transaction";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 import { getInitialBalance, getTotal } from "@/utils/totals";
 
+export const generateMetadata = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
+  const { from, to } = await searchParams;
+
+  return {
+    title: `Account Summary — ${format(
+      new Date(from?.toString() || ""),
+      "MMMM yyyy",
+    )}`,
+  };
+};
+
 const Account = async ({
   account,
   from,
@@ -210,7 +225,7 @@ const Account = async ({
         </span>
       </div>
 
-      {payments
+      {paymentsInDate
         .filter((t) =>
           isWithinInterval(t.date, {
             start: new Date(from || ""),
