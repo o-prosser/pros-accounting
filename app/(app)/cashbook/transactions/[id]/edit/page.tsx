@@ -38,8 +38,8 @@ const TransactionEditPage = async (props: {
           transaction={transaction}
           categories={categories.filter(
             (c) =>
-              c.financialYearId === null ||
-              c.financialYearId === transaction.financialYearId,
+              c.financialYearId === transaction.financialYearId ||
+              c.financialYearId === null,
           )}
         />
       </div>
