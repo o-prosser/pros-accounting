@@ -211,7 +211,7 @@ const Account = async ({
             key={idx}
             className="flex items-stretch text-[10pt] border-b divide-x border-x"
           >
-            <p className="py-2 px-1" style={{ width: "7%" }}>
+            <p className="py-2 px-1 leading-[10pt]" style={{ width: "7%" }}>
               {format(transaction.date, "d/M")}
             </p>
             <div
