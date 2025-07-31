@@ -183,7 +183,14 @@ const SummaryWidget = async ({
     financialYear: currentFinancialYear,
   });
   const expense = getTotal({
-    transactions,
+    transactions: transactions.filter((t) =>
+      currentFinancialYear
+        ? isWithinInterval(t.date, {
+            start: currentFinancialYear.startDate,
+            end: currentFinancialYear.endDate,
+          })
+        : true,
+    ),
     transfers: transfers.filter((t) =>
       currentFinancialYear
         ? isWithinInterval(t.date, {

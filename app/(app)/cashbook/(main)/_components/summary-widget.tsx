@@ -21,6 +21,8 @@ import {
   differenceInMonths,
   getMonth,
   getYear,
+  isBefore,
+  isWithinInterval,
   startOfMonth,
   subMonths,
 } from "date-fns";
@@ -141,18 +143,81 @@ const SummaryWidget = async ({
   chart?: boolean;
   viewButton?: boolean;
   min?: boolean;
-  financialYear?: { id: string };
+  financialYear?: { id: string; startDate: Date; endDate: Date };
 } & React.ComponentProps<"div">) => {
   const transactions = await selectTransactions({
     account: null,
+  });
+  const transfers = await selectTransfers({});
+
+  const income = getTotal({
+    transactions: transactions.filter((t) =>
+      financialYear
+        ? isWithinInterval(t.date, {
+            start: financialYear.startDate,
+            end: financialYear.endDate,
+          })
+        : true,
+    ),
+    transfers: transfers.filter((t) =>
+      financialYear
+        ? isWithinInterval(t.date, {
+            start: financialYear.startDate,
+            end: financialYear.endDate,
+          })
+        : true,
+    ),
+    type: "income",
+    account,
     financialYear,
   });
-  const transfers = await selectTransfers({ financialYear });
-
-  const income = getTotal({ transactions, transfers, type: "income", account });
   const expense = getTotal({
-    transactions,
-    transfers,
+    transactions: transactions.filter((t) =>
+      financialYear
+        ? isWithinInterval(t.date, {
+            start: financialYear.startDate,
+            end: financialYear.endDate,
+          })
+        : true,
+    ),
+    transfers: transfers.filter((t) =>
+      financialYear
+        ? isWithinInterval(t.date, {
+            start: financialYear.startDate,
+            end: financialYear.endDate,
+          })
+        : true,
+    ),
+    type: "expense",
+    account,
+    financialYear,
+  });
+
+  const incomeForBalance = getTotal({
+    transactions: transactions.filter((t) =>
+      financialYear
+        ? isBefore(t.date, addDays(financialYear.endDate, 1))
+        : true,
+    ),
+    transfers: transfers.filter((t) =>
+      financialYear
+        ? isBefore(t.date, addDays(financialYear.endDate, 1))
+        : true,
+    ),
+    type: "income",
+    account,
+  });
+  const expenseForBalance = getTotal({
+    transactions: transactions.filter((t) =>
+      financialYear
+        ? isBefore(t.date, addDays(financialYear.endDate, 1))
+        : true,
+    ),
+    transfers: transfers.filter((t) =>
+      financialYear
+        ? isBefore(t.date, addDays(financialYear.endDate, 1))
+        : true,
+    ),
     type: "expense",
     account,
   });
@@ -193,9 +258,9 @@ const SummaryWidget = async ({
           <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
           <div className="relative">
             <p className="text-2xl font-mono font-semibold tracking-tight">
-              {income + initial - expense == 0
+              {incomeForBalance + initial - expenseForBalance == 0
                 ? "---"
-                : currency(income + initial - expense)}
+                : currency(incomeForBalance + initial - expenseForBalance)}
             </p>
             <p className="font-medium text-muted-foreground">Current balance</p>
           </div>
