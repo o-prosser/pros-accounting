@@ -82,11 +82,14 @@ const monthNames = [
 export const getTotals = async ({
   financialYear,
 }: {
-  financialYear?: { startDate: Date };
+  financialYear?: { id: string; startDate: Date };
 }) => {
   const months = await getMonths({ financialYear });
-  const transactions = await selectTransactions({ account: null });
-  const transfers = await selectTransfers();
+  const transactions = await selectTransactions({
+    account: null,
+    financialYear,
+  });
+  const transfers = await selectTransfers({ financialYear });
 
   return {
     charity: months.map((month) => ({
