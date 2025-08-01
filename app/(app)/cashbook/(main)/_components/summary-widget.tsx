@@ -11,6 +11,7 @@ import {
   ArrowRightIcon,
   BadgePoundSterlingIcon,
   BanknoteArrowUpIcon,
+  CalendarIcon,
   ExternalLinkIcon,
   ShoppingBagIcon,
 } from "lucide-react";
@@ -19,6 +20,7 @@ import {
   addDays,
   addMonths,
   differenceInMonths,
+  format,
   getMonth,
   getYear,
   isBefore,
@@ -223,6 +225,8 @@ const SummaryWidget = async ({
   });
   const initial = await getInitialBalance(account);
 
+  const monthlyTotals = await getTotals();
+
   return (
     <div className="rounded-2xl p-3 border bg-muted/50 group mb-6">
       <div className="flex gap-2 items-center">
@@ -265,7 +269,6 @@ const SummaryWidget = async ({
             <p className="font-medium text-muted-foreground">Current balance</p>
           </div>
         </div>
-
         <div className="bg-background border rounded-lg p-3 mt-2 relative overflow-hidden">
           <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
           <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
@@ -285,7 +288,6 @@ const SummaryWidget = async ({
             </div>
           </div>
         </div>
-
         <div className="bg-background border rounded-lg p-3 mt-2 relative overflow-hidden">
           <div className="absolute -left-px -top-px right-0 bottom-0 bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-[size:20px_20px]" />
           <div className="absolute inset-0 h-full w-full bg-gradient-to-bl from-transparent via-background via-70% to-background"></div>
@@ -303,6 +305,181 @@ const SummaryWidget = async ({
                 )}
               />
               Total expenses
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Monthly summary */}
+      <div className="grid grid-cols-2 gap-2">
+        {/* Prev */}
+        <div className="bg-background border rounded-lg p-3 mt-2 grid grid-cols-2">
+          <div>
+            <h4 className="font-medium text-lg">
+              {format(subMonths(new Date(), 1), "MMMM yyyy")}
+            </h4>
+            <div className="font-medium text-muted-foreground flex gap-1.5 items-center">
+              <CalendarIcon
+                className={cn(
+                  "size-4",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                )}
+              />
+              Month to date
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <BanknoteArrowUpIcon
+                className={cn(
+                  "size-4",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                )}
+              />
+              <div className="flex items-end gap-1">
+                <p className="font-mono font-medium tracking-tight">
+                  {account === "charity"
+                    ? currency(
+                        monthlyTotals.charity.find(
+                          (t) =>
+                            t.month ===
+                            format(subMonths(new Date(), 1), "MMMM"),
+                        )?.income || 0,
+                      )
+                    : ""}
+                  {account === "club"
+                    ? currency(
+                        monthlyTotals.club.find(
+                          (t) =>
+                            t.month ===
+                            format(subMonths(new Date(), 1), "MMMM"),
+                        )?.income || 0,
+                      )
+                    : ""}
+                </p>
+                <p className="text-sm pb-[0.5px] text-muted-foreground">
+                  income
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <ShoppingBagIcon
+                className={cn(
+                  "size-4",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                )}
+              />
+              <div className="flex items-end gap-1">
+                <p className="font-mono font-medium tracking-tight">
+                  {account === "charity"
+                    ? currency(
+                        monthlyTotals.charity.find(
+                          (t) =>
+                            t.month ===
+                            format(subMonths(new Date(), 1), "MMMM"),
+                        )?.expense || 0,
+                      )
+                    : ""}
+                  {account === "club"
+                    ? currency(
+                        monthlyTotals.club.find(
+                          (t) =>
+                            t.month ===
+                            format(subMonths(new Date(), 1), "MMMM"),
+                        )?.expense || 0,
+                      )
+                    : ""}{" "}
+                </p>
+                <p className="text-sm pb-[0.5px] text-muted-foreground">
+                  expenses
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Current */}
+        <div className="bg-background border rounded-lg p-3 mt-2 grid grid-cols-2">
+          <div>
+            <h4 className="font-medium text-lg">
+              {format(new Date(), "MMMM yyyy")}
+            </h4>
+            <div className="font-medium text-muted-foreground flex gap-1.5 items-center">
+              <CalendarIcon
+                className={cn(
+                  "size-4",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                )}
+              />
+              Month to date
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <BanknoteArrowUpIcon
+                className={cn(
+                  "size-4",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                )}
+              />
+              <div className="flex items-end gap-1">
+                <p className="font-mono font-medium tracking-tight">
+                  {account === "charity"
+                    ? currency(
+                        monthlyTotals.charity.find(
+                          (t) => t.month === format(new Date(), "MMMM"),
+                        )?.income || 0,
+                      )
+                    : ""}
+                  {account === "club"
+                    ? currency(
+                        monthlyTotals.club.find(
+                          (t) => t.month === format(new Date(), "MMMM"),
+                        )?.income || 0,
+                      )
+                    : ""}
+                </p>
+                <p className="text-sm pb-[0.5px] text-muted-foreground">
+                  income
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <ShoppingBagIcon
+                className={cn(
+                  "size-4",
+                  account === "charity" && "text-orange-600",
+                  account === "club" && "text-cyan-600",
+                )}
+              />
+              <div className="flex items-end gap-1">
+                <p className="font-mono font-medium tracking-tight">
+                  {account === "charity"
+                    ? currency(
+                        monthlyTotals.charity.find(
+                          (t) => t.month === format(new Date(), "MMMM"),
+                        )?.expense || 0,
+                      )
+                    : ""}
+                  {account === "club"
+                    ? currency(
+                        monthlyTotals.club.find(
+                          (t) => t.month === format(new Date(), "MMMM"),
+                        )?.expense || 0,
+                      )
+                    : ""}{" "}
+                </p>
+                <p className="text-sm pb-[0.5px] text-muted-foreground">
+                  expenses
+                </p>
+              </div>
             </div>
           </div>
         </div>
