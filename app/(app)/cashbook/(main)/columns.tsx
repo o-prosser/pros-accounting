@@ -55,20 +55,63 @@ export const columns: ColumnDef<Transaction>[] = [
       row.original.name ? (
         <Tooltip>
           <TooltipTrigger>
-            <Button asChild variant="link" size={null}>
+            <Button
+              asChild
+              variant="link"
+              className="group/link hover:no-underline"
+              size={null}
+            >
               <Link
                 href={`/cashbook/${
                   row.original.to ? "transfers" : `transactions`
                 }/${row.original.id}`}
               >
-                <span className="group-data-[sidepanel-visible:=true]:hidden">
+                <span className="group-data-[sidepanel-visible:=true]:hidden group-hover/link:underline">
                   {row.original.name.substring(0, 30)}
                   {row.original.name.length > 30 ? "..." : ""}
                 </span>
-                <span className="hidden group-data-[sidepanel-visible:=true]:!inline">
+                <span className="hidden group-data-[sidepanel-visible:=true]:!inline group-hover/link:underline">
                   {row.original.name.substring(0, 20)}
                   {row.original.name.length > 20 ? "..." : ""}
                 </span>
+
+                {row.original.to ? (
+                  <div className="text-muted-foreground flex ml-2 group-hover:!no-underline">
+                    (
+                    <div className="flex font-medium gap-1 items-center">
+                      <div
+                        className={clsx(
+                          "h-2 w-2 rounded-full flex-shrink-0",
+                          row.original.from === "club"
+                            ? "bg-cyan-600"
+                            : row.original.from === "charity"
+                            ? "bg-orange-600"
+                            : "bg-green-600",
+                        )}
+                      />
+                      <span className="capitalize !no-underline">
+                        {row.original.from}
+                      </span>
+
+                      <ArrowRightIcon className="h-4 w-4 text-muted-foreground" />
+
+                      <div
+                        className={clsx(
+                          "h-2 w-2 rounded-full flex-shrink-0",
+                          row.original.to === "club"
+                            ? "bg-cyan-600"
+                            : row.original.to === "charity"
+                            ? "bg-orange-600"
+                            : "bg-green-600",
+                        )}
+                      />
+                      <span className="capitalize">{row.original.to}</span>
+                    </div>
+                    )
+                  </div>
+                ) : (
+                  ""
+                )}
               </Link>
             </Button>
           </TooltipTrigger>
