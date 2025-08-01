@@ -31,9 +31,16 @@ import {
 // import IncomeExpenseChart from "/summary-chart";
 import { cn } from "@/lib/utils";
 
-const getMonths = async () => {
+const getMonths = async ({
+  financialYear,
+}: {
+  financialYear?: { startDate: Date };
+}) => {
   const organisation = await selectCurrentOrganisation();
-  const financialStart = addDays(organisation.endOfFinancialYear, 1);
+  const financialStart = addDays(
+    financialYear?.startDate || organisation.endOfFinancialYear,
+    1,
+  );
 
   const startFromFinancialStart =
     differenceInMonths(startOfMonth(new Date()), financialStart) <= 6;
@@ -72,8 +79,12 @@ const monthNames = [
   "December",
 ];
 
-export const getTotals = async () => {
-  const months = await getMonths();
+export const getTotals = async ({
+  financialYear,
+}: {
+  financialYear?: { startDate: Date };
+}) => {
+  const months = await getMonths({ financialYear });
   const transactions = await selectTransactions({ account: null });
   const transfers = await selectTransfers();
 
@@ -225,7 +236,7 @@ const SummaryWidget = async ({
   });
   const initial = await getInitialBalance(account);
 
-  const monthlyTotals = await getTotals();
+  const monthlyTotals = await getTotals({ financialYear });
 
   return (
     <div className="rounded-2xl p-3 border bg-muted/50 group mb-6">
