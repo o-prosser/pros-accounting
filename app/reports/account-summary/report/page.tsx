@@ -9,6 +9,9 @@ import { ArrowRightIcon, HashIcon } from "lucide-react";
 import { selectTransactions } from "@/models/transaction";
 import { SelectTransaction, SelectTransfer } from "@/drizzle/schema";
 import { getInitialBalance, getTotal } from "@/utils/totals";
+import PrintOnLoad from "../../_components/print-on-load";
+import BackButton from "@/components/back-button";
+import PrintButton from "../../_components/print-button";
 
 export const generateMetadata = async ({
   searchParams,
@@ -436,22 +439,37 @@ const AccountSummaryReport = async (routeData: {
   //   .reverse();
 
   return (
-    <div className="text-[12pt]">
-      {searchParams.club === "on" ? (
-        <Account account="club" from={searchParams.from} to={searchParams.to} />
-      ) : (
-        ""
-      )}
-      {searchParams.charity === "on" ? (
-        <Account
-          account="charity"
-          from={searchParams.from}
-          to={searchParams.to}
-        />
-      ) : (
-        ""
-      )}
-      {/* {searchParams.dutch === 'on' ? <Account account="dutch" transactions={transactions.filter((t) => t.account === 'dutch')} from={searchParams.from} to={searchParams.to} /> : ""} */}
+    <div className="p-6 print:p-0">
+      <div className="flex gap-3 print:!hidden">
+        <BackButton />
+        <PrintButton />
+        <div className="bg-muted/50 rounded-2xl border h-10 flex items-center px-3 flex-1">
+          <h4 className="font-medium">Account summary report</h4>
+        </div>
+      </div>
+      <div className="text-[12pt] bg-muted/50 rounded-2xl p-3 border print:bg-white print:rounded-none print:p-0 print:border-none">
+        <PrintOnLoad />
+
+        {searchParams.club === "on" ? (
+          <Account
+            account="club"
+            from={searchParams.from}
+            to={searchParams.to}
+          />
+        ) : (
+          ""
+        )}
+        {searchParams.charity === "on" ? (
+          <Account
+            account="charity"
+            from={searchParams.from}
+            to={searchParams.to}
+          />
+        ) : (
+          ""
+        )}
+        {/* {searchParams.dutch === 'on' ? <Account account="dutch" transactions={transactions.filter((t) => t.account === 'dutch')} from={searchParams.from} to={searchParams.to} /> : ""} */}
+      </div>
     </div>
   );
 };
