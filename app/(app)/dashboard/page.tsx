@@ -29,6 +29,7 @@ import { selectCurrentOrganisation } from "@/models/organisation";
 import LoadingIndicator from "@/components/loading-indicator";
 import { selectCategories } from "@/models/category";
 import { currency } from "@/utils/currency";
+import Greeting from "./_components/greeting";
 // import { seed } from "../transactions/cash-book/[account]/seed";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -59,7 +60,9 @@ const DashboardPage = async ({
     <>
       <div className="flex flex-col sm:!flex-row gap-2 justify-between sm:items-end">
         <div>
-          <Title icon={HomeIcon}>Welcome back, {session?.user.firstName}</Title>
+          <Title icon={HomeIcon}>
+            <Greeting />, {session?.user.firstName}
+          </Title>
           <Caption className="-mt-4">
             It&apos;s {format(new Date(), "EEEE, do MMMM yyyy")} &mdash;
             here&apos;s an overview of your accounts.
