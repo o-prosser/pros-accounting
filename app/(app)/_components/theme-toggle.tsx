@@ -1,27 +1,28 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import * as React from "react";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuItem,
   DropdownMenuSubTrigger,
   DropdownMenuPortal,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger>
-          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-muted-foreground mr-2" />
-          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 text-muted-foreground dark:scale-100 mr-2" />
-          <span className="sr-only">Toggle theme</span>
+        <SunIcon className="text-muted-foreground size-4 mr-2 dark:hidden" />
+        <MoonIcon className="text-muted-foreground size-4 mr-2 hidden dark:!inline" />
+        {/* <SunIcon className="size-4 mr-2 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <MoonIcon className="absolute size-4 mr-2 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" /> */}
         Select theme
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
@@ -38,5 +39,5 @@ export function ModeToggle() {
         </DropdownMenuSubContent>
       </DropdownMenuPortal>
     </DropdownMenuSub>
-  )
+  );
 }

@@ -40,7 +40,7 @@ const DesktopSidebar = ({
   user: { firstName: string; lastName: string | null; email: string };
 }) => {
   return (
-    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-1 flex-col items-start p-3 overflow-auto">
+    <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-0.5 flex-col items-start p-3 overflow-auto">
       <Logo className="h-6 w-auto mb-2 fill-foreground shrink-0" />
 
       <div className="h-[2px] bg-background border-t w-full" />
@@ -212,18 +212,18 @@ const DesktopSidebar = ({
           Configuration
         </DesktopLink>
       </ActivePage>
-      <ActivePage pathname="/help" match="eq">
+      {/* <ActivePage pathname="/help" match="eq">
         <DesktopLink href="/help">
           <HelpCircleIcon />
           Help
         </DesktopLink>
-      </ActivePage>
+      </ActivePage> */}
 
       <div className="flex-1" />
 
-      <div className="flex items-center w-full">
-        <div className="h-9 w-9 bg-background rounded-full overflow-hidden flex justify-center items-center">
-          <User className="fill-zinc-300 text-zinc-300 h-10 w-10 -mb-[15px] inline-block" />
+      <div className="flex items-center w-full bg-background border rounded-lg px-3 py-2">
+        <div className="h-8 w-8 bg-muted/50 border rounded-full overflow-hidden flex justify-center items-center">
+          <User className="fill-zinc-300 text-zinc-300 h-10 w-10 -mb-[10px] inline-block" />
         </div>
         <div className="flex flex-col items-start text-sm -gap-2 pl-3 flex-1 w-full">
           <span className="font-semibold">
@@ -233,11 +233,11 @@ const DesktopSidebar = ({
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="-mr-2">
+            <Button variant="ghost" size="icon-sm" className="-mr-2">
               <ChevronsUpDownIcon />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-40">
+          <DropdownMenuContent className="w-44" align="start">
             <DropdownMenuGroup>
               <ModeToggle />
               <DropdownMenuItem asChild className="w-full">
