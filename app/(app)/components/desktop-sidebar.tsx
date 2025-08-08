@@ -17,6 +17,7 @@ import {
   FolderIcon,
   LucideLandmark,
   ExternalLinkIcon,
+  UserIcon,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -240,6 +241,12 @@ const DesktopSidebar = ({
           <DropdownMenuContent className="w-44" align="start">
             <DropdownMenuGroup>
               <ModeToggle />
+              <DropdownMenuItem asChild className="w-full">
+                <Link href="/profile">
+                  <UserIcon className="text-muted-foreground mr-2 h-4 w-4" />
+                  Profile
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild className="w-full">
                 <Link href="/user-guidance-v1.pdf" download target="_blank">
                   <HelpCircleIcon className="text-muted-foreground mr-2 h-4 w-4" />
