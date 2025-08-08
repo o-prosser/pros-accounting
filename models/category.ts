@@ -72,7 +72,7 @@ export const selectCategories = async (
   return categories.map((category) => {
     const lastUpdated = category?.transactions[0]
       ? category?.transactions[0].createdAt
-      : new Date();
+      : null;
 
     const paymentNumber =
       category.transactions.length + category.transfers.length;

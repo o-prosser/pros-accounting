@@ -11,6 +11,7 @@ import {
   ArrowRightIcon,
   BadgePoundSterlingIcon,
   BanknoteArrowUpIcon,
+  DownloadIcon,
   ExternalLinkIcon,
   ShoppingBagIcon,
 } from "lucide-react";
@@ -376,8 +377,9 @@ const SummaryWidget = async ({
                   "yyyy-MM-dd",
                 )}&to=${format(endOfMonth(new Date()), "yyyy-MM-dd")}`}
               >
-                Generate monthly summary
+                <div className="flex-1">Generate monthly summary</div>
                 <LoadingIndicator />
+                <DownloadIcon />
               </Link>
             </ContextMenuItem>
           </ContextMenuSubContent>
