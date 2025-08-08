@@ -71,7 +71,9 @@ export default function RootLayout({
       {/* <ViewTransitions> */}
       <html lang="en" suppressHydrationWarning>
         <body
-          className={generalSans.className + " antialiased"}
+          className={
+            generalSans.className + " antialiased select-none cursor-default"
+          }
           style={{ viewTransitionName: "app" }}
         >
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
