@@ -1,12 +1,24 @@
-import { ChartColumnIcon } from "@/components/icons/chart-column"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { Heading, Muted, Title } from "@/components/ui/typography"
-import Link from "next/link"
+import { ChartColumnIcon } from "@/components/icons/chart-column";
+import { Button } from "@/components/ui/button";
+import { Heading, Muted, Title } from "@/components/ui/typography";
+import Link from "next/link";
 
-const ReportLink = ({title, description, href}: {title: string; description: string; href: string}) => {
+const ReportLink = ({
+  title,
+  description,
+  href,
+}: {
+  title: string;
+  description: string;
+  href: string;
+}) => {
   return (
-    <Button variant="outline" className="flex-col justify-start whitespace-normal" size={null} asChild>
+    <Button
+      variant="outline"
+      className="flex-col justify-start whitespace-normal"
+      size={null}
+      asChild
+    >
       <Link href={href}>
         <div className="h-48 w-full bg-muted flex justify-center items-end overflow-hidden">
           <div className="rounded-t-xl h-44 w-44 bg-background drop-shadow-lg -mb-4 p-4 space-y-1">
@@ -41,30 +53,38 @@ const ReportLink = ({title, description, href}: {title: string; description: str
         </div>
       </Link>
     </Button>
-  )
-}
+  );
+};
 
 const ReportsPage = () => {
   return (
     <>
-      {/* <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>Dashboard</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Reports</BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb> */}
-
       <Title icon={ChartColumnIcon}>Reports</Title>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <ReportLink title="Account summary" description="Summary of each account with its income and expense." href={`/reports/account-summary`} />
-        <ReportLink title="Transaction logs" description="Logs of all transactions by category, account type and income/expense." href={`/reports/transaction-log`} />
-        <ReportLink title="Category summaries" description="Income and expense totals for each sub category, in a specified time period." href={`/reports/category-summaries`} />
-        <ReportLink title="Raw data exports" description="Exports of transactions as CSV to import into an Excel spreadsheet. Useful for data backups." href={`/reports/raw-data-exports`} />
+        <ReportLink
+          title="Account summary"
+          description="Summary of each account with its income and expense."
+          href={`/reports/account-summary`}
+        />
+        <ReportLink
+          title="Transaction logs"
+          description="Logs of all transactions by category, account type and income/expense."
+          href={`/reports/transaction-log`}
+        />
+        <ReportLink
+          title="Category summaries"
+          description="Income and expense totals for each sub category, in a specified time period."
+          href={`/reports/category-summaries`}
+        />
+        <ReportLink
+          title="Raw data exports"
+          description="Exports of transactions as CSV to import into an Excel spreadsheet. Useful for data backups."
+          href={`/reports/raw-data-exports`}
+        />
       </div>
     </>
-  )
-}
+  );
+};
 
 export default ReportsPage;

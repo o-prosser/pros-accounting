@@ -11,18 +11,7 @@ import {
   updateOrganisation,
 } from "./actions";
 import { format } from "date-fns";
-import {
-  CalendarIcon,
-  CircleDotIcon,
-  CircleSmallIcon,
-  PoundSterlingIcon,
-} from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { CalendarIcon, CircleSmallIcon, PoundSterlingIcon } from "lucide-react";
 import { SettingsIcon } from "@/components/icons/settings";
 import {
   Table,
@@ -33,7 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -45,14 +33,6 @@ const SettingsPage = async () => {
 
   return (
     <>
-      {/* <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>Dashboard</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Settings</BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb> */}
-
       <Title icon={SettingsIcon}>Settings</Title>
 
       <div className="max-w-2xl">

@@ -1,17 +1,4 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
 import {
@@ -22,10 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Heading, Muted, Title } from "@/components/ui/typography";
+import { Title } from "@/components/ui/typography";
 import { selectCategoriesMin } from "@/models/category";
-import Link from "next/link";
-import { generateReport } from "./actions";
 import { FormButton } from "@/components/form-button";
 
 export const runtime = "edge";
@@ -35,16 +20,6 @@ const CategorySummariesPage = async () => {
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>Dashboard</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Reports</BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>Category summaries</BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
       <Title>Category summaries</Title>
 
       <Card className="max-w-lg">
