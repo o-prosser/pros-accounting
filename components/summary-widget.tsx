@@ -1,6 +1,4 @@
 import { Account } from "@/enums";
-import { Card, CardTitle } from "./ui/card";
-import { Caption } from "./ui/typography";
 import { selectTransactions } from "@/models/transaction";
 import { selectTransfers } from "@/models/transfer";
 import { getInitialBalance, getTotal } from "@/utils/totals";
@@ -22,8 +20,6 @@ import {
   differenceInMonths,
   endOfMonth,
   format,
-  getMonth,
-  getYear,
   isBefore,
   isWithinInterval,
   startOfMonth,
@@ -33,12 +29,10 @@ import IncomeExpenseChart from "./summary-chart";
 import { cn } from "@/lib/utils";
 import {
   ContextMenu,
-  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuLabel,
   ContextMenuRadioGroup,
-  ContextMenuRadioItem,
   ContextMenuRadioItemLink,
   ContextMenuSeparator,
   ContextMenuShortcut,
