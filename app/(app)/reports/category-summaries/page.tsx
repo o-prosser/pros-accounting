@@ -1,17 +1,34 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { DateRangePicker } from "@/components/ui/date-range-picker"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Heading, Muted, Title } from "@/components/ui/typography"
-import { selectCategoriesMin } from "@/models/category"
-import Link from "next/link"
-import { generateReport } from "./actions"
-import { FormButton } from "@/components/form-button"
-import { Font } from "@react-pdf/renderer"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Heading, Muted, Title } from "@/components/ui/typography";
+import { selectCategoriesMin } from "@/models/category";
+import Link from "next/link";
+import { generateReport } from "./actions";
+import { FormButton } from "@/components/form-button";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 const CategorySummariesPage = async () => {
   const categories = await selectCategoriesMin();
@@ -44,7 +61,9 @@ const CategorySummariesPage = async () => {
               <SelectContent>
                 <SelectGroup>
                   {categories.map((category, idx) => (
-                    <SelectItem key={idx} value={category.id}>{category.name}</SelectItem>
+                    <SelectItem key={idx} value={category.id}>
+                      {category.name}
+                    </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
@@ -53,12 +72,14 @@ const CategorySummariesPage = async () => {
             <Label htmlFor="date">Date range</Label>
             <DateRangePicker />
 
-            <FormButton type="submit" className="mt-4">Generate report</FormButton>
+            <FormButton type="submit" className="mt-4">
+              Generate report
+            </FormButton>
           </form>
         </CardContent>
       </Card>
     </>
-  )
-}
+  );
+};
 
 export default CategorySummariesPage;

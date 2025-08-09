@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 // import { ThemeProvider } from "@/components/theme-provider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
-import { ViewTransitions } from "next-view-transitions";
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { TooltipProvider } from "@/components/ui/tooltip";

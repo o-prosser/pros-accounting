@@ -1,15 +1,16 @@
 import { env } from "@/env.mjs";
-import {EncryptJWT, jwtDecrypt} from 'jose';
+import { EncryptJWT, jwtDecrypt } from "jose";
 import { cookies } from "next/headers";
-import {addMonths, isPast} from 'date-fns'
+import { addMonths, isPast } from "date-fns";
 import { NextRequest } from "next/server";
 import db from "./db";
 import { selectSession } from "@/models/session";
+import { cache } from "react";
 
 const secret = new TextEncoder().encode(env.JOSE_SESSION_KEY);
 const issuer = "urn:example:issuer";
 const audience = "urn:example:audience";
-const expiresAt = `${60*60*24*31}s`;
+const expiresAt = `${60 * 60 * 24 * 31}s`;
 
 export const encodeUserSession = async (sessionId: string) => {
   const jwt = await new EncryptJWT({ sessionId })
@@ -91,8 +92,8 @@ export const getMiddlewareSession = async (request: NextRequest) => {
   return { session, shouldDelete: false };
 };
 
-export const getSession = async () => {
-  const cookieStore = await cookies()
+export const getSession = cache(async () => {
+  const cookieStore = await cookies();
 
   const cookieSessionValue = cookieStore.get("session_id")?.value;
   if (!cookieSessionValue) return;
@@ -111,4 +112,4 @@ export const getSession = async () => {
   }
 
   return session;
-};
+});

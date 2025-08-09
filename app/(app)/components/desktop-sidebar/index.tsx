@@ -1,6 +1,6 @@
 import ActivePage from "@/components/active-page";
 import Logo from "@/components/ui/logo";
-import DesktopLink from "./desktop-link";
+import DesktopLink from "../desktop-link";
 import {
   HelpCircleIcon,
   LogOutIcon,
@@ -9,9 +9,6 @@ import {
   User,
   SearchIcon,
   ChevronsUpDownIcon,
-  ChevronDownIcon,
-  BanknoteIcon,
-  ArrowLeftRightIcon,
   FileIcon,
   SettingsIcon,
   FolderIcon,
@@ -28,18 +25,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "../_components/theme-toggle";
+import { ModeToggle } from "../../_components/theme-toggle";
 import Link from "next/link";
-import { logout } from "../actions";
+import { logout } from "../../actions";
 import { HomeIcon } from "@/components/icons/home";
+import { Suspense } from "react";
+import DekstopSidebarOrganisationName from "./organisation-name";
+import DekstopSidebarUserDetail from "./user-details";
 
-const DesktopSidebar = ({
-  organisation,
-  user,
-}: {
-  organisation: { name: string };
-  user: { firstName: string; lastName: string | null; email: string };
-}) => {
+const DesktopSidebar = () => {
   return (
     <div className="hidden md:!flex fixed z-10 left-4 inset-y-4 w-70 gap-y-0.5 flex-col items-start p-3 overflow-auto">
       <Logo className="h-6 w-auto mb-2 fill-foreground shrink-0" />
@@ -75,7 +69,9 @@ const DesktopSidebar = ({
       </div>
 
       <span className="text-xs font-medium uppercase text-muted-foreground">
-        {organisation.name}
+        <Suspense fallback={"Loading"}>
+          <DekstopSidebarOrganisationName />
+        </Suspense>
       </span>
 
       <div className="h-[2px] bg-background border-t w-full" />
@@ -227,10 +223,9 @@ const DesktopSidebar = ({
           <User className="fill-zinc-300 text-zinc-300 h-10 w-10 -mb-[10px] inline-block" />
         </div>
         <div className="flex flex-col items-start text-sm -gap-2 pl-3 flex-1 w-full">
-          <span className="font-semibold">
-            {user.firstName} {user.lastName}
-          </span>
-          <span className="text-xs text-muted-foreground">{user.email}</span>
+          <Suspense fallback={"Loading"}>
+            <DekstopSidebarUserDetail />
+          </Suspense>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

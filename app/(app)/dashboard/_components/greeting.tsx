@@ -1,9 +1,24 @@
-const Greeting = () => {
+import { getSession } from "@/lib/auth";
+
+const DashboardGreeting = async () => {
+  const session = await getSession();
+
   const hour = new Date().getHours();
 
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
+  const message =
+    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
+  return `${message}, ${session?.user.firstName}`;
 };
 
-export default Greeting;
+const DashboardGreetingLoading = () => {
+  const hour = new Date().getHours();
+
+  return hour < 12
+    ? "Good morning"
+    : hour < 18
+    ? "Good afternoon"
+    : "Good evening";
+};
+
+export { DashboardGreeting, DashboardGreetingLoading };
