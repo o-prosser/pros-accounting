@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { UploadButton } from "@/components/uploadthing";
 import { FileIcon, ImageIcon, XIcon } from "lucide-react";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 const UploadFiles = () => {
   const [id, setId] = useState("");
@@ -37,12 +38,14 @@ const UploadFiles = () => {
         </div>
       ) : (
         <UploadButton
-          appearance={{
-            container: "",
-            button:
-              "w-full bg-background text-foreground border flex text-sm justify-start px-4 hover:bg-accent hover:text-accent-foreground transition-colors",
-            allowedContent: "text-left text-xs text-muted-foreground hidden",
-          }}
+          // appearance={{
+          //   container: "",
+          //   button:
+          //     "w-full bg-background text-foreground border flex text-sm justify-start px-4 hover:bg-accent hover:text-accent-foreground transition-colors",
+          //   allowedContent: "text-left text-xs text-muted-foreground hidden",
+          // }}
+          className="ut-button:w-full ut-button:bg-background ut-button:text-foreground ut-button:border ut-button:flex ut-button:text-sm ut-button:justify-start ut-button:px-4 ut-button:hover:bg-accent ut-button:hover:text-accent-foreground ut-button:transition-colors ut-allowed-content:hidden"
+          config={{ cn: twMerge }}
           content={{
             button: (
               <>
