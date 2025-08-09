@@ -79,7 +79,7 @@ const Transactions = async ({
                     >
                       <span className="group-hover/link:underline">
                         {payment.name?.substring(0, 30)}
-                        {payment.name?.length || 0 > 30 ? "..." : ""}
+                        {(payment.name?.length || 0) > 30 ? "..." : ""}
                       </span>
                       {payment.to ? (
                         <div className="text-muted-foreground flex ml-2 group-hover:!no-underline">
