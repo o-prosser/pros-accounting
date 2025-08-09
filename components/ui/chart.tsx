@@ -239,12 +239,12 @@ const ChartTooltipContent = React.forwardRef<
                         </span>
                       </div>
                       {/* {item.value && ( */}
-                        <span className="font-mono font-medium tabular-nums text-foreground pl-2">
-                          {new Intl.NumberFormat("en-GB", {
-                            style: "currency",
-                            currency: "GBP",
-                          }).format(parseFloat(item.value?.toString() || ""))}
-                        </span>
+                      <span className="font-mono font-medium tabular-nums text-foreground pl-2">
+                        {new Intl.NumberFormat("en-GB", {
+                          style: "currency",
+                          currency: "GBP",
+                        }).format(parseFloat(item.value?.toString() || ""))}
+                      </span>
                       {/* )} */}
                     </div>
                   </>
