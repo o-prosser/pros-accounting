@@ -9,6 +9,7 @@ import { ViewTransitions } from "next-view-transitions";
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const generalSans = localFont({
   src: [
@@ -76,6 +77,7 @@ export default function RootLayout({
           }
           style={{ viewTransitionName: "app" }}
         >
+          <SpeedInsights />
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <ThemeProvider
             attribute="class"
