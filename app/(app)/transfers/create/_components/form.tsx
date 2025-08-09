@@ -18,7 +18,7 @@ import {
 import { createTransferAction } from "../../actions";
 import { useActionState, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Popover } from "@radix-ui/react-popover";
+import { Popover } from "radix-ui";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -44,7 +44,7 @@ const CreateForm = ({
       amount: [],
       notes: [],
     },
-  })
+  });
 
   const [date, setDate] = useState<Date | undefined>(undefined);
 
@@ -83,7 +83,7 @@ const CreateForm = ({
 
           <Label htmlFor="date">Date</Label>
           <div className="mt-1">
-            <Popover>
+            <Popover.Root>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
@@ -108,7 +108,7 @@ const CreateForm = ({
                   initialFocus
                 />
               </PopoverContent>
-            </Popover>
+            </Popover.Root>
           </div>
           <input
             type="hidden"
@@ -158,9 +158,9 @@ const CreateForm = ({
                 ""
               )}
             </div>
-              <div className="mt-10 px-3">
-                <ArrowRight className="h-4 w-4 text-muted-foreground" />
-              </div>
+            <div className="mt-10 px-3">
+              <ArrowRight className="h-4 w-4 text-muted-foreground" />
+            </div>
             <div>
               <Label htmlFor="to">Moving to</Label>
               <Select name="to">
@@ -184,7 +184,6 @@ const CreateForm = ({
               )}
             </div>
           </div>
-
 
           <Label htmlFor="category">Category</Label>
           <Select name="category">
@@ -234,8 +233,7 @@ const CreateForm = ({
       </div>
 
       <div className="mt-6 justify-end flex">
-
-      <FormButton type="submit">Add transfer</FormButton>
+        <FormButton type="submit">Add transfer</FormButton>
       </div>
     </form>
   );

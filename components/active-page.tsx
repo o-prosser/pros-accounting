@@ -1,6 +1,6 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import { usePathname, useSearchParams } from "next/navigation";
 
 const ActivePage = ({
@@ -35,7 +35,7 @@ const ActivePage = ({
   )
     active = false;
 
-  return <Slot data-active={active}>{children}</Slot>;
+  return <Slot.Root data-active={active}>{children}</Slot.Root>;
 };
 
 export default ActivePage;
