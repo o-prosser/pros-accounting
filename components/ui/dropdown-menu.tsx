@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -14,7 +14,7 @@ const DropdownMenuGroup = ({
   className,
   children,
   ...props
-}: DropdownMenuPrimitive.DropdownMenuGroupProps) => {
+}: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) => {
   return (
     <DropdownMenuPrimitive.Group
       className={cn("space-y-1", className)}

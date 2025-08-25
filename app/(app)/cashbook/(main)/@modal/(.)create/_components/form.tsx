@@ -5,7 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
-import { Popover as PopoverPrimitive } from "radix-ui";
+import { PopoverContent } from "@radix-ui/react-popover";
 import {
   Select,
   SelectContent,
@@ -246,10 +246,10 @@ const AddPaymentForm = ({
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverPrimitive.Content
+          <PopoverContent
             align="start"
             sideOffset={4}
-            className="z-50 rounded-md border bg-popover-foreground text-popover shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-64 overflow-hidden p-0 h-84"
+            className="w-64 overflow-hidden p-0 h-84"
           >
             <Calendar
               mode="single"
@@ -258,7 +258,7 @@ const AddPaymentForm = ({
               captionLayout="dropdown"
               className="w-full"
             />
-          </PopoverPrimitive.Content>
+          </PopoverContent>
         </Popover>
         <input
           type="hidden"

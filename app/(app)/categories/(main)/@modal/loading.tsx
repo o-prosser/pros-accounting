@@ -1,6 +1,6 @@
 import { DialogTitle } from "@/components/ui/dialog";
 import { LoaderCircleIcon } from "lucide-react";
-import { VisuallyHidden } from "radix-ui";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 const ModalLoading = () => {
   return (

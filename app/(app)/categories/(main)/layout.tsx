@@ -1,5 +1,5 @@
 import { Title } from "@/components/ui/typography";
-import { BanknoteIcon, PlusIcon, TagIcon } from "lucide-react";
+import { PlusIcon, TagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
