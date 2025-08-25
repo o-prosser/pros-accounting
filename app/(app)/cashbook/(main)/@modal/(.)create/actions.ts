@@ -40,6 +40,8 @@ export const createPaymentAction = async (
 ) => {
   const fields = schema.safeParse(Object.fromEntries(formData));
 
+  console.log(fields);
+
   if (!fields.success) {
     return {
       errors: z.prettifyError(fields.error),
@@ -93,7 +95,9 @@ export const createPaymentAction = async (
               : null,
           categoryId: fields.data.category,
           account: fields.data.account,
-          receiptBookNumber: fields.data.receiptBookNumber,
+          receiptBookNumber: fields.data.receiptBookNumber
+            ? parseInt(fields.data.receiptBookNumber).toString()
+            : null,
           fileId: fields.data.fileId === "" ? undefined : fields.data.fileId,
           notes: fields.data.notes,
           financialYearId: currentFinancialYearId,
